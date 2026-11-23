@@ -158,7 +158,7 @@
     "topicId": "sd-002",
     "type": "interview",
     "front": "Why use majority election?",
-    "back": "Intersecting majorities prevent conflicting committed ownership decisions.",
+    "back": "Any two majorities intersect. In Raft the shared voter obeys one vote per term and a log freshness rule.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -256,7 +256,7 @@
     "topicId": "sd-002",
     "type": "tradeoff",
     "front": "What is a safe handoff order?",
-    "back": "Commit new ownership, establish fences, reconcile ambiguous work, then activate.",
+    "back": "Claim, install verified floors, reconcile accepted effects, then activate the ready resources with a conditional transition.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -270,7 +270,7 @@
     "topicId": "sd-002",
     "type": "interview",
     "front": "Why persist operation IDs first?",
-    "back": "A successor can determine whether an external call was accepted before retrying.",
+    "back": "Record a client-generated idempotency key and payload before dispatch. The external handle may exist only in a lost response.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -301,9 +301,7 @@
     "back": "Reject obsolete scheduler commands before accepting reservations.",
     "companies": [
       "OpenAI",
-      "Anthropic",
       "Meta",
-      "Google",
       "NVIDIA"
     ]
   },
@@ -315,9 +313,7 @@
     "back": "Quarantine its resources until safe authority and reservation state are established.",
     "companies": [
       "OpenAI",
-      "Anthropic",
       "Meta",
-      "Google",
       "NVIDIA"
     ]
   },
@@ -328,10 +324,7 @@
     "front": "What protects checkpoint publication?",
     "back": "An atomically fenced manifest pointer to immutable checkpoint blobs.",
     "companies": [
-      "OpenAI",
-      "Anthropic",
       "Meta",
-      "Google",
       "NVIDIA"
     ]
   },
@@ -469,9 +462,7 @@
     "back": "Reduce contention and blast radius while allowing horizontal scaling.",
     "companies": [
       "OpenAI",
-      "Anthropic",
       "Meta",
-      "Google",
       "NVIDIA"
     ]
   },
@@ -538,11 +529,7 @@
     "front": "Can fencing guarantee exactly-once tool calls?",
     "back": "No. External idempotency, journals, and reconciliation are also needed.",
     "companies": [
-      "OpenAI",
-      "Anthropic",
-      "Meta",
-      "Google",
-      "NVIDIA"
+      "Anthropic"
     ]
   },
   {

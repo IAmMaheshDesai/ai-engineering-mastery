@@ -119,3 +119,29 @@ html:fullscreen, html:fullscreen body {width:100%;height:100%;background:#fff}
 .resource-word-list{margin-top:20px}.resource-actions{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:25px 0}.resource-empty{padding:28px;background:#f1f7ff;border:1px solid #cee0f7;border-radius:16px;font-size:18px}
 #resourceOverlay{z-index:100005}#resourceOverlay .flash-bottom{z-index:2}#resourceOverlay .flash-top{z-index:2}
 @media(max-width:720px){.resource-reader{width:calc(100% - 32px);margin:24px auto 95px}.resource-markdown{font-size:17px}}
+
+/* Optional custom HTML chapter components. Scoped to the existing slide. */
+.slide .aem-rich{font-size:1em;line-height:1.76}
+.slide .aem-rich h1{font-size:1.85em;margin:8px 0 16px}
+.slide .aem-rich h2{font-size:1.19em;text-transform:none;letter-spacing:0;border:0;margin:28px 0 12px}
+.slide .aem-rich p{max-width:1120px}
+.slide .aem-rich .aem-eyebrow{font-size:.72em;letter-spacing:.12em;text-transform:uppercase;font-weight:850;color:#1761dc}
+.slide .aem-rich .aem-lead{padding:17px 21px;background:linear-gradient(110deg,#eaf4ff,#f6f9ff);border-left:5px solid #1761dc;border-radius:11px}
+.slide .aem-rich .aem-panel{border:1px solid #d2e3fa;background:#f6faff;border-radius:15px;padding:18px 24px;margin:23px 0}
+.slide .aem-rich .aem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:22px 0}
+.slide .aem-rich .aem-grid .aem-panel{margin:0}
+.slide .aem-rich .aem-table-wrap{overflow-x:auto;margin:22px 0;border:1px solid #d0e1f8;border-radius:13px}
+.slide .aem-rich table{width:100%;border-collapse:collapse;font-size:.87em;line-height:1.5}
+.slide .aem-rich th{background:#e7f1ff;color:#124a8e;text-align:left;font-weight:800}
+.slide .aem-rich th,.slide .aem-rich td{padding:13px 16px;border-bottom:1px solid #d9e6f7;vertical-align:top}
+.slide .aem-rich tr:last-child td{border-bottom:0}
+.slide .aem-rich .aem-flow{display:flex;align-items:stretch;justify-content:center;flex-wrap:wrap;gap:8px;margin:24px 0}
+.slide .aem-rich .aem-node{background:#eff6ff;border:1px solid #9bc2f7;color:#174c89;padding:15px 17px;border-radius:12px;font-size:.84em;font-weight:750;min-width:130px;text-align:center}
+.slide .aem-rich .aem-arrow{align-self:center;color:#2174c5;font-weight:900}
+.slide .aem-rich .aem-code-panel{background:#0d1117;color:#e6edf3;border:1px solid #30363d;border-radius:14px;overflow:hidden;margin:24px 0;box-shadow:0 9px 26px #0d11171b}
+.slide .aem-rich .aem-code-head{display:flex;justify-content:space-between;align-items:center;background:#161b22;padding:10px 16px;border-bottom:1px solid #30363d;color:#7ee787;font:700 .75em ui-monospace,monospace}
+.slide .aem-rich .aem-copy{border:1px solid #48515d;background:#252d39;color:#e6edf3;border-radius:7px;padding:6px 11px;font:600 12px ui-monospace,monospace;cursor:pointer}
+.slide .aem-rich .aem-copy:hover{background:#354152}
+.slide .aem-rich pre{margin:0;background:transparent;border:0;border-radius:0;padding:19px;white-space:pre;overflow:auto;line-height:1.6;font-size:.77em;color:#e6edf3}
+.slide .aem-rich .tok-key{color:#ff7b72}.slide .aem-rich .tok-str{color:#a5d6ff}.slide .aem-rich .tok-num{color:#79c0ff}.slide .aem-rich .tok-com{color:#8b949e}.slide .aem-rich .tok-fn{color:#d2a8ff}
+@media(max-width:650px){.slide .aem-rich .aem-node{min-width:100px}.slide .aem-rich th,.slide .aem-rich td{padding:9px}}

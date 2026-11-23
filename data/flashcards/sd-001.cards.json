@@ -45,8 +45,8 @@
     "id": "sd-001-fc-004",
     "topicId": "sd-001",
     "type": "concept",
-    "front": "What is a majority of five?",
-    "back": "Three voters.",
+    "front": "In a five-voter Raft group, how many durable follower acknowledgments does a leader need for its current-term entry?",
+    "back": "Two followers plus the leader’s own durable copy form a majority of three.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -272,11 +272,8 @@
     "front": "Does Raft ensure exactly-once external calls?",
     "back": "No; use external idempotency and reconciliation.",
     "companies": [
-      "OpenAI",
       "Anthropic",
-      "Meta",
-      "Google",
-      "NVIDIA"
+      "Google"
     ]
   },
   {
@@ -357,9 +354,7 @@
     "back": "Control-plane metadata, not per-token inference traffic.",
     "companies": [
       "OpenAI",
-      "Anthropic",
       "Meta",
-      "Google",
       "NVIDIA"
     ]
   },
@@ -371,9 +366,7 @@
     "back": "To reject outdated allocation or ownership commands.",
     "companies": [
       "OpenAI",
-      "Anthropic",
       "Meta",
-      "Google",
       "NVIDIA"
     ]
   },
@@ -409,8 +402,8 @@
     "id": "sd-001-fc-030",
     "topicId": "sd-001",
     "type": "failure",
-    "front": "What should a Staff+ answer include?",
-    "back": "Fault model, tradeoffs, correctness, recovery, and operations.",
+    "front": "What should a Staff+ latency estimate show after zone loss?",
+    "back": "Remove the failed voters and recalculate which remaining durable follower acknowledgment completes the quorum. Include queuing and apply time.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -455,9 +448,7 @@
     "back": "A stale scheduler may still send commands; enforcement at the worker rejects lower epochs.",
     "companies": [
       "OpenAI",
-      "Anthropic",
       "Meta",
-      "Google",
       "NVIDIA"
     ]
   },
@@ -465,8 +456,8 @@
     "id": "sd-001-fc-034",
     "topicId": "sd-001",
     "type": "interview",
-    "front": "What does a Raft term identify?",
-    "back": "A monotonically increasing logical election epoch, not a wall-clock timestamp.",
+    "front": "Can a Raft term advance without a leader being elected?",
+    "back": "Yes. An unsuccessful candidate starts a new term. Repeated increases can indicate split votes or delayed heartbeats.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -510,11 +501,8 @@
     "front": "Why is an external API timeout ambiguous?",
     "back": "The side effect may have succeeded even if the caller did not receive a response.",
     "companies": [
-      "OpenAI",
       "Anthropic",
-      "Meta",
-      "Google",
-      "NVIDIA"
+      "Google"
     ]
   },
   {
@@ -549,13 +537,11 @@
     "id": "sd-001-fc-040",
     "topicId": "sd-001",
     "type": "interview",
-    "front": "Why keep consensus off the inference token path?",
-    "back": "Quorum round trips would add latency to a high-frequency data-plane operation.",
+    "front": "Which model-serving update deserves strong ordering?",
+    "back": "Publishing an authoritative routing revision can require strong ordering. Token generation uses locally applied validated configuration.",
     "companies": [
       "OpenAI",
-      "Anthropic",
       "Meta",
-      "Google",
       "NVIDIA"
     ]
   }

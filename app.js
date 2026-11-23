@@ -88,6 +88,21 @@ function renderSlide(){
    return '';
  };
  let html=`<div class="breadcrumbs">${esc(s.section||'Architecture')} / ${esc(lesson.title)}</div><h1>${esc(s.title)}</h1>`;
+ const custom=registry.htmlLessons?.[topic?.id];
+ if(custom){
+   const holder=document.createElement('template');holder.innerHTML=custom;
+   const chapters=holder.content.querySelectorAll('article[data-aem-chapter]');
+   const chapter=chapters[slideIndex];
+   if(chapter){html=chapter.innerHTML;}
+   else{html='<p>HTML chapter missing. Check the custom lesson file.</p>';}
+   $('slide').innerHTML=html;
+   $('slide').style.setProperty('--slide-font',zoom*0.19+'px');$('slide').classList.toggle('wide',wide);
+   $('zoom').textContent=zoom+'%';$('pageCount').textContent=(slideIndex+1)+' / '+lesson.slides.length;
+   $('slideSection').textContent=s.section||'';$('prev').disabled=slideIndex===0;$('next').disabled=slideIndex===lesson.slides.length-1;
+   $('widen').textContent=wide?'Normal Width':'Widen Slide';$('slideScroll').scrollTop=0;save('lastSlide:'+topic.id,slideIndex);
+   return;
+ }
+
  if(s.lead)html+=`<div class="intro"><p>${esc(s.lead)}</p></div>`;
  if(s.blocks)html+=s.blocks.map(renderBlock).join('');
  else{html+=(s.paragraphs||[]).map(para).join('')+list(s.bullets)}
@@ -229,3 +244,18 @@ $('app').addEventListener('click',e=>{let b=e.target.closest('button');if(!b)ret
 $('prev').onclick=()=>changeSlide(-1);$('next').onclick=()=>changeSlide(1);$('close').onclick=closePresentation;$('closeTop').onclick=closePresentation;$('larger').onclick=()=>{zoom=Math.min(160,zoom+10);renderSlide()};$('smaller').onclick=()=>{zoom=Math.max(70,zoom-10);renderSlide()};$('widen').onclick=()=>{wide=!wide;renderSlide()};$('full').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen?.()};$('pointer').onclick=()=>{pointer=!pointer;$('slideScroll').style.cursor=pointer?'crosshair':'auto'};$('flashFromSlide').onclick=()=>startReview(topic.id);$('addWordFromSlide').onclick=()=>openWordEditor(selectedWord||getSelectedLessonWord());
 document.addEventListener('keydown',e=>{if($('vocabDialog').open)return;if(!$('resourceOverlay').classList.contains('hidden')){if(e.key==='Escape'&&!document.fullscreenElement)closeTopicResources();return;}if(!$('vocabOverlay').classList.contains('hidden')){if(vocabListMode)return;if(e.key==='ArrowRight'){$('vocabNext').click();e.preventDefault()}else if(e.key==='ArrowLeft'){$('vocabPrev').click();e.preventDefault()}else if(e.key===' '){vocabRevealed=!vocabRevealed;renderVocabulary();e.preventDefault()}else if(e.key==='Escape'&&!document.fullscreenElement)closeVocabulary();return;}if(!$('flashOverlay').classList.contains('hidden')){if(e.key==='ArrowRight'){e.preventDefault();$('flashNext').click()}else if(e.key==='ArrowLeft'){e.preventDefault();$('flashPrev').click()}else if(e.key===' '){e.preventDefault();revealed=!revealed;renderReview()}else if(e.key==='Escape'&&!document.fullscreenElement){closeReview()}return;}if($('presentation').classList.contains('hidden'))return;if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;if(e.key==='Escape'){if(!document.fullscreenElement)closePresentation()}else if(e.key==='ArrowRight'){e.preventDefault();changeSlide(1)}else if(e.key==='ArrowLeft'){e.preventDefault();changeSlide(-1)}else if(e.key==='Home'){slideIndex=0;renderSlide()}else if(e.key==='End'){slideIndex=lesson.slides.length-1;renderSlide()}else if(e.key.toLowerCase()==='f'){$('full').click()}else if(e.key==='+'){$('larger').click()}else if(e.key==='-'){$('smaller').click()}});
 home();})();
+
+// Delegated code-copy support works in fullscreen and after slide navigation.
+document.addEventListener('click',async e=>{
+ const btn=e.target.closest('[data-aem-copy]');if(!btn)return;
+ const pre=btn.closest('.aem-code-panel')?.querySelector('code');if(!pre)return;
+ const source=pre.textContent;
+ try{
+  if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(source);
+  else{
+   const ta=document.createElement('textarea');ta.value=source;ta.style.cssText='position:fixed;left:-9999px;top:0';document.body.append(ta);ta.select();
+   if(!document.execCommand('copy'))throw Error('Clipboard unavailable');ta.remove();
+  }
+  btn.textContent='✓ Copied';setTimeout(()=>{if(btn.isConnected)btn.textContent='Copy code'},1600);
+ }catch(err){btn.textContent='Select code to copy';}
+});

@@ -1,6 +1,6 @@
 # AI ENGINEERING MASTERY
 
-## FINAL MASTER TOPIC GENERATOR — VERSION 5.1
+## FINAL MASTER TOPIC GENERATOR — VERSION 6.0
 
 ### Senior Staff AI Infrastructure | Distributed Systems | Architecture | Interview & Communication Mastery
 
@@ -12,13 +12,13 @@
 
 ## TOPIC CONFIGURATION
 
-**Topic ID:** `sd-002`\
-**Topic Name:** `Leader election, leases, fencing tokens, ownership epochs`
+**Topic ID:** `sd-001`\
+**Topic Name:** `Distributed consensus: Raft, Paxos, quorum`
 
 **Target Companies:** OpenAI, Anthropic, Meta, Google, NVIDIA\
 **Target Level:** Senior Staff / Staff+ Software Engineer and AI Infrastructure Architect\
 **Learning Duration:** 75–90 minutes of substantive read-aloud instruction\
-**Primary Output:** Four content files plus one ZIP package
+**Primary Output:** Five content files plus one ZIP package (four original files plus optional-renderer HTML, required for this run)
 
 
 
@@ -213,9 +213,9 @@ Include an architecture defense exercise with a model solution.
 
 The content must render beautifully inside my existing AI Engineering Mastery fullscreen presentation.
 
-**Do not modify the application's HTML, CSS, JavaScript, navigation, presentation controls, or visual theme.**
+**Do not modify the application shell, CSS, JavaScript, navigation, presentation controls, or visual theme.** Generate a separate per-topic HTML fragment for rich chapter bodies; it is not a replacement for the application HTML.
 
-Use the existing JSON renderer's supported content blocks.
+Use the existing JSON renderer's supported content blocks for the canonical JSON fallback. Also create the matching rich HTML chapter fragment using the exact contract below.
 
 Each chapter should contain:
 
@@ -421,7 +421,7 @@ This Markdown must render correctly in the application's fullscreen **Research &
 
 ## 13. EXACT OUTPUT FILES — DO NOT CHANGE
 
-Generate these four files:
+Generate these five files (the first four remain unchanged):
 
 **1. Complete lesson**
 
@@ -456,6 +456,35 @@ data/research/[TOPIC_ID].research.md
 ```
 
 Must contain the research, company evidence, citations, and further reading.
+
+**5. Rich per-topic HTML presentation**
+
+`data/lesson-html/[TOPIC_ID].html`
+
+This is a **fragment**, not a standalone HTML page. It must contain **exactly one** `<article data-aem-chapter="1">...</article>` for **each** slide in `data/lessons/[TOPIC_ID].json`, in exactly the same order. The JSON remains authoritative for topic ID, slide titles, sections, chapter navigation, flashcards, saved position, and fallback. The HTML controls only the chapter body.
+
+Use semantic HTML for substantial explanatory paragraphs, nested headings, comparison tables, worked calculations, callouts, architecture diagrams, failure timelines, sequence diagrams, and clearly labeled pseudocode. Make diagrams readable with HTML/CSS structure and accessible textual descriptions; do not substitute decorative diagrams for technical explanation. Favor responsive, horizontally scrollable wrappers around wide tables and diagrams when the existing stylesheet supports them.
+
+For code, use the existing copy-enabled panel contract:
+
+```html
+<div class="aem-code-panel">
+  <div class="aem-code-head">
+    <span>PYTHON</span>
+    <button type="button" class="aem-copy" data-aem-copy>Copy code</button>
+  </div>
+  <pre><code>def example():
+    return True</code></pre>
+</div>
+```
+
+HTML-escape all code (`&` → `&amp;`, `<` → `&lt;`, `>` → `&gt;`). Label Python, Java, Bash, JSON, HTTP, and pseudocode accurately. Preserve the existing **AIBL Dark** code theme and copy interaction; do not implement another copy handler or invent unsupported syntax-highlighting hooks. Do not claim a language is syntax-highlighted unless the existing application actually supports it.
+
+**Safety and compatibility:** Do not include `<html>`, `<head>`, `<body>`, `<script>`, `<iframe>`, inline event handlers (such as `onclick`), `javascript:` URLs, embedded scripts, or external runtime dependencies. Do not introduce standalone CSS in the fragment; shared styles belong in `app.css`, which this generation must not change. Use existing classes and safe semantic HTML. Avoid IDs that collide with application controls. The HTML must be fully self-contained for offline use after `python3 build.py`.
+
+**Content parity:** The HTML must faithfully render the full substantive teaching content in the lesson JSON, not a shortened summary. Every major worked example, formula, interview answer, and failure case must be present in both the canonical JSON and the matching HTML chapter. HTML may improve layout and add visual structure, but must not silently contradict the JSON. Do not inflate word counts by counting duplicated JSON and HTML text twice.
+
+**Fallback:** If the HTML fragment is absent, the application must continue to display the JSON lesson unchanged. Do not modify other topics.
 
 ### Schema Requirements
 
@@ -499,6 +528,13 @@ Before delivering, verify:
 16. Exact compatibility with the existing renderer.
 17. Correct directory paths.
 18. Successful execution of `python3 build.py` when the project is available for testing.
+19. Exactly one `<article data-aem-chapter="1">` per JSON slide, with matching order.
+20. HTML contains all substantive JSON teaching content and no truncated chapters.
+21. No forbidden scripts, event handlers, iframes, or external dependencies in the HTML fragment.
+22. Tables, diagrams, code panels, and copy buttons follow existing application conventions.
+23. AIBL Dark syntax highlighting and Copy behavior are tested in a browser when browser testing is available; otherwise disclose that only static checks were run.
+24. Existing navigation, zoom, fullscreen, dictionary, flashcards, research, and progress are unchanged.
+25. Spoken word count is measured once from canonical teaching text, not by adding duplicated JSON and HTML.
 
 Do not claim validation passed unless it was actually performed.
 
@@ -512,7 +548,7 @@ If the content is incomplete, report exactly what remains unfinished.
 
 ## 15. FINAL DELIVERABLES
 
-Deliver **four individual downloadable files plus one ZIP**:
+Deliver **five individual downloadable files plus one ZIP**:
 
 1.
 
@@ -544,7 +580,9 @@ Deliver **four individual downloadable files plus one ZIP**:
 AI_Engineering_Mastery_[TOPIC_ID]_Content.zip
 ```
 
-The ZIP must contain the four files in their correct directory structure.
+6. `data/lesson-html/[TOPIC_ID].html` — rich chapter presentation fragment
+
+The ZIP must contain all five files in their correct directory structure.
 
 It must be ready to extract into the existing AI Engineering Mastery project.
 
@@ -589,4 +627,4 @@ After studying this lesson, I must be able to:
 
 **Prepare me to operate at Senior Staff engineering level—not merely to pass an interview.**
 
-**END OF AI ENGINEERING MASTERY MASTER TOPIC GENERATOR — VERSION 5.1**
+**END OF AI ENGINEERING MASTERY MASTER TOPIC GENERATOR — VERSION 6.0**

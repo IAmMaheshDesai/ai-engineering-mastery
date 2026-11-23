@@ -1,7 +1,7 @@
 """Build a self-contained HTML app from editable JSON; requires Python 3 only."""
-import json,pathlib,sys
+import json,pathlib,sys,re
 p=pathlib.Path(__file__).resolve().parent
-registry={'topics':json.loads((p/'data/topics.json').read_text(encoding='utf-8')),'lessons':{},'cards':{},'vocabularySuggestions':{},'research':{}}
+registry={'topics':json.loads((p/'data/topics.json').read_text(encoding='utf-8')),'lessons':{},'cards':{},'vocabularySuggestions':{},'research':{},'htmlLessons':{}}
 ids=set();numbers=set()
 for topic in registry['topics']:
     key=topic['id']
@@ -25,6 +25,16 @@ for topic in registry['topics']:
         registry['vocabularySuggestions'][key]=words
     if research.exists():
         registry['research'][key]=research.read_text(encoding='utf-8')
+    custom_html=p/'data/lesson-html'/f'{key}.html'
+    if custom_html.exists():
+        markup=custom_html.read_text(encoding='utf-8')
+        if re.search(r'<\s*(script|iframe|object|embed|base)\b|\son[a-z]+\s*=|javascript\s*:',markup,re.I):
+            raise ValueError(f'Unsafe HTML in {custom_html}; use declarative markup only')
+        if key not in registry['lessons']:raise ValueError(f'HTML requires a corresponding JSON lesson: {key}')
+        expected=len(registry['lessons'][key]['slides'])
+        actual=len(re.findall(r'<article\s+[^>]*data-aem-chapter\s*=',markup,re.I))
+        if actual!=expected:raise ValueError(f'Expected {expected} HTML chapters, found {actual}: {custom_html}')
+        registry['htmlLessons'][key]=markup
     if cards.exists():
         item=json.loads(cards.read_text(encoding='utf-8'))
         if not isinstance(item,list):raise ValueError(f'Cards must be an array: {cards}')
