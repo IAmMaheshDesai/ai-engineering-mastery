@@ -1,0 +1,726 @@
+{
+  "id": "sd-002",
+  "title": "Leader election, leases, fencing tokens, ownership epochs",
+  "durationMinutes": 90,
+  "sections": [
+    "01 · The ownership problem",
+    "02 · Leader election",
+    "03 · Leases",
+    "04 · Fencing tokens",
+    "05 · Ownership epochs",
+    "06 · Designing a safe ownership handoff protocol",
+    "07 · Capacity, latency, and failure mathematics",
+    "08 · Production reliability, security, and observability",
+    "09 · AI infrastructure applications",
+    "10 · Complete Senior Staff architecture exercise",
+    "11 · Interview masterclass"
+  ],
+  "slides": [
+    {
+      "id": "chapter-01",
+      "section": "01 · The ownership problem",
+      "title": "The ownership problem: why a leader is not enough",
+      "lead": "Begin with the failure that makes coordination necessary.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "A production incident to imagine",
+          "paragraphs": [
+            "Picture an AI compute platform with three scheduler replicas, a fleet of GPU nodes, and thousands of pending training jobs. Scheduler A currently assigns jobs. Its control-plane process pauses for forty seconds because the host is overloaded. The monitoring system stops receiving heartbeats and elects scheduler B. B starts assigning work. Then A resumes and still believes it owns the scheduling role. Both schedulers are healthy enough to send network requests. This is the central danger: an old owner can remain capable of acting after the rest of the system has moved on.",
+            "An equivalent disaster recovery example is a failover controller that initiates recovery in another region. If a stale controller resumes, it might issue an incompatible recovery step, overwrite a newer status, or try to reverse a promotion. Merely displaying a single leader in a dashboard does not make these side effects safe. We must define where authority is recorded, how authority changes, and how each consequential resource verifies it."
+          ],
+          "bullets": [
+            "Leader selection chooses a candidate; exclusive authority requires an enforceable protocol.",
+            "A crash, long pause, delayed packet, or partition can all create stale actors."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Separate four concepts that sound similar",
+          "paragraphs": [
+            "Leader election is the mechanism for choosing a coordinator among candidates. A lease is a time-bounded permission, generally requiring carefully defined timing assumptions. An ownership epoch is a logical generation number that changes when authority transfers. A fencing token is an ordered credential presented to a protected resource so that operations from an older generation can be rejected. These mechanisms solve related but different problems; combining them without understanding their boundaries creates false confidence.",
+            "For an interview, start by defining the safety invariant in application language: at most one authorized owner can successfully mutate the protected resource for a given ownership generation. The invariant is stronger than “at most one process thinks it is leader.” Processes can have stale beliefs. What matters is whether their operations are accepted. This is why fencing at the resource boundary is so important."
+          ],
+          "bullets": [
+            "Safety concerns accepted effects, not subjective leader beliefs.",
+            "Election, lease, epoch, and fence are distinct layers."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Failure model and system boundaries",
+          "paragraphs": [
+            "Assume crash-stop and crash-recovery failures, unpredictable message delay, duplicated requests, temporary network partitions, and processes that may pause without losing memory. A process may be alive but disconnected from the coordinator. Another process may be newly elected but unable to reach the GPU host. The system must remain safe through these situations, even if availability temporarily suffers. Arbitrary malicious behavior is outside the basic crash-fault model and requires separate authentication and threat controls.",
+            "Write down exactly which resources need protection: scheduler assignments, storage writes, cloud API calls, deployment steps, or region promotions. A token checked only by the control-plane database cannot automatically protect a downstream cloud API that does not understand it. You need a resource-side enforcement point, an intermediary with durable state, or a different application-level reconciliation protocol. This boundary is one of the most valuable observations a Staff+ engineer can make."
+          ],
+          "bullets": [
+            "Define the failure model before choosing an algorithm.",
+            "Map every external side effect to its authority check."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Read-aloud interview explanation",
+          "paragraphs": [
+            "I would begin by saying: a leader election protocol establishes a preferred coordinator, but it does not guarantee that an old coordinator has stopped running. In distributed systems, stale processes can resume after pauses or partitions. I therefore use a durable ownership generation and require protected resources to reject operations from obsolete generations. Leases help with availability and timely handoff, while fencing protects correctness at the point where side effects occur.",
+            "Now practice without looking: explain why a paused leader is more dangerous than a cleanly terminated leader. Then describe what you would need to verify before declaring that a new owner may safely issue commands. Your answer should mention durable ownership state, ordering, downstream enforcement, and reconciliation of uncertain operations."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-02",
+      "section": "02 · Leader election",
+      "title": "Leader election: choosing an owner safely",
+      "lead": "Follow an election through actual state changes.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "Election is a replicated decision",
+          "paragraphs": [
+            "A naive algorithm might declare the lowest-numbered live server to be leader. That rule fails when different servers have different views of who is alive. During a partition, A may see B as failed while B sees A as failed. Both can independently select themselves. The problem is not sorting candidate IDs; it is reaching a coordinated decision despite inconsistent observations.",
+            "A consensus-backed coordination service can serialize ownership changes. A candidate asks for leadership through a linearizable transaction, compare-and-swap, or consensus log entry. A majority-backed service decides which candidate wins. The winning candidate receives a generation value. Other candidates either observe the existing owner or retry after the current ownership expires or is explicitly relinquished. A client should never infer exclusive authority from a local heartbeat timer alone."
+          ],
+          "bullets": [
+            "Local failure detectors are suspicions, not proof of death.",
+            "A linearizable ownership decision gives a common order."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Worked example: three schedulers",
+          "paragraphs": [
+            "At time zero, the coordinator stores owner=A and generation=17. A heartbeats normally. At time ten seconds, A stops responding to coordinator traffic. The coordination service eventually determines that A has not renewed its session according to its own protocol. Scheduler B and scheduler C race to claim the next generation. The service serializes their transactions; B wins and receives generation 18, while C observes that B is now owner. B can now begin actions carrying generation 18. A may still be alive, but its generation 17 must not be accepted by protected resources once generation 18 is established there.",
+            "Notice the critical ordering question. If a GPU worker has never heard of generation 18, it may accept a delayed generation 17 command. A robust design must specify when the worker learns the new floor, how that floor is persisted, and whether the new owner must first establish its generation at the resource. If the operation is destructive or non-reversible, the handoff protocol needs stronger coordination than a best-effort notification."
+          ],
+          "bullets": [
+            "State: A/17 → B/18; C loses its claim.",
+            "Generation changes must be reflected where commands are enforced."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Election mechanics and split votes",
+          "paragraphs": [
+            "In Raft, a follower that misses heartbeats may become a candidate, increment its term, vote for itself, and request votes. A candidate wins after obtaining a majority under Raft’s voting and log-freshness rules. Randomized election timeouts reduce repeated split votes. Terms order election rounds; they do not automatically fence every external resource. A newly elected leader may need to commit an entry or establish a read barrier before serving some operations safely.",
+            "For a five-voter cluster, a majority is three. If two voters become unreachable, the remaining three can elect a leader if they can communicate and meet the protocol rules. A minority partition of two cannot elect a legitimate leader. This preserves election safety but can reduce availability when the network topology prevents any majority. Avoid saying “Raft prevents two processes from thinking they are leaders”; it prevents conflicting legitimate leadership in a term under its rules, while stale beliefs may persist."
+          ],
+          "bullets": [
+            "Raft term and application ownership epoch can be related but need not be identical.",
+            "Quorum availability depends on connectivity, not just machine count."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Practical interview tradeoffs",
+          "paragraphs": [
+            "For one region with modest metadata traffic, an existing coordination service such as etcd or ZooKeeper is usually preferable to inventing a new election algorithm. A database with sufficiently strong conditional writes may also be appropriate for simple ownership records, provided its consistency and failure semantics meet the requirements. For high-rate per-request ownership changes, a centralized consensus service can become a latency bottleneck; partition ownership by resource key or batch work under longer-lived assignments.",
+            "At Staff+ level, explain why you would not run one consensus group per GPU if that created unacceptable operational overhead. Instead, shard the scheduler control plane, use a small number of durable ownership records, and enforce per-resource fencing at execution boundaries. The correct granularity depends on how independent the resources are and how frequently leadership changes."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-03",
+      "section": "03 · Leases",
+      "title": "Leases: time-bounded authority and its limits",
+      "lead": "Understand why time is useful and dangerous.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "What a lease promises",
+          "paragraphs": [
+            "A lease grants authority for a bounded period according to an explicitly defined clock and renewal protocol. It can reduce coordination on the common path because a client may act while it believes its lease remains valid. However, the safety of such behavior depends on timing assumptions: clock drift, pause duration, network delay, and how the server defines expiration. A lease is not simply a database timestamp that all machines interpret identically.",
+            "Imagine a lease with a nominal duration of thirty seconds. The holder renews every ten seconds. If renewal stops, the service can eventually reassign ownership. But a client paused for forty seconds might wake with stale local state, and an unsynchronized clock can make two parties disagree about whether a lease has expired. A robust client must stop acting when it cannot establish current authority; a resource-side fence protects against the cases where it fails to stop."
+          ],
+          "bullets": [
+            "Lease expiration is a protocol decision, not proof that the old process is dead.",
+            "Fencing reduces dependence on perfect clock behavior."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Worked example: a long garbage collection pause",
+          "paragraphs": [
+            "Worker A acquires lease L with generation 41 and begins preparing a model checkpoint. At time five seconds, A experiences a forty-five-second stop-the-world pause. The coordinator no longer receives renewals and eventually allows B to acquire generation 42. B starts checkpoint work. A resumes, reads its in-memory lease object, and attempts to upload an old manifest. If storage blindly accepts the upload, the checkpoint can regress even though the lease service correctly transferred ownership.",
+            "Now add a resource-side rule: the checkpoint metadata service stores the highest accepted generation per checkpoint namespace. B first establishes generation 42 through an atomic operation. Any subsequent A/41 manifest write is rejected. The safety property now depends on a durable monotonic comparison at the protected resource. If A writes directly to an object store without this check, the metadata fence may not cover the underlying blob, so use immutable content-addressed blobs and atomically publish only the fenced manifest."
+          ],
+          "bullets": [
+            "Lease handoff and resource fencing must compose.",
+            "Immutable blobs plus fenced manifest publication simplify recovery."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Clock discipline and conservative renewal",
+          "paragraphs": [
+            "A practical lease client renews well before expiry and stops initiating new operations if renewal becomes uncertain. A monotonic local clock is preferable for measuring elapsed time because wall clocks can jump due to synchronization or administrative changes. Nevertheless, monotonic clocks on different machines are not globally comparable. Design around a server-authoritative expiration policy, bounded assumptions if needed, and explicit acknowledgment of uncertainty.",
+            "If a service grants a thirty-second lease, do not assume a client can safely execute a thirty-second uninterruptible external call right up to the deadline. The call may complete after expiration. Either the destination validates an ownership token at commit time, or the operation must be designed to be safely retryable and reconciled. For destructive actions, use approval, fencing, and state-machine preconditions rather than relying on a local timer alone."
+          ],
+          "bullets": [
+            "Use monotonic time for local elapsed intervals.",
+            "External operations can outlive their initiating lease."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Lease design decisions",
+          "paragraphs": [
+            "Choose lease duration by balancing failure recovery time against renewal overhead and false failovers. Short leases improve potential takeover latency but increase heartbeat traffic and sensitivity to transient pauses. Long leases reduce churn but delay legitimate recovery. The correct duration follows measured tail latency, process pause distributions, network conditions, and the cost of temporary unavailability.",
+            "In an interview, make the assumptions explicit. If your design requires bounded clock drift, say so and describe how you would detect violations. If your correctness depends on a storage-side fencing check, identify it as the real safety boundary. Then explain how the lease primarily helps liveness and operational coordination, not unconditional exactly-once execution."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-04",
+      "section": "04 · Fencing tokens",
+      "title": "Fencing tokens: stopping stale writers",
+      "lead": "Move correctness enforcement to the protected resource.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "The monotonic-token rule",
+          "paragraphs": [
+            "A fencing token is a monotonically increasing value associated with successive ownership grants. A protected resource remembers the highest generation it has accepted and rejects commands with older tokens. The rule is conceptually simple: if incoming generation is less than the recorded floor, reject the command. For same-generation commands, the resource still needs operation-specific idempotency and ordering rules; a fence is not a substitute for them.",
+            "The ordering value must come from a durable, correctly serialized authority. Random UUIDs are excellent for identifying operations, but they do not by themselves establish which owner is newer. A local process counter is also insufficient because two candidates could independently generate the same or conflicting values. Use a consensus-backed counter, a linearizable compare-and-swap record, or another authority that can establish an unambiguous total order for the protected namespace."
+          ],
+          "bullets": [
+            "Monotonic means newer grants compare greater than older grants.",
+            "A UUID identifies an operation but is not an ordered fencing token."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Worked example: stale file writer",
+          "paragraphs": [
+            "At generation 7, controller A writes the current desired configuration. A loses connectivity and controller B receives generation 8. B writes configuration version B. A later resumes and attempts to write version A using generation 7. A resource with a durable highest-generation value of 8 rejects the stale write. Without that check, the old configuration can overwrite the new one despite perfectly functioning leader election.",
+            "What if A’s generation-7 write arrives before B’s first generation-8 write? If the resource has not learned generation 8, it may accept the old command. A strong handoff protocol can require B to establish its generation at the resource before acting, or route all mutations through a gate that atomically checks current ownership. This nuance is often missed. A fencing token is effective only when the protected resource enforces the right ordering at the right time."
+          ],
+          "bullets": [
+            "Reject generation 7 after generation 8 has been established.",
+            "Handoff ordering and enforcement placement matter."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Correct implementation and concurrency",
+          "paragraphs": [
+            "Implement the check and the protected mutation as one atomic transaction or under an equivalent linearizable serialization boundary. A read-then-write check is unsafe: two requests can both read the same floor and then write conflicting values. In a database, use a conditional update or transaction with appropriate isolation. In a service, serialize per-resource commands and persist the floor before acknowledging. If the floor is lost on restart, stale commands may become valid again, so its durability is part of the correctness argument.",
+            "One safe simplified pattern is a conditional operation that verifies generation >= stored_generation, applies the domain-specific precondition, updates the stored generation, and records the operation ID atomically. A second command with the same generation may be allowed only if it is the same idempotent operation or follows the owner’s ordering policy. The greater-than comparison alone does not serialize all commands issued by one owner."
+          ],
+          "bullets": [
+            "Atomic fence check plus mutation is required.",
+            "Store operation IDs for retry deduplication."
+          ],
+          "code": "def apply(resource, generation, operation_id, command):\n    with linearizable_transaction(resource) as tx:\n        if generation < tx.highest_generation:\n            return STALE_OWNER\n        if operation_id in tx.completed_operations:\n            return tx.completed_operations[operation_id]\n        tx.check_domain_preconditions(command)\n        result = tx.apply(command)\n        tx.highest_generation = max(tx.highest_generation, generation)\n        tx.completed_operations[operation_id] = result\n        return result",
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Where fences cannot be applied directly",
+          "paragraphs": [
+            "Some cloud APIs, GPU drivers, and external services do not accept fencing tokens. Do not pretend that adding a token field to your own request magically protects those systems. Introduce a controlled gateway that serializes commands, use conditional version updates where the API supports them, or design reconciliation and compensation around ambiguous effects. For operations such as irreversible notifications, payments, or region promotions, carefully define what can be retried and what requires human review.",
+            "The strongest interview answer identifies the exact enforcement point and explains how it survives crashes. For a GPU worker agent, the agent itself may persist the highest accepted generation and reject older scheduler commands. For a storage manifest, the metadata service can enforce the floor. For an API without conditional semantics, the guarantee may be weaker, and you must say so explicitly."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-05",
+      "section": "05 · Ownership epochs",
+      "title": "Ownership epochs: versioning authority over time",
+      "lead": "Distinguish generations, terms, versions, and identities.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "Epochs as logical time",
+          "paragraphs": [
+            "An ownership epoch is a logical period during which a particular owner is authorized to coordinate a resource. Each transfer advances the epoch. Epochs allow the system to distinguish commands issued under old authority from those issued under new authority without relying on synchronized wall clocks. An epoch may be represented as an integer, a compound generation and sequence number, or a version stored in a coordination service.",
+            "An epoch is not necessarily a Raft term. A single Raft group can elect a new leader while application ownership of a shard remains unchanged, or application ownership can move several times during one Raft term. Likewise, a database row version might advance for ordinary metadata edits that are not ownership transfers. Name each counter according to its semantics so that engineers do not accidentally compare incompatible values."
+          ],
+          "bullets": [
+            "Protocol term, ownership epoch, and record version serve different purposes.",
+            "Use stable namespaces and document the ordering scope."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Worked example: shard reassignment",
+          "paragraphs": [
+            "Shard S17 is owned by scheduler A in epoch 105. The coordinator decides to rebalance because A is overloaded. It commits a new record assigning S17 to scheduler B in epoch 106. B retrieves the pending jobs, reconstructs in-flight state, and establishes epoch 106 at the execution agents. An old A command carrying epoch 105 arrives after B starts. The agents reject it as stale. B then resumes dispatching jobs using the new epoch and new per-job operation IDs.",
+            "Now suppose B crashes during recovery. The coordinator transfers S17 to C with epoch 107. C must reconstruct the state of jobs whose outcomes are ambiguous. It should not assume that every command sent by B failed. Instead it queries workers, reads durable job states, and uses idempotent command identifiers to decide whether to retry, continue, or compensate. The epoch fences ownership; it does not resolve every ambiguous business effect."
+          ],
+          "bullets": [
+            "Epoch progression: A/105 → B/106 → C/107.",
+            "Recovery requires durable operation state in addition to ownership state."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "ABA and token reuse",
+          "paragraphs": [
+            "The ABA problem appears when a value changes from A to B and back to A, making a naive equality check mistake the final A for the original A. Owner identity alone is therefore insufficient. A may own the shard in epoch 11, lose it in epoch 12, and regain it in epoch 13. An old command from epoch 11 must not become valid just because the owner ID again says A.",
+            "Never reset a fencing counter during ordinary failover. If a coordination store is restored from an old snapshot, generation reuse becomes a serious risk. Define a recovery strategy that preserves monotonicity across restoration, possibly using a higher-level incarnation ID and an authoritative durable generation. A compound token may compare lexicographically only if every participant agrees on the ordering and the authority guarantees uniqueness."
+          ],
+          "bullets": [
+            "Owner identity is not a generation.",
+            "Protect monotonicity across backup restoration and disaster recovery."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "How to explain epochs in an interview",
+          "paragraphs": [
+            "I would say that an ownership epoch is a logical generation of authority. Every handoff increments the generation, and commands carry that generation to downstream resources. The generation lets us distinguish an old controller from a new controller even if both are alive. We persist it durably and enforce it at the resource boundary. This is particularly useful for long-running workflows because a controller may pause or lose connectivity and later resume with obsolete state.",
+            "Then I would clarify that epochs are necessary but not sufficient. I still need idempotency for retries, a durable workflow record for crash recovery, and a reconciliation process for external operations with uncertain outcomes. This distinction demonstrates that I understand end-to-end correctness rather than just the coordination layer."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-06",
+      "section": "06 · Designing a safe ownership handoff protocol",
+      "title": "Designing a safe ownership handoff protocol",
+      "lead": "Put election, lease, epoch, and fencing together.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "The handoff state machine",
+          "paragraphs": [
+            "Define explicit states such as UNASSIGNED, ACTIVE, DRAINING, TRANSFERRING, and RECOVERING. A controller may initiate a graceful handoff by marking the shard DRAINING, stopping new work, waiting for in-flight commands, and then committing a new owner and epoch. A forced failover cannot wait for an unreachable old owner. It must establish a new generation at protected resources and recover outstanding operations by reading durable state.",
+            "A durable coordinator record should include resource ID, owner ID, generation, lease or session metadata, desired state, and last transition ID. Each transition is conditional on the expected prior version. A new owner should not issue destructive commands until it has established the appropriate fencing floor at the resource and reconstructed the last known durable workflow state. For multi-resource workflows, a single atomic fence across all destinations may not exist; model the sequence explicitly."
+          ],
+          "bullets": [
+            "Use explicit handoff states and compare-and-swap transitions.",
+            "Different resources may require separate fencing and recovery."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Worked example: region failover controller",
+          "paragraphs": [
+            "Assume an OCI-style disaster recovery orchestration service coordinates promotion of a standby database and reconfiguration of an application tier. Controller A owns recovery plan P under epoch 220 and has already submitted a database promotion request with operation ID O1. A crashes before recording the final result. Controller B wins epoch 221. B first fences old controller commands at its own orchestration gateway, then queries the database service using O1 or the target resource state. If promotion completed, B records success and continues; if it is still running, B waits; if the service guarantees O1 was never accepted, B may safely retry with the same idempotency key.",
+            "Crucially, the external database service may not understand epoch 221. The orchestration gateway must prevent new stale submissions, but a previously accepted operation may still finish. B cannot simply roll it back. The workflow needs preconditions, a durable operation journal, state reconciliation, and compensation only where safe. This is an example of end-to-end reasoning that distinguishes a senior architect from someone who merely deploys a lock service."
+          ],
+          "bullets": [
+            "Persist operation ID before making the external call.",
+            "A fence cannot cancel work already accepted by an external service."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Handoff pseudocode",
+          "paragraphs": [
+            "The coordinator can use a linearizable conditional transaction to assign the next generation. The worker must establish that generation at each protected resource and recover ambiguous operations before becoming fully active. If establishment fails, the system should remain in RECOVERING or DEGRADED rather than announce success. A status page must reflect observed readiness, not merely successful leader election.",
+            "Observe that this is not a distributed transaction across every service. It is a carefully sequenced state machine with durable checkpoints and idempotent or reconcilable effects. In a real design, the coordinator itself must be highly available, and the protected resources must survive their own restarts without forgetting the accepted generation."
+          ],
+          "bullets": [],
+          "code": "def acquire_and_activate(shard, candidate):\n    claim = coordinator.compare_and_advance(shard, candidate)\n    # claim contains a durable, ordered generation\n    for resource in shard.protected_resources:\n        resource.establish_generation(claim.generation)\n    reconcile_inflight_operations(shard)\n    coordinator.mark_active_if_current(shard, claim.generation)\n    return claim",
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Failure matrix",
+          "paragraphs": [
+            "Consider four failure points. Before the ownership transaction commits, the old owner remains authoritative and the candidate retries. After the transaction commits but before the new owner fences workers, the system may temporarily refuse new work; do not promise instantaneous availability. After fencing but before state reconstruction, old commands are rejected, while the new owner must discover what already happened. After activation, a new crash simply begins another generation and recovery cycle.",
+            "When reviewing this matrix aloud, identify which property you prioritize at each stage. A correct system may pause dispatch rather than risk duplicate execution. Explain the expected recovery time and the observability needed to tell operators whether the system is blocked on coordination, fencing propagation, or external reconciliation."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-07",
+      "section": "07 · Capacity, latency, and failure mathematics",
+      "title": "Capacity, latency, and failure mathematics",
+      "lead": "Turn design statements into quantitative engineering.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "Quorum and availability arithmetic",
+          "paragraphs": [
+            "For N voting replicas under majority consensus, the quorum is floor(N/2)+1. Three replicas require two votes and tolerate one failed voter if the remaining two communicate. Five require three and tolerate two. Seven require four and tolerate three. This tolerance describes crash failures under favorable connectivity, not guaranteed availability during arbitrary partitions. Adding voters increases fault tolerance but may increase coordination and operational costs.",
+            "Assume a five-replica coordination group distributed across three zones as 2-2-1. If the one-voter zone fails, four remain and quorum is possible. If one of the two-voter zones fails, three remain and quorum is still possible. But if two zones fail, only one or two remain, so ownership changes stop. A Staff+ design should also consider correlated network failure, not merely independent host failure probabilities."
+          ],
+          "bullets": [
+            "Quorum(N) = floor(N/2) + 1.",
+            "Quorum math does not replace failure-domain placement analysis."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Lease renewal traffic and capacity",
+          "paragraphs": [
+            "Imagine 50,000 active shard owners, each renewing every ten seconds. That is approximately 5,000 renewals per second, before retries, elections, and reads. If each renewal is a separate consensus write, the coordinator could become expensive. Options include session-level leases covering many shards, renewal batching, watch-based observation, partitioning ownership across multiple coordination groups, and reducing renewal frequency when recovery requirements allow.",
+            "Now suppose each lease lasts thirty seconds and the owner renews every ten seconds. There are nominally three opportunities per lease interval, but this is not a proof of safe operation under arbitrary pauses. Measure p99.9 renewal latency and process pause distributions, and choose a margin that accounts for them. Then make downstream safety independent of a perfectly timed renewal by enforcing epochs and fences."
+          ],
+          "bullets": [
+            "50,000 / 10 seconds = 5,000 renewals per second.",
+            "Batching changes load but must preserve ownership semantics."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Recovery time budget",
+          "paragraphs": [
+            "Consider a hypothetical requirement that a scheduler shard recover within sixty seconds. Allocate fifteen seconds for detecting lost renewals, five seconds for coordination and election, ten seconds for fencing propagation, twenty seconds for reconstructing durable work, and ten seconds for validation and margin. These are illustrative budgets, not measured promises. The actual recovery time is the sum of dependent critical-path stages, while independent tasks may overlap.",
+            "A useful interview move is to ask whether the sixty-second target applies to ownership transfer, first successful new assignment, or complete recovery of all in-flight jobs. Those are different milestones. If the user-facing SLO is about first successful scheduling, you can prioritize recovering high-value queues before bulk historical reconciliation. If correctness requires verifying a destructive external operation, recovery may take longer, and the system should expose that limitation honestly."
+          ],
+          "bullets": [
+            "Define what “recovered” means before quoting RTO.",
+            "Measure end-to-end failover, not only election latency."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Hotspots and scaling architecture",
+          "paragraphs": [
+            "If all resources share one global owner, election is simple but the leader can become a bottleneck and failure blast radius grows. If each resource independently elects an owner, metadata overhead and complexity can explode. A middle ground is consistent shard partitioning with a bounded number of ownership records and stable worker agents. Each shard has one active coordinator and its own epoch, allowing independent failover and horizontal scale.",
+            "At Staff+ level, justify the sharding key. GPU topology, locality, tenant isolation, and placement constraints may matter more than even shard counts. Avoid moving ownership too frequently because handoffs require reconciliation and cache warming. Observe the system under skewed workload, not just average throughput. Measure ownership churn, stale-command rejection, and recovery queue depth as leading indicators of control-plane instability."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-08",
+      "section": "08 · Production reliability, security, and observability",
+      "title": "Production reliability, security, and observability",
+      "lead": "Operate the system under pressure, not just on a whiteboard.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "Metrics that reveal ownership bugs",
+          "paragraphs": [
+            "Instrument election count, election duration, active-owner cardinality, lease renewal latency, renewal failures, epoch progression, rejected stale commands, fencing-establishment latency, and reconciliation backlog. Each metric answers a different question. Election count alone cannot tell you whether resources are protected. A surge in stale-command rejections may indicate slow shutdown, network partitions, or clients retaining old credentials. A backlog of ambiguous operations may reveal an external dependency that is not safely idempotent.",
+            "Trace every ownership transition with a correlation ID, resource ID, old owner, new owner, epoch, and reason. Propagate operation IDs through downstream API calls. Do not log sensitive credentials or entire customer payloads. For incident analysis, you want a timeline showing when ownership changed, when the fence was established, when an old command was rejected, and when the new owner became operational."
+          ],
+          "bullets": [
+            "Measure enforcement and recovery, not only leader election.",
+            "Trace ownership epochs across service boundaries."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Security and authority",
+          "paragraphs": [
+            "Fencing tokens are ordering evidence, not authentication credentials. A malicious actor who can submit arbitrary large epochs could bypass a naive comparison unless the resource authenticates the caller and validates token provenance. Use mutually authenticated service identities, scoped authorization, and a trusted issuer for generations. Protect coordinator writes with least-privilege permissions and audit every forced transfer.",
+            "In multi-tenant AI infrastructure, ensure a token for tenant A cannot authorize operations on tenant B’s GPU reservation. Bind the token to a resource namespace and validate that namespace. If a gateway is the enforcement point, its own high availability and durable state become part of the threat and failure model. Consider compromised workers separately from ordinary stale workers: crash-fault fencing alone is not a Byzantine security mechanism."
+          ],
+          "bullets": [
+            "A fence is not a bearer credential by default.",
+            "Bind authority to resource scope and authenticated identity."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Failure injection test plan",
+          "paragraphs": [
+            "Create tests that pause an owner after it obtains a lease, partition it from the coordinator while leaving its connection to workers intact, delay its outgoing command, and then elect a new owner. Verify that the old command cannot change protected state after the new generation is established. Restart a worker after it has accepted a high generation and verify that it does not forget the floor. Simulate duplicate operation IDs and confirm the result is returned without reapplying the side effect.",
+            "Also test coordinator restore from backup, forced region failover, clock jumps, and retry storms. A particularly revealing test pauses the old leader immediately before a destructive external call, performs a handoff, then resumes the old leader. If the external API cannot fence the operation, document the remaining risk and mitigation. Chaos testing should validate stated invariants, not merely whether a dashboard turns green again."
+          ],
+          "bullets": [
+            "Inject stale-owner scenarios intentionally.",
+            "Test durable fence floors after resource restart."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Operational playbook",
+          "paragraphs": [
+            "When the system reports conflicting ownership, first determine whether the conflict is in leader belief or in accepted resource effects. Inspect coordinator history, resource-side generation floors, and operation journals. Do not manually reset epochs to make the system appear healthy. If the coordinator has lost durable history, isolate dangerous mutations until a safe monotonic recovery path is established.",
+            "A Staff+ engineer should be able to explain how teams deploy this safely: introduce generation fields, add resource-side rejection in observation mode, measure compatibility, then enforce with a staged rollout. Existing clients that do not send epochs require an explicit migration plan. Build dashboards and runbooks before relying on the mechanism for high-impact failovers."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-09",
+      "section": "09 · AI infrastructure applications",
+      "title": "AI infrastructure applications: schedulers, agents, and checkpoints",
+      "lead": "Transfer the concepts to systems at your target companies.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "GPU scheduler ownership",
+          "paragraphs": [
+            "An AI training platform may have multiple scheduler replicas and thousands of GPU worker agents. The control plane assigns jobs, maintains reservations, and reacts to node failures. Use consensus-backed ownership for scheduler shards and an epoch per shard or resource group. A worker agent validates the scheduler generation before accepting a new reservation. Job IDs and command IDs provide deduplication. A lease lets the platform detect failed schedulers and initiate a handoff.",
+            "The hard part is not electing a leader. It is reconciling jobs that may already be running. Killing every job during an election wastes expensive accelerator time. A stronger design reconstructs reservations from worker reports, preserves valid running jobs, and reassigns only work whose ownership is truly lost. For multi-node training jobs, placement and gang scheduling may require an additional atomic or staged reservation protocol. Fencing prevents stale dispatch; it does not automatically solve distributed gang scheduling."
+          ],
+          "bullets": [
+            "Separate scheduler ownership from job execution ownership.",
+            "Avoid needless termination of healthy expensive workloads."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Agent execution and durable workflows",
+          "paragraphs": [
+            "An AI agent may execute a workflow that lasts minutes or hours, calling tools that change real-world state. Multiple workers can race to resume the same workflow after a timeout. Give each workflow execution an ownership generation and a durable operation journal. Before issuing a tool call, persist an operation ID and intended action. If the worker crashes after the call, the successor queries the tool or uses its idempotency key rather than blindly repeating the action.",
+            "A stale agent worker might still attempt a tool call after another worker has resumed the workflow. A gateway can enforce workflow epoch and operation preconditions. But if the tool has already accepted an irreversible action, a new owner must reconcile rather than assume cancellation. This is the same principle as disaster recovery orchestration: ownership transfer protects new decisions; durable execution handles uncertain effects."
+          ],
+          "bullets": [
+            "Workflow ownership and tool idempotency are complementary.",
+            "A new owner must recover, not simply restart from scratch."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Checkpoint publishing and model serving",
+          "paragraphs": [
+            "In distributed training, checkpoint writers may run for minutes and upload large immutable blobs. Use content-addressed object names and a small authoritative manifest that references a complete checkpoint. Fence manifest publication by generation and validate expected training step. This avoids allowing a stale writer to replace the latest checkpoint pointer. The blob uploads themselves may finish after lease expiry without compromising correctness if unreferenced blobs are harmless and eventually garbage collected.",
+            "For model serving, ownership epochs can protect routing configuration or model deployment generation. A stale rollout controller must not restore an older traffic split after a new rollout takes effect. However, data-plane requests should not synchronously consult consensus on every inference request. Push signed or authenticated versioned configuration to serving nodes and use local validation and bounded propagation strategies. This preserves high-throughput serving while keeping control-plane changes ordered."
+          ],
+          "bullets": [
+            "Fence publication points, not necessarily every immutable data write.",
+            "Keep consensus off latency-critical inference request paths."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Company relevance as engineering preparation",
+          "paragraphs": [
+            "OpenAI publicly describes compute infrastructure work across orchestration, scheduling, and fleet health; this makes scheduler ownership a useful original practice domain. Anthropic publicly advertises infrastructure, inference, and scheduler-related engineering roles, which similarly supports preparation in reliability and control-plane coordination. Google’s published Chubby work provides direct technical evidence for lock services and coordination. For Meta and NVIDIA, distributed infrastructure and GPU fleet management provide reasonable practice contexts, but the particular interview scenarios in this lesson are hypothetical.",
+            "In a Senior Staff interview, avoid claiming knowledge of proprietary scheduler internals. State the public signal, articulate the failure mode, and propose a design with explicit assumptions. Interviewers can assess the reasoning without requiring confidential facts. That is both technically stronger and more credible than asserting that a named company uses a particular ownership protocol without evidence."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-10",
+      "section": "10 · Complete Senior Staff architecture exercise",
+      "title": "Complete Senior Staff architecture exercise",
+      "lead": "Design a fault-tolerant GPU scheduler control plane.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "Problem and requirements",
+          "paragraphs": [
+            "Design a scheduling control plane for a hypothetical fleet of 10,000 GPUs across three availability zones. The platform supports long-running training jobs and short interactive jobs. It must survive one zone failure without double-assigning a GPU, recover scheduling authority for a shard within sixty seconds under defined conditions, and provide auditable ownership transitions. Assume a small coordination cluster, horizontally scalable scheduler shards, and GPU node agents that can enforce generation checks.",
+            "Clarify what double assignment means. Two scheduler processes may both send a command, but only one valid reservation should be accepted by the worker for a given resource and allocation generation. Clarify whether already running jobs must continue through control-plane failover; assume yes when worker health is unaffected. Clarify whether the platform guarantees that every training job runs exactly once; it does not, because process crashes and external effects require checkpointing, deduplication, and recovery semantics."
+          ],
+          "bullets": [
+            "Safety: no conflicting accepted GPU reservations.",
+            "Availability: restore new dispatch under specified failure conditions."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Architecture and APIs",
+          "paragraphs": [
+            "Use five coordination voters spread across three zones, scheduler replicas assigned to shards, a durable job metadata store, a reservation ledger, and GPU worker agents. Each shard has a coordination record with owner ID, epoch, and session. A worker agent stores the highest accepted epoch for each relevant scheduling namespace and enforces conditional reservation state transitions. The scheduler records an operation ID before dispatch and reconciles outcomes after timeouts.",
+            "The core APIs might be ClaimShard(shardId, expectedVersion), EstablishEpoch(shardId, epoch), ReserveGpu(gpuId, jobId, operationId, epoch, expectedState), GetReservation(gpuId), and ReportWorkerState(workerId). All mutating operations must authenticate the caller and validate the resource namespace. The worker should reject stale epochs and duplicate operation IDs; it should also reject incompatible same-epoch reservations based on reservation state."
+          ],
+          "bullets": [
+            "Control plane: ownership and desired state.",
+            "Data plane: worker-local execution and validated reservations."
+          ],
+          "code": "POST /shards/S17/claim {\"candidate\":\"sched-B\",\"expectedVersion\":105}\n→ {\"owner\":\"sched-B\",\"epoch\":106,\"state\":\"RECOVERING\"}\nPOST /workers/GPU-42/reserve {\"jobId\":\"J9\",\"epoch\":106,\"operationId\":\"op-72\",\"expected\":\"FREE\"}\n→ {\"status\":\"ACCEPTED\",\"reservationVersion\":19}",
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Normal execution and failover timeline",
+          "paragraphs": [
+            "In normal operation, scheduler B holds shard S17 epoch 106. It selects a job, writes the intended reservation operation to the durable ledger, and sends the worker a request with epoch 106 and an operation ID. The worker atomically checks its epoch floor and reservation state, persists the accepted reservation, and replies. The scheduler updates the ledger and reports the job as assigned. If the reply is lost, the scheduler queries by operation ID instead of issuing a fresh conflicting reservation.",
+            "During failover, B becomes unreachable. After session expiry, scheduler C claims epoch 107 through the coordination service. C establishes epoch 107 with worker agents before issuing new reservations, then reads the durable ledger and queries workers for ambiguous operations. Existing healthy training jobs remain running under their accepted reservation records. New work is dispatched only after the shard reaches ACTIVE. If a worker is unreachable, its GPUs remain quarantined from reassignment until the platform can establish safe ownership or use a documented failure policy."
+          ],
+          "bullets": [
+            "Persist intent before dispatch; reconcile uncertain outcomes.",
+            "Do not reallocate unreachable GPUs without a safe policy."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Scale, security, and cost analysis",
+          "paragraphs": [
+            "Assume each GPU runs one primary allocation and scheduling decisions average two per GPU per hour. That is 20,000 reservation changes per hour, about 5.6 per second on average; bursts can be far higher during mass restarts. Control-plane sizing should use burst and tail measurements rather than average rate. If 500 shards renew sessions every ten seconds, that is fifty renewals per second, much cheaper than 10,000 independent leases. The shard count is illustrative and should be tuned to locality and hot-spot behavior.",
+            "Use authorization scopes that bind scheduler identity, shard, and epoch. Audit forced transfers and protect the coordinator from accidental mass reassignment. Track scheduling latency, rejected stale commands, renewal failures, reservation conflicts, and recovery time. Define separate SLOs for scheduling availability and existing-job continuity. A cost-aware design preserves running GPU workloads during transient control-plane outages instead of restarting expensive training jobs unnecessarily."
+          ],
+          "bullets": [
+            "Average assignment rate is not peak recovery load.",
+            "Protect expensive running work during control-plane disruption."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Architecture defense: the interviewer challenges you",
+          "paragraphs": [
+            "Question: Why not put every reservation in one global Raft log? Answer: that offers a straightforward serialization point but may create unnecessary latency, operational coupling, and a large failure blast radius. I would shard ownership and keep worker-local reservation enforcement, while using a durable metadata store for cross-shard visibility. Question: What if a worker restarts and forgets its epoch? Answer: the worker must persist the accepted floor or recover it from an authoritative service before accepting commands. Question: What if the new scheduler cannot reach a worker? Answer: quarantine that resource rather than risk double assignment.",
+            "Question: Can a five-node consensus group guarantee sixty-second recovery? Answer: no. It provides a foundation for ordered ownership, but end-to-end recovery includes detection, election, fencing propagation, reconciliation, and external dependencies. I would define a measured recovery SLO, test failures at each stage, and expose degraded states. This kind of explicit qualification is a strength, not a weakness, in a Senior Staff interview."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-11",
+      "section": "11 · Interview masterclass",
+      "title": "Interview masterclass: explain and defend the design",
+      "lead": "Practice concise, credible answers and difficult follow-ups.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "Thirty-second explanation",
+          "paragraphs": [
+            "Leader election chooses which process should coordinate a resource, but a stale process can continue running after losing leadership. Leases help detect failures and transfer authority. Ownership epochs assign a new logical generation to each handoff. Fencing tokens carry that generation to protected resources, which reject commands from older owners. Together with durable operation IDs and reconciliation, these mechanisms let a control plane recover from crashes without accepting conflicting side effects."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Two-minute explanation",
+          "paragraphs": [
+            "When I design a distributed controller, I start with the safety invariant: only commands from the current authorized generation may mutate a protected resource. I use a coordination service with linearizable ownership transitions to elect an owner and issue a monotonically increasing epoch. The owner holds a renewable session or lease, but I do not rely on the lease alone for correctness. A paused or partitioned old owner may resume and send commands after the lease has expired.",
+            "To prevent that, I place a fencing check at the resource boundary. Each command carries the epoch, and the resource durably remembers the highest generation it has accepted. The check and mutation must be atomic. I also use operation IDs for idempotent retries and a durable workflow journal to recover calls whose outcomes are uncertain. During failover, the new owner establishes its epoch, reconciles in-flight operations, and only then resumes normal work. This pattern applies to GPU schedulers, agent execution, and disaster recovery orchestration."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Five-minute explanation: the architectural narrative",
+          "paragraphs": [
+            "I would open by separating coordination from side effects. A consensus service can decide that scheduler B owns shard S17 in epoch 106, but it cannot forcibly stop scheduler A from sending a packet. This distinction is the root of stale-owner bugs. The lease provides a failure-detection and renewal mechanism, while the epoch provides logical ordering. The resource-side fence is where we enforce the invariant. For a worker agent, a conditional transaction checks that the epoch is current and the reservation state is compatible before accepting an assignment.",
+            "I would then draw a timeline: A owns epoch 105, pauses, B claims epoch 106, B establishes the new floor, and A resumes with an old command. The worker rejects A. Next I would explain the harder case: an operation already accepted before the handoff may finish afterward. A fence does not cancel it. Therefore we persist operation intent and identifiers before external calls, query actual resource state during recovery, and use idempotent retries or compensation. For long-running GPU jobs, we preserve healthy executions rather than restarting them unnecessarily.",
+            "Finally, I would discuss tradeoffs. Short leases speed takeover but increase churn and renewal load. A global leader simplifies serialization but limits scale. Sharded ownership improves availability and throughput at the cost of more complex reconciliation. I would select the design based on failure domains, recovery objectives, consistency requirements, and the ability of downstream systems to enforce fences. I would validate it with chaos tests that pause leaders, partition networks, delay commands, and restart workers. The goal is not just to elect a leader quickly; it is to maintain correctness while restoring useful service."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Twelve original Senior Staff interview questions — part one",
+          "paragraphs": [
+            "Question 1: Why does leader election not guarantee exclusive execution? Evaluation: distinguish process belief from accepted effects. Strong answer: old leaders can remain alive or paused; enforce generations at resources. Follow-up: what if the old command was already accepted? Reconcile the effect. Common mistake: assuming a lease instantly kills a process.",
+            "Question 2: What makes a fencing token safe? Evaluation: monotonic issuance, durable comparison, and atomic enforcement. Strong answer: use a serialized authority and atomic resource-side check. Follow-up: what happens after coordinator backup restore? Preserve generation monotonicity. Common mistake: using a random UUID as an ordered token.",
+            "Question 3: How would you choose lease duration? Evaluation: quantitative reasoning. Strong answer: measure tail renewal latency, pauses, false failovers, and recovery objectives; choose margin and test. Follow-up: can a lease guarantee a long external call finishes safely? No, use fencing or reconciliation. Common mistake: assuming fixed timing is universally safe.",
+            "Question 4: Can two processes both believe they own a shard? Evaluation: safety versus belief. Strong answer: yes, during pauses or partitions, but resource-side checks prevent both from making conflicting accepted changes. Follow-up: how do you audit this? Log epochs and rejected stale operations. Common mistake: treating split belief as automatically equivalent to data corruption.",
+            "Question 5: How does a resource enforce a fence atomically? Evaluation: concurrency and storage isolation. Strong answer: compare generation and mutate in one linearizable transaction, with operation-level preconditions. Follow-up: how do same-epoch commands avoid conflict? Use state transitions and idempotency keys. Common mistake: separate read and write checks.",
+            "Question 6: Why might you shard leadership? Evaluation: scaling tradeoffs. Strong answer: reduce contention and blast radius, improve locality, and bound coordination overhead. Follow-up: what if one shard is hot? Rebalance carefully while preserving epochs. Common mistake: creating an expensive consensus group per individual task."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Twelve original Senior Staff interview questions — part two",
+          "paragraphs": [
+            "Question 7: What if a GPU worker cannot be reached during handoff? Evaluation: safe degraded operation. Strong answer: quarantine the resource until authority can be established or a safe recovery policy is satisfied. Follow-up: how do you meet availability targets? Reserve spare capacity and distinguish scheduling recovery from job continuity. Common mistake: immediate blind reassignment.",
+            "Question 8: How do you recover a timed-out external API call? Evaluation: durable execution. Strong answer: persist operation ID before submission, query status, retry idempotently when supported, or reconcile observed state. Follow-up: what if the API offers neither query nor idempotency? Acknowledge weaker guarantees and use safeguards. Common mistake: assuming timeout means failure.",
+            "Question 9: What is the difference between a Raft term and ownership epoch? Evaluation: abstraction boundaries. Strong answer: a term orders consensus elections; an epoch orders application resource ownership. They may correlate but need not. Follow-up: can an epoch advance without a Raft leader change? Yes. Common mistake: using them interchangeably.",
+            "Question 10: How would you test stale-owner safety? Evaluation: operational rigor. Strong answer: pause an owner, transfer ownership, delay its command, and assert resource rejection; restart the resource and repeat. Follow-up: what metrics detect failures in production? Epoch floors, stale rejections, and recovery timelines. Common mistake: only testing clean process crashes.",
+            "Question 11: How do you handle a coordinator outage? Evaluation: availability versus safety. Strong answer: existing safe operations may continue only within documented lease and enforcement rules; new ownership changes may pause. Follow-up: what about a minority partition? It cannot commit a new majority-backed owner. Common mistake: promising uninterrupted progress under arbitrary partitions.",
+            "Question 12: How would you migrate an existing service to fencing? Evaluation: cross-team delivery. Strong answer: add epoch fields and observability, introduce enforcement gateways, run compatibility mode, inject failures, stage rollout, and define rollback. Follow-up: what about legacy clients? Gate or quarantine them until compatible. Common mistake: enabling strict rejection without a migration plan."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Speaking practice and final cheat sheet",
+          "paragraphs": [
+            "Practice one: explain the difference between leader election, lease, epoch, and fence in thirty seconds without looking. Practice two: draw a paused-leader timeline and narrate exactly why the old command is rejected. Practice three: explain how a durable operation ID complements fencing during disaster recovery. Practice four: defend a sharded GPU scheduler against a global-leader alternative. Practice five: describe one situation in which your design deliberately pauses work to preserve safety.",
+            "Remember these core ideas: leader selection is not resource enforcement; a lease is time-bounded authority under assumptions; an epoch orders ownership generations; a fence rejects stale commands at the resource; the fence check must be atomic and durable; same-epoch commands still need preconditions; external operations may outlive ownership; idempotency handles retries; reconciliation resolves ambiguous outcomes; quorum availability depends on connectivity; and observability must measure accepted effects as well as elections. A strong Staff+ answer identifies where each guarantee is enforced and where it stops."
+          ],
+          "bullets": [
+            "Final interview sentence: “I separate who is elected from which effects a resource will accept.”",
+            "Do not claim exactly-once external execution from a lease or fencing token alone."
+          ],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    }
+  ]
+}

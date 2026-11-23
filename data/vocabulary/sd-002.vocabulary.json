@@ -1,0 +1,102 @@
+[
+  {
+    "word": "authority",
+    "meaning": "Recognized permission to make decisions",
+    "sentence": "The coordinator records which scheduler currently has authority."
+  },
+  {
+    "word": "lease",
+    "meaning": "Time-bounded permission subject to renewal",
+    "sentence": "The scheduler renews its lease before the deadline."
+  },
+  {
+    "word": "fencing",
+    "meaning": "Rejecting operations from obsolete owners",
+    "sentence": "Fencing prevents the paused controller from overwriting new state."
+  },
+  {
+    "word": "epoch",
+    "meaning": "A logical generation of ownership",
+    "sentence": "The new scheduler claimed epoch 106."
+  },
+  {
+    "word": "monotonic",
+    "meaning": "Moving in one direction without decreasing",
+    "sentence": "The fencing counter must remain monotonic across recovery."
+  },
+  {
+    "word": "stale",
+    "meaning": "No longer current or authoritative",
+    "sentence": "The worker rejected a stale reservation command."
+  },
+  {
+    "word": "quorum",
+    "meaning": "The minimum voters required for a decision",
+    "sentence": "Three of five replicas form a majority quorum."
+  },
+  {
+    "word": "linearizable",
+    "meaning": "Behaving as though operations occur atomically in real-time order",
+    "sentence": "We use a linearizable claim to transfer ownership."
+  },
+  {
+    "word": "reconciliation",
+    "meaning": "Comparing recorded intent with observed outcomes",
+    "sentence": "Reconciliation resolved the timed-out promotion request."
+  },
+  {
+    "word": "idempotency",
+    "meaning": "Safe repetition without duplicate intended effects",
+    "sentence": "Idempotency keys protect retries after ambiguous responses."
+  },
+  {
+    "word": "invariant",
+    "meaning": "A property that must always hold",
+    "sentence": "Our invariant forbids conflicting GPU reservations."
+  },
+  {
+    "word": "contention",
+    "meaning": "Competition for a shared resource",
+    "sentence": "Sharding reduces contention on the ownership table."
+  },
+  {
+    "word": "propagation",
+    "meaning": "The spread of a change through a system",
+    "sentence": "We measured fencing propagation to every worker."
+  },
+  {
+    "word": "revocation",
+    "meaning": "Withdrawal of previously granted permission",
+    "sentence": "Lease expiry is not instantaneous process revocation."
+  },
+  {
+    "word": "handoff",
+    "meaning": "Transfer of responsibility from one owner to another",
+    "sentence": "The handoff establishes the new epoch before dispatch."
+  },
+  {
+    "word": "durability",
+    "meaning": "Survival of committed state across failures",
+    "sentence": "Durability of the fencing floor is essential."
+  },
+  {
+    "word": "incarnation",
+    "meaning": "A distinct lifetime or restart generation of an entity",
+    "sentence": "An incarnation identifier can help prevent token reuse."
+  },
+  {
+    "word": "quarantine",
+    "meaning": "Temporary isolation to avoid unsafe use",
+    "sentence": "We quarantine an unreachable GPU until state is verified."
+  },
+  {
+    "word": "tail latency",
+    "meaning": "Slow response time near the high end of a distribution",
+    "sentence": "Tail latency determines safe renewal margins."
+  },
+  {
+    "word": "blast radius",
+    "meaning": "Scope of damage caused by one failure",
+    "sentence": "Sharded ownership reduces the blast radius of an election storm."
+  }
+]

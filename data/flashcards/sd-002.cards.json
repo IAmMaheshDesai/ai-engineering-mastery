@@ -1,0 +1,562 @@
+[
+  {
+    "id": "sd-002-fc-001",
+    "topicId": "sd-002",
+    "type": "concept",
+    "front": "Why is election alone insufficient?",
+    "back": "A stale former leader may still send commands; resources must reject obsolete authority.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-002",
+    "topicId": "sd-002",
+    "type": "failure",
+    "front": "What is a lease?",
+    "back": "Time-bounded authority under explicit renewal and timing assumptions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-003",
+    "topicId": "sd-002",
+    "type": "tradeoff",
+    "front": "What is an ownership epoch?",
+    "back": "A logical generation identifying a period of resource authority.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-004",
+    "topicId": "sd-002",
+    "type": "interview",
+    "front": "What is a fencing token?",
+    "back": "An ordered generation checked by a resource to reject stale owners.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-005",
+    "topicId": "sd-002",
+    "type": "concept",
+    "front": "Why not use UUIDs as fences?",
+    "back": "UUIDs identify requests but do not express newer-versus-older ownership.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-006",
+    "topicId": "sd-002",
+    "type": "failure",
+    "front": "What does a paused leader threaten?",
+    "back": "It can resume after handoff and issue obsolete side effects.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-007",
+    "topicId": "sd-002",
+    "type": "tradeoff",
+    "front": "Where must fencing be enforced?",
+    "back": "At the protected resource or an authoritative gateway controlling its mutations.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-008",
+    "topicId": "sd-002",
+    "type": "interview",
+    "front": "Why must check and mutation be atomic?",
+    "back": "Separate checks allow races between conflicting commands.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-009",
+    "topicId": "sd-002",
+    "type": "concept",
+    "front": "What must survive worker restart?",
+    "back": "The highest accepted fencing generation and relevant operation state.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-010",
+    "topicId": "sd-002",
+    "type": "failure",
+    "front": "Does fencing cancel accepted API calls?",
+    "back": "No. Already accepted operations may complete and require reconciliation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-011",
+    "topicId": "sd-002",
+    "type": "tradeoff",
+    "front": "What is a Raft term?",
+    "back": "A consensus election generation, distinct from an application ownership epoch.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-012",
+    "topicId": "sd-002",
+    "type": "interview",
+    "front": "Why use majority election?",
+    "back": "Intersecting majorities prevent conflicting committed ownership decisions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-013",
+    "topicId": "sd-002",
+    "type": "concept",
+    "front": "Majority of five voters?",
+    "back": "Three voters.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-014",
+    "topicId": "sd-002",
+    "type": "failure",
+    "front": "Failures tolerated by five voters?",
+    "back": "Two, provided the remaining three can communicate.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-015",
+    "topicId": "sd-002",
+    "type": "tradeoff",
+    "front": "Why use monotonic clocks for elapsed time?",
+    "back": "Wall clocks can jump; monotonic clocks measure local elapsed intervals.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-016",
+    "topicId": "sd-002",
+    "type": "interview",
+    "front": "Does a lease prove the old process died?",
+    "back": "No. Expiration allows reassignment but the old process may remain alive.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-017",
+    "topicId": "sd-002",
+    "type": "concept",
+    "front": "What is an ABA ownership bug?",
+    "back": "The same owner ID returns after transfers; stale commands look current without epochs.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-018",
+    "topicId": "sd-002",
+    "type": "failure",
+    "front": "How do epochs prevent ABA?",
+    "back": "Each transfer gets a new generation even if the owner identity repeats.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-019",
+    "topicId": "sd-002",
+    "type": "tradeoff",
+    "front": "What is a safe handoff order?",
+    "back": "Commit new ownership, establish fences, reconcile ambiguous work, then activate.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-020",
+    "topicId": "sd-002",
+    "type": "interview",
+    "front": "Why persist operation IDs first?",
+    "back": "A successor can determine whether an external call was accepted before retrying.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-021",
+    "topicId": "sd-002",
+    "type": "concept",
+    "front": "What does an API timeout prove?",
+    "back": "Only that the caller lacks a timely result, not that the operation failed.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-022",
+    "topicId": "sd-002",
+    "type": "failure",
+    "front": "How should GPU agents use epochs?",
+    "back": "Reject obsolete scheduler commands before accepting reservations.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-023",
+    "topicId": "sd-002",
+    "type": "tradeoff",
+    "front": "What if a GPU agent is unreachable?",
+    "back": "Quarantine its resources until safe authority and reservation state are established.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-024",
+    "topicId": "sd-002",
+    "type": "interview",
+    "front": "What protects checkpoint publication?",
+    "back": "An atomically fenced manifest pointer to immutable checkpoint blobs.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-025",
+    "topicId": "sd-002",
+    "type": "concept",
+    "front": "Why not consensus per inference request?",
+    "back": "It adds coordination latency and limits data-plane throughput.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-026",
+    "topicId": "sd-002",
+    "type": "failure",
+    "front": "What is the difference between idempotency and fencing?",
+    "back": "Idempotency deduplicates retries; fencing rejects obsolete owners.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-027",
+    "topicId": "sd-002",
+    "type": "tradeoff",
+    "front": "Can same-epoch commands conflict?",
+    "back": "Yes. Use reservation preconditions and operation sequencing or deduplication.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-028",
+    "topicId": "sd-002",
+    "type": "interview",
+    "front": "Why might short leases hurt?",
+    "back": "They increase renewals and false failovers under transient delays.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-029",
+    "topicId": "sd-002",
+    "type": "concept",
+    "front": "Why might long leases hurt?",
+    "back": "They delay takeover after genuine owner failure.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-030",
+    "topicId": "sd-002",
+    "type": "failure",
+    "front": "What should ownership metrics include?",
+    "back": "Epoch transitions, renewals, stale rejections, fence latency, and reconciliation backlog.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-031",
+    "topicId": "sd-002",
+    "type": "tradeoff",
+    "front": "What is a coordinator outage tradeoff?",
+    "back": "New ownership changes may stop to preserve safety.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-032",
+    "topicId": "sd-002",
+    "type": "interview",
+    "front": "How do you test stale-owner safety?",
+    "back": "Pause an owner, transfer ownership, release its delayed command, assert rejection.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-033",
+    "topicId": "sd-002",
+    "type": "concept",
+    "front": "How can token provenance be secured?",
+    "back": "Authenticate issuer and caller; scope token to authorized resource.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-034",
+    "topicId": "sd-002",
+    "type": "failure",
+    "front": "Why shard scheduler ownership?",
+    "back": "Reduce contention and blast radius while allowing horizontal scaling.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-035",
+    "topicId": "sd-002",
+    "type": "tradeoff",
+    "front": "What is the 50,000/10 renewal rate?",
+    "back": "5,000 renewals per second before batching or retries.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-036",
+    "topicId": "sd-002",
+    "type": "interview",
+    "front": "What is the risk of restoring old epoch counters?",
+    "back": "Reused generations may make stale commands appear valid.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-037",
+    "topicId": "sd-002",
+    "type": "concept",
+    "front": "What is a strong interview invariant?",
+    "back": "No conflicting accepted mutations from obsolete ownership generations.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-038",
+    "topicId": "sd-002",
+    "type": "failure",
+    "front": "What does a new owner reconcile?",
+    "back": "Durable intents, external operation outcomes, and observed resource state.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-039",
+    "topicId": "sd-002",
+    "type": "tradeoff",
+    "front": "Can fencing guarantee exactly-once tool calls?",
+    "back": "No. External idempotency, journals, and reconciliation are also needed.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-002-fc-040",
+    "topicId": "sd-002",
+    "type": "interview",
+    "front": "How do you explain Staff+ tradeoffs?",
+    "back": "State invariants, assumptions, enforcement points, failure behavior, and alternatives.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

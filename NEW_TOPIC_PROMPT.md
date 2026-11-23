@@ -12,8 +12,8 @@
 
 ## TOPIC CONFIGURATION
 
-**Topic ID:** `sd-001`\
-**Topic Name:** `Distributed Consensus: Raft, Paxos and Quorums`
+**Topic ID:** `sd-002`\
+**Topic Name:** `Leader election, leases, fencing tokens, ownership epochs`
 
 **Target Companies:** OpenAI, Anthropic, Meta, Google, NVIDIA\
 **Target Level:** Senior Staff / Staff+ Software Engineer and AI Infrastructure Architect\
