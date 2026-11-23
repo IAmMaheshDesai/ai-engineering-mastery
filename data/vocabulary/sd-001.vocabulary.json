@@ -1,0 +1,102 @@
+[
+  {
+    "word": "authoritative",
+    "meaning": "Having recognized power to decide what is correct.",
+    "sentence": "The metadata log is the authoritative source of scheduler ownership."
+  },
+  {
+    "word": "quorum",
+    "meaning": "The minimum participating voters needed for a decision.",
+    "sentence": "A five-node Raft group needs a quorum of three."
+  },
+  {
+    "word": "invariant",
+    "meaning": "A property that must remain true in every allowed state.",
+    "sentence": "Our key invariant is that a GPU has only one active owner."
+  },
+  {
+    "word": "split brain",
+    "meaning": "Two parts of a system incorrectly acting as independent authorities.",
+    "sentence": "Fencing prevents stale writes after a split-brain incident."
+  },
+  {
+    "word": "replication",
+    "meaning": "Maintaining copies of data across multiple machines.",
+    "sentence": "Replication improves fault tolerance but needs coordination for consistent writes."
+  },
+  {
+    "word": "linearizability",
+    "meaning": "Consistency where operations appear instantaneous in real-time order.",
+    "sentence": "We require linearizability for final host assignments."
+  },
+  {
+    "word": "liveness",
+    "meaning": "The ability to eventually make progress under suitable conditions.",
+    "sentence": "A minority partition may sacrifice liveness to preserve safety."
+  },
+  {
+    "word": "durability",
+    "meaning": "Persistence of committed information across failures.",
+    "sentence": "Durability requires acknowledging only after the required writes survive."
+  },
+  {
+    "word": "epoch",
+    "meaning": "A numbered period of ownership or protocol authority.",
+    "sentence": "The new scheduler operates under ownership epoch 42."
+  },
+  {
+    "word": "fencing",
+    "meaning": "Rejecting operations from an outdated owner using an ordered token.",
+    "sentence": "Resource-side fencing protects against resumed stale workers."
+  },
+  {
+    "word": "idempotency",
+    "meaning": "A property that makes repeated requests have the same intended effect.",
+    "sentence": "Idempotency keys make failover retries safe."
+  },
+  {
+    "word": "reconciliation",
+    "meaning": "Comparing desired and observed state and repairing differences.",
+    "sentence": "The controller performs reconciliation after an ambiguous timeout."
+  },
+  {
+    "word": "partition",
+    "meaning": "A network failure that separates communicating groups.",
+    "sentence": "The partition left only two of five voters reachable."
+  },
+  {
+    "word": "tail latency",
+    "meaning": "Latency experienced by the slowest fraction of requests.",
+    "sentence": "We measure p99 tail latency during snapshot catch-up."
+  },
+  {
+    "word": "failover",
+    "meaning": "Switching responsibility from a failed component to a replacement.",
+    "sentence": "Failover should preserve committed ownership history."
+  },
+  {
+    "word": "compensation",
+    "meaning": "A corrective action after an earlier step cannot be undone directly.",
+    "sentence": "The workflow uses compensation if partial reservations remain."
+  },
+  {
+    "word": "monotonic",
+    "meaning": "Moving in only one direction, usually increasing.",
+    "sentence": "A fencing epoch must be monotonically increasing."
+  },
+  {
+    "word": "blast radius",
+    "meaning": "The scope of damage caused by a failure.",
+    "sentence": "Sharding reduces the blast radius of leader churn."
+  },
+  {
+    "word": "tradeoff",
+    "meaning": "A choice where improving one property costs another.",
+    "sentence": "The main tradeoff is quorum durability versus cross-region latency."
+  },
+  {
+    "word": "observability",
+    "meaning": "Ability to understand system behavior from its signals.",
+    "sentence": "Observability includes election churn and follower lag metrics."
+  }
+]

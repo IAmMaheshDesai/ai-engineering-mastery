@@ -1,0 +1,121 @@
+:root{font-family:Inter,'Segoe UI',Arial,sans-serif;color:#192b46;background:#f4f8fd;--blue:#1761dc;--line:#c9dfff;--soft:#f0f7ff}*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #6b9aff;outline-offset:2px}.shell{max-width:1370px;margin:28px auto;padding:32px 55px 65px;border:1px solid var(--line);border-radius:30px;background:white;min-height:calc(100vh - 56px);box-shadow:0 12px 35px #173b6b0a}.top{display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid #dce9f8;padding-bottom:25px}.brand{font-size:26px;font-weight:850;color:#1452ac;letter-spacing:-.8px}.sub{color:#536d8b;font-size:14px}.clock{font-weight:750;color:#1761dc;background:#f0f6ff;border:1px solid #cfe2ff;padding:11px 17px;border-radius:28px}.hero{margin:34px 0 25px;border:1px solid #d0e3ff;border-radius:22px;background:linear-gradient(125deg,#f1f8ff,#fafcff);padding:35px}.eyebrow{color:#1761dc;text-transform:uppercase;letter-spacing:2px;font-size:12px;font-weight:850}h1{font-size:clamp(31px,4vw,49px);letter-spacing:-1.6px;line-height:1.13;margin:12px 0}h2{font-size:25px;color:#174878;letter-spacing:-.5px}h3{font-size:19px;color:#174878}p{line-height:1.75}.hero p{font-size:18px;color:#496584}.tracks{display:grid;grid-template-columns:1fr 1fr;gap:17px}.track,.topic{border:1px solid #c6dfff;background:#f3f8ff;border-radius:16px;padding:24px;text-align:left;transition:transform .15s,box-shadow .15s}.track:hover,.topic:hover{transform:translateY(-2px);box-shadow:0 9px 22px #0c54a214}.track strong{font-size:22px;color:#164e9d}.track p{margin-bottom:0}.pill{border:1px solid #c6dbf7;border-radius:25px;padding:7px 12px;background:#fff;color:#476180;font-size:12px;font-weight:750;display:inline-block}.btn{border:0;border-radius:25px;background:#1761dc;color:white;padding:11px 20px;font-weight:750;box-shadow:0 4px 12px #1761dc20}.btn.secondary{background:#edf5ff;color:#1458bb;border:1px solid #c7dcff;box-shadow:none}.btn:disabled{opacity:.35;cursor:default}.toolbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:20px 0}.toolbar input{padding:12px 15px;border:1px solid #c7dcf5;border-radius:12px;min-width:260px;flex:1}.tag.active{background:#1761dc;color:white}.tag{padding:9px 12px;border:1px solid #c8ddfa;background:white;color:#345477;border-radius:18px;font-size:13px;font-weight:700}.group-title{margin:32px 0 12px;border-bottom:1px solid #d7e6f8;padding-bottom:10px}.topic{display:flex;align-items:center;gap:15px;margin:9px 0;padding:16px 20px;width:100%}.topic .num{border:1px solid #94c2ff;border-radius:10px;padding:10px;font-weight:800;color:#1254a8;background:#e2f0ff}.topic .desc{flex:1}.topic strong{color:#263e5b}.topic small{display:block;color:#68819e;margin-top:5px}.topic .go{color:#1761dc;font-weight:800}.back{margin-top:18px}.empty{padding:40px;border:1px dashed #bad4f4;border-radius:15px;text-align:center;color:#647f9e}.overlay{position:fixed;inset:0;z-index:50;background:white;display:flex;flex-direction:column}.hidden{display:none!important}.presentation-top{height:70px;display:flex;align-items:center;justify-content:space-between;padding:12px 30px;gap:20px;box-shadow:0 5px 20px #183b5c13}.presentation-top .clock{font-size:13px}.slide-scroll{flex:1;overflow:auto;padding:28px 30px 55px}.slide{max-width:1120px;margin:auto;font-size:var(--slide-font,19px);line-height:1.75;color:#233b55}.slide.wide{max-width:1450px}.slide h1{font-size:2em;color:#124f9c;margin:0 0 22px}.slide h2{font-size:1.3em}.slide p{font-size:1em;margin:15px 0}.slide .intro{background:linear-gradient(100deg,#eaf5ff,#faf6ff);border:1px solid #bcd8ff;border-left:5px solid #1761dc;border-radius:14px;padding:18px 24px;margin:20px 0}.slide .concepts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}.slide .concept{background:#f6faff;border:1px solid #d0e3ff;border-radius:14px;padding:16px 20px}.slide li{margin:10px 0}.slide pre{overflow:auto;background:#10243d;color:#f0f7ff;border-radius:13px;padding:20px;font-size:.82em}.slide .diagram{background:#f2f8ff;border:1px solid #c6dfff;border-radius:14px;padding:20px;white-space:pre-wrap;font-family:ui-monospace,monospace}.slide .takeaway{border-left:4px solid #24a9c2;background:#eefbfc;padding:15px 19px;border-radius:7px;margin-top:24px}.presentation-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;border-top:3px solid #7cc55a;background:#f4faff;flex-wrap:wrap}.controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:center}.timer{font-size:12px;color:#4e6c88;font-weight:800}.count{background:#eaf0f8;border-radius:22px;padding:10px 20px;font-weight:750}.round{width:39px;height:39px;border-radius:50%;background:white;border:1px solid #d3e0ee;font-size:20px}.flash-card{max-width:800px;margin:35px auto;padding:48px 36px;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#f2f8ff;border:1px solid #bed9ff;border-radius:23px}.flash-card h2{font-size:clamp(23px,3vw,34px);line-height:1.45}.review-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.muted{color:#66809a}.breadcrumbs{color:#1761dc;font-size:13px;font-weight:800}.flashbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px}@media(max-width:750px){.shell{padding:18px;margin:0;border-radius:0}.tracks,.slide .concepts{grid-template-columns:1fr}.presentation-top{height:auto;padding:10px}.slide-scroll{padding:22px 15px}.presentation-bottom{justify-content:center}.topic{padding:12px}.clock{font-size:11px}.brand{font-size:20px}}
+
+/* Reference-inspired immersive AIBL presentation skin, no AIBL branding. */
+body.presentation-open{overflow:hidden}
+.overlay{position:fixed;inset:0;width:100vw;height:100dvh;z-index:99999;background:#fff;display:flex;flex-direction:column;overflow:hidden}
+.presentation-top{position:relative;flex:0 0 69px;height:69px;justify-content:center;padding:9px 24px;background:linear-gradient(180deg,#fff,#f9fbff);box-shadow:0 5px 25px rgba(18,42,90,.11);border-top:5px solid #080808;z-index:2}
+.present-brand{position:absolute;left:22px;top:15px;border:1px solid #8fcf83;border-radius:11px;padding:9px 14px;font-weight:900;font-size:14px;color:#1761c7;background:#effbea;letter-spacing:.03em;box-shadow:0 3px 10px #0001}
+.present-brand span{color:#32a16c}
+.presentation-top .present-clock{font-size:14px;letter-spacing:.01em;border-radius:40px;box-shadow:0 7px 28px #203b6b24;padding:12px 24px;background:linear-gradient(100deg,#fff,#f4f1ff);color:#0c54c4}
+.top-close{position:absolute;right:22px;top:16px;border:1px solid #c6dafa;background:#f5f9ff;color:#1655aa;font-weight:800;border-radius:11px;padding:8px 13px}
+.presentation-titlebar{flex:0 0 auto;max-width:1500px;width:100%;margin:0 auto;display:flex;align-items:baseline;justify-content:space-between;gap:18px;padding:17px 35px 4px;color:#1554a6;font-size:21px;letter-spacing:-.025em}
+.presentation-kicker{font-size:11px;color:#537296;font-weight:800;letter-spacing:.12em;white-space:nowrap}
+.slide-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:8px 36px 58px;scrollbar-gutter:stable}
+.slide{max-width:1410px;margin:0 auto;font-size:var(--slide-font,19px);line-height:1.7;color:#1d2c42;padding:0 6px 12px}
+.slide.wide{max-width:none}
+.slide h1{font-size:clamp(30px,2.4em,45px);line-height:1.2;color:#104c9b;margin:8px 0 23px;letter-spacing:-.035em}
+.slide h2{font-size:1.14em;letter-spacing:.015em;text-transform:uppercase;color:#1754ae;margin:25px 0 12px;border-bottom:1px solid #dbe8fa;padding-bottom:7px}
+.slide .breadcrumbs{font-size:.67em;letter-spacing:.11em;text-transform:uppercase;margin:7px 0 8px;color:#3169b2}
+.slide .intro{background:linear-gradient(110deg,#e9f3ff,#f9f6ff);border:1px solid #b7d6ff;border-left:5px solid #1c67d3;border-radius:14px;padding:18px 22px;margin:16px 0 18px;font-weight:650}
+.slide .intro p{margin:0}
+.slide p{margin:12px 0;line-height:1.7}
+.slide .concepts{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.slide .concept{border:1px solid #c6dcfa;background:linear-gradient(140deg,#fff,#f6faff);border-radius:14px;padding:16px 20px;box-shadow:0 4px 14px #1d63ac08}
+.slide .concept p{margin:5px 0 0}
+.slide .diagram{background:#f5f9ff;white-space:pre;overflow-x:auto;line-height:1.5}
+.slide .takeaway{background:#effafb;border-left:4px solid #22b4c4;padding:14px 18px;margin-top:22px}
+.presentation-bottom{flex:0 0 auto;min-height:66px;justify-content:space-between;gap:12px;padding:10px 20px;border-top:3px solid #7fcb60;background:linear-gradient(180deg,#f8fcff,#eef6ff);box-shadow:0 -4px 20px #1d497812}
+.presentation-bottom .btn{font-size:13px;padding:9px 15px;box-shadow:none}
+.presentation-bottom .btn:not(.secondary){box-shadow:0 4px 10px #1755bc25}
+.presentation-bottom .timer{font-size:12px;letter-spacing:.035em;color:#3b648b}
+.presentation-bottom #sessionTime{background:#f5fbff;border:1px solid #cde0ff;border-radius:40px;padding:10px 14px;font-family:ui-monospace,monospace}
+.presentation-bottom .count{font-size:13px;padding:9px 14px}
+.presentation-bottom .controls{flex:1;gap:9px}
+.presentation-bottom .round{color:#15385d}
+@media(max-width:1000px){.present-brand{font-size:11px;left:10px}.presentation-kicker{display:none}.presentation-top .present-clock{font-size:11px}.presentation-bottom #slideSection{display:none}}
+@media(max-width:650px){.present-brand{display:none}.presentation-top{height:58px;flex-basis:58px}.presentation-titlebar{padding:12px 15px 3px;font-size:15px}.slide-scroll{padding:8px 13px 30px}.slide .concepts{grid-template-columns:1fr}.presentation-bottom{padding:8px;max-height:140px;overflow:auto}.presentation-bottom .controls{gap:5px}.presentation-bottom .btn{padding:7px 9px;font-size:11px}.presentation-bottom #sessionTime{display:none}}
+
+/* Long-form teaching mode, matching the original clean AIBL slide presentation. */
+.slide{max-width:1280px;line-height:1.76}
+.slide .intro{font-size:1em;margin-bottom:28px}
+.slide .teaching-section{padding:4px 0 20px;border-bottom:1px solid #e0eaf7;margin:0 0 17px}
+.slide .teaching-section h2{font-size:1.16em;letter-spacing:-.015em;text-transform:none;border:0;color:#104b94;margin:16px 0 12px}
+.slide .teaching-section p{margin:10px 0 17px;max-width:1100px}
+.slide .teaching-list{background:#f5f9ff;border:1px solid #d4e6ff;border-radius:13px;padding:18px 24px 18px 44px;line-height:1.72}
+.slide .teaching-list li{margin:9px 0}
+.slide .teaching-section:nth-of-type(3n) h2{color:#116f82}
+.slide .takeaway{margin:25px 0 60px}
+#fullscreenHint{position:absolute;right:62px;top:14px;font-size:12px;background:#eaf4ff;border:1px solid #b9d6ff;padding:9px 14px;border-radius:9px;color:#164d98;z-index:5}
+#fullscreenHint[hidden]{display:none}
+
+/* Immersive flashcards: same full-viewport presentation design */
+.flash-overlay{position:fixed;inset:0;z-index:100;background:#fff;display:flex;flex-direction:column;color:#1a304e}
+.flash-overlay:fullscreen{width:100vw;height:100vh;background:#fff}
+.flash-top{flex:0 0 72px;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 26px;box-shadow:0 4px 24px #173b5d12}
+.flash-scroll{flex:1;min-height:0;overflow-y:auto;padding:30px 30px 45px;display:flex;justify-content:center;align-items:safe center}
+.flash-stage{width:min(100%,1100px);text-align:center;margin:auto}
+.flash-eyebrow{font-size:12px;letter-spacing:2px;font-weight:850;color:#1761dc}
+.flash-stage h1{font-size:clamp(34px,4vw,54px);color:#133e71;margin:12px 0 8px}
+.flash-description{font-size:clamp(16px,1.4vw,19px);color:#536f90;margin:0 0 22px}
+.flash-meta{display:flex;gap:10px;justify-content:center;margin:14px 0}
+.flash-progress-track{height:5px;background:#e7f1ff;border-radius:8px;max-width:830px;margin:20px auto;overflow:hidden}
+.flash-progress-fill{height:100%;background:#236cdb;transition:width .2s}
+.flash-focus-card{width:min(100%,900px);min-height:clamp(310px,43vh,490px);margin:20px auto 22px;padding:45px 50px;background:linear-gradient(130deg,#eef6ff,#f8fbff);border:1px solid #b8d7ff;border-radius:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:18px;box-shadow:0 12px 36px #1451a50b}
+.flash-face-label{font-size:13px;letter-spacing:2px;font-weight:850;color:#1761dc}
+.flash-question{font-size:clamp(25px,3vw,41px);font-weight:800;color:#164779;line-height:1.35;max-width:760px;overflow-wrap:anywhere}
+.flash-subtext{color:#627d9a;font-size:15px;margin:0}
+.flash-bottom{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 25px;border-top:3px solid #83c95c;background:#f4faff;flex-wrap:wrap}
+.flash-footer-label{font-size:13px;color:#4c688a;font-weight:700;max-width:350px}
+.flash-overlay .review-actions{min-height:45px;margin-bottom:4px}
+@media(max-width:750px){.flash-top{padding:10px;flex-basis:60px}.flash-scroll{padding:16px}.flash-focus-card{padding:26px 16px;min-height:300px}.flash-bottom{justify-content:center}.flash-footer-label{display:none}}
+
+/* Fullscreen is owned by the document root, so lesson and flashcard overlays remain interactive when switching. */
+html:fullscreen, html:fullscreen body {width:100%;height:100%;background:#fff}
+.flash-top,.presentation-top {position:relative;justify-content:space-between}
+.flash-top > .clock,.presentation-top > .present-clock {position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);white-space:nowrap;margin:0;z-index:1}
+.flash-top > .present-brand,.presentation-top > .present-brand,.flash-top > .top-close,.presentation-top > .top-close {position:relative;z-index:2}
+@media(max-width:750px){.flash-top > .clock,.presentation-top > .present-clock {font-size:10px;padding:8px;max-width:50%;overflow:hidden;text-overflow:ellipsis}}
+
+/* Vocabulary selection, editor and immersive review */
+.selection-tools{position:fixed;z-index:260;left:50%;bottom:85px;transform:translateX(-50%);padding:7px;border-radius:16px;background:white;border:1px solid #bcd6fc;box-shadow:0 9px 32px #18467538}
+.vocab-dialog{width:min(94vw,620px);border:1px solid #bdd8ff;border-radius:22px;padding:30px;box-shadow:0 20px 80px #142c4b55;color:#193657;background:#fff}
+.vocab-dialog::backdrop{background:#071c38a8;backdrop-filter:blur(3px)}
+.vocab-dialog h2{font-size:28px;color:#164e98;margin:0 0 8px}.vocab-dialog p{color:#526d8d;margin:0 0 20px}
+.vocab-dialog label{display:block;font-weight:750;margin:16px 0 6px}.vocab-dialog input,.vocab-dialog textarea{display:block;box-sizing:border-box;width:100%;padding:13px;margin-top:7px;border-radius:10px;border:1px solid #aacbf4;font:inherit;color:#1d3454;resize:vertical}
+.vocab-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:22px}
+.vocab-definition{font-size:clamp(20px,2vw,30px);font-weight:650;color:#183c67;line-height:1.5}.vocab-example{font-size:clamp(16px,1.4vw,21px);line-height:1.6;color:#385e83;max-width:720px}
+.vocab-empty{padding:30px;text-align:center;color:#4b6685}
+
+/* Keep the word-selection action above the immersive lesson overlay. */
+.selection-tools{z-index:100010!important;bottom:86px!important;pointer-events:auto}
+#addWordFromSlide{white-space:nowrap}
+@media(max-width:750px){.selection-tools{bottom:155px!important}}
+
+/* Fullscreen dictionary library */
+.vocab-library{width:min(980px,94vw);margin:18px auto 24px;text-align:left;max-height:calc(100vh - 355px);overflow:auto;padding:4px 10px 20px;box-sizing:border-box}.vocab-library label{display:block;color:#375b84;font-size:14px;font-weight:750;margin:0 0 9px}.vocab-library input{width:100%;border:1px solid #b9d5fa;border-radius:13px;padding:14px 17px;font:inherit;background:#fff;color:#1a3659}.vocab-entry{background:#f4f9ff;border:1px solid #c6ddfa;border-radius:16px;margin-top:13px;padding:18px 22px}.vocab-entry-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.vocab-entry h3{color:#164d90;font-size:22px;margin:0}.vocab-entry p{font-size:17px;line-height:1.6;margin:9px 0 0;color:#274563}.vocab-entry strong{color:#174b8c}@media(max-width:700px){.vocab-library{max-height:calc(100vh - 330px)}.vocab-entry{padding:14px}.vocab-entry p{font-size:15px}}
+
+.vocab-entry-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.vocab-delete{background:#fff4f4!important;border-color:#e6b4b4!important;color:#a52626!important}
+.vocab-delete:hover{background:#ffe2e2!important}
+
+/* In-page confirmation keeps Chrome fullscreen active (native confirm can exit fullscreen). */
+.delete-confirm{position:fixed;inset:0;z-index:2147483640;background:rgba(18,41,78,.42);display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(4px)}
+.delete-confirm.hidden{display:none!important}
+.delete-confirm-card{width:min(100%,520px);background:#fff;border:1px solid #bcd6ff;border-radius:22px;padding:32px;box-shadow:0 24px 80px rgba(15,39,77,.24);color:#1b355b}
+.delete-confirm-label{font-size:12px;font-weight:800;letter-spacing:.13em;color:#1454b2}
+.delete-confirm-card h2{font-size:29px;margin:14px 0 10px;color:#153d71}
+.delete-confirm-card p{font-size:17px;line-height:1.6}
+.delete-confirm-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:24px;flex-wrap:wrap}
+@media(max-width:540px){.delete-confirm-card{padding:22px}.delete-confirm-actions .btn{flex:1}}
+
+/* Fullscreen per-topic research and suggested vocabulary */
+.resource-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;background:#fff}
+.resource-reader{width:min(1020px,calc(100% - 56px));margin:34px auto 110px;color:#1c3859}
+.resource-reader h1{font-size:clamp(31px,3.2vw,46px);line-height:1.15;color:#153e75;margin:15px 0}
+.resource-intro{font-size:19px;line-height:1.7;color:#4d6785;max-width:850px}
+.resource-markdown{font-size:19px;line-height:1.85;overflow-wrap:anywhere}
+.resource-markdown h2,.resource-markdown h3,.resource-markdown h4{color:#174d90;line-height:1.3;margin:28px 0 12px}
+.resource-markdown p{margin:15px 0}.resource-markdown li{margin:11px 0}.resource-markdown a{color:#1363bd;text-decoration:underline;text-underline-offset:3px}.resource-markdown code{background:#eef5ff;padding:2px 6px;border-radius:5px}
+.resource-word-list{margin-top:20px}.resource-actions{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:25px 0}.resource-empty{padding:28px;background:#f1f7ff;border:1px solid #cee0f7;border-radius:16px;font-size:18px}
+#resourceOverlay{z-index:100005}#resourceOverlay .flash-bottom{z-index:2}#resourceOverlay .flash-top{z-index:2}
+@media(max-width:720px){.resource-reader{width:calc(100% - 32px);margin:24px auto 95px}.resource-markdown{font-size:17px}}

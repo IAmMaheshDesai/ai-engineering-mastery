@@ -1,0 +1,562 @@
+[
+  {
+    "id": "sd-001-fc-001",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "What is consensus?",
+    "back": "Agreement on an ordered sequence of decisions despite failures.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-002",
+    "topicId": "sd-001",
+    "type": "failure",
+    "front": "What does safety mean?",
+    "back": "Conflicting decisions must never both become committed.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-003",
+    "topicId": "sd-001",
+    "type": "tradeoff",
+    "front": "What does liveness mean?",
+    "back": "Progress eventually occurs under suitable conditions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-004",
+    "topicId": "sd-001",
+    "type": "concept",
+    "front": "What is a majority of five?",
+    "back": "Three voters.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-005",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "How many failed voters can five tolerate?",
+    "back": "Two, if the remaining three can communicate.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-006",
+    "topicId": "sd-001",
+    "type": "failure",
+    "front": "Why do majorities overlap?",
+    "back": "Any two sets larger than half share at least one member.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-007",
+    "topicId": "sd-001",
+    "type": "tradeoff",
+    "front": "What are Raft server roles?",
+    "back": "Follower, candidate, and leader.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-008",
+    "topicId": "sd-001",
+    "type": "concept",
+    "front": "What is a Raft term?",
+    "back": "A monotonically increasing election epoch.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-009",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "How does a candidate win?",
+    "back": "It obtains majority votes and meets log freshness rules.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-010",
+    "topicId": "sd-001",
+    "type": "failure",
+    "front": "Why randomized election timeouts?",
+    "back": "They reduce repeated split votes.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-011",
+    "topicId": "sd-001",
+    "type": "tradeoff",
+    "front": "What does AppendEntries carry?",
+    "back": "Log entries plus previous index/term consistency information.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-012",
+    "topicId": "sd-001",
+    "type": "concept",
+    "front": "What is log matching?",
+    "back": "Equal index and term imply identical preceding log history.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-013",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "Can a minority partition commit?",
+    "back": "No; it lacks a majority.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-014",
+    "topicId": "sd-001",
+    "type": "failure",
+    "front": "Can a former leader remain dangerous?",
+    "back": "Yes, for external effects unless the resource rejects stale owners.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-015",
+    "topicId": "sd-001",
+    "type": "tradeoff",
+    "front": "What is a fencing token?",
+    "back": "A growing epoch checked by a resource to reject stale actions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-016",
+    "topicId": "sd-001",
+    "type": "concept",
+    "front": "Does a lease replace fencing?",
+    "back": "No; pauses and clock issues can leave stale actions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-017",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "What is commitIndex?",
+    "back": "Highest log index known committed by the leader.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-018",
+    "topicId": "sd-001",
+    "type": "failure",
+    "front": "Are old-term entries committed by majority alone?",
+    "back": "Not necessarily; Raft current-term commitment rules matter.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-019",
+    "topicId": "sd-001",
+    "type": "tradeoff",
+    "front": "What is a client request ID for?",
+    "back": "Deduplicate retries after ambiguous acknowledgments.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-020",
+    "topicId": "sd-001",
+    "type": "concept",
+    "front": "Does Raft ensure exactly-once external calls?",
+    "back": "No; use external idempotency and reconciliation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-021",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "Who are Paxos actors?",
+    "back": "Proposers, acceptors, and learners.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-022",
+    "topicId": "sd-001",
+    "type": "failure",
+    "front": "What happens in Paxos prepare?",
+    "back": "Acceptors promise and report previously accepted proposals.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-023",
+    "topicId": "sd-001",
+    "type": "tradeoff",
+    "front": "What happens in Paxos accept?",
+    "back": "A quorum accepts a safe proposal value.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-024",
+    "topicId": "sd-001",
+    "type": "concept",
+    "front": "What is Multi-Paxos?",
+    "back": "A repeated-decision optimization with stable leadership.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-025",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "Why avoid global quorum for every request?",
+    "back": "Wide-area latency and coordination bottlenecks.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-026",
+    "topicId": "sd-001",
+    "type": "failure",
+    "front": "Where should consensus live in LLM serving?",
+    "back": "Control-plane metadata, not per-token inference traffic.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-027",
+    "topicId": "sd-001",
+    "type": "tradeoff",
+    "front": "Why does a GPU scheduler need epochs?",
+    "back": "To reject outdated allocation or ownership commands.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-028",
+    "topicId": "sd-001",
+    "type": "concept",
+    "front": "Consensus versus durable execution?",
+    "back": "Agreement on decisions versus checkpointed workflow progress.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-029",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "How to recover after an ambiguous API call?",
+    "back": "Reuse a stable operation ID; query status or idempotently retry.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-030",
+    "topicId": "sd-001",
+    "type": "failure",
+    "front": "What should a Staff+ answer include?",
+    "back": "Fault model, tradeoffs, correctness, recovery, and operations.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-031",
+    "topicId": "sd-001",
+    "type": "tradeoff",
+    "front": "What is Raft snapshotting for?",
+    "back": "Compact applied state and catch up lagging replicas.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-032",
+    "topicId": "sd-001",
+    "type": "concept",
+    "front": "What happens on a higher Raft term?",
+    "back": "The server steps down and updates its term.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-033",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "Why must the GPU worker enforce a fencing epoch?",
+    "back": "A stale scheduler may still send commands; enforcement at the worker rejects lower epochs.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-034",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "What does a Raft term identify?",
+    "back": "A monotonically increasing logical election epoch, not a wall-clock timestamp.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-035",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "What happens to an uncommitted log suffix after reelection?",
+    "back": "It may be overwritten by the new leader; clients must not treat it as committed.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-036",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "What is the purpose of RequestVote log freshness checks?",
+    "back": "Prevent an outdated candidate from replacing a leader and losing committed history.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-037",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "Why is an external API timeout ambiguous?",
+    "back": "The side effect may have succeeded even if the caller did not receive a response.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-038",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "Why are joint configurations needed?",
+    "back": "To preserve safe quorum overlap while changing the set of voting replicas.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-039",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "What does a Raft snapshot record?",
+    "back": "A consistent applied state at an included log index and term.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-001-fc-040",
+    "topicId": "sd-001",
+    "type": "interview",
+    "front": "Why keep consensus off the inference token path?",
+    "back": "Quorum round trips would add latency to a high-frequency data-plane operation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

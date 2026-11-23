@@ -1,0 +1,1104 @@
+{
+  "id": "sd-001",
+  "title": "Distributed Consensus: Raft, Paxos and Quorums",
+  "durationMinutes": 90,
+  "sections": [
+    "AI Infrastructure",
+    "Foundations",
+    "Interview",
+    "Paxos",
+    "Production",
+    "Raft",
+    "Review"
+  ],
+  "slides": [
+    {
+      "id": "chapter-01",
+      "section": "01 · Foundations",
+      "title": "Why consensus exists: the split-brain problem",
+      "lead": "Detailed read-aloud chapter · Scroll vertically; pause at each example and explain it in your own words.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "Why distributed consensus exists",
+          "paragraphs": [
+            "Imagine three replicas storing the identity of the active scheduler. A network partition makes two groups disagree about which machine is the leader. Without a coordination protocol, both might schedule the same GPU or trigger the same failover.",
+            "Consensus is a way for cooperating processes to agree on an ordered sequence of decisions despite some failures. It is not a magical guarantee that every operation will finish."
+          ],
+          "bullets": [
+            "Replicated state machines apply the same committed commands in the same order.",
+            "Consensus chooses an agreed log; application logic determines what those commands mean."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Failure model and assumptions",
+          "paragraphs": [
+            "Machines may crash, messages may be lost, duplicated, reordered or delayed, and partitions may temporarily isolate replicas. Raft assumes crash faults rather than arbitrary Byzantine behavior.",
+            "In a fully asynchronous system, a deterministic consensus algorithm cannot guarantee termination under even one crash in all executions (FLP). Practical systems use timeouts and partial synchrony for progress."
+          ],
+          "bullets": [
+            "Do not confuse a slow node with a dead node.",
+            "Safety must survive delayed and duplicated messages."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Safety versus liveness",
+          "paragraphs": [
+            "Safety means conflicting decisions never both become committed. Liveness means the system can eventually commit new decisions under appropriate conditions.",
+            "A minority partition should generally stop committing rather than violate safety. If a majority remains connected, it can often continue after an election."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Majority quorum mathematics",
+          "paragraphs": [
+            "For N voting replicas, a majority is floor(N/2)+1. Any two majorities intersect, so they cannot be entirely disjoint.",
+            "For five voters, quorum is three. A five-node cluster can tolerate two failed voters while still retaining a reachable majority. It does not tolerate an arbitrary partition that leaves no connected majority."
+          ],
+          "bullets": [
+            "N=3 → quorum 2 → tolerate 1 failed voter",
+            "N=5 → quorum 3 → tolerate 2 failed voters",
+            "N=7 → quorum 4 → tolerate 3 failed voters"
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Replication is not automatically consensus",
+          "paragraphs": [
+            "Asynchronous replication can create divergent copies if multiple leaders accept writes. Consensus provides rules for selecting an ordered log and safely committing entries.",
+            "A replicated database might use consensus for metadata while using different mechanisms for bulk data. Choose the coordination scope deliberately."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Think through a real incident",
+          "paragraphs": [
+            "Suppose Scheduler A owns a GPU allocation. A network pause prevents A from renewing leadership, so the other replicas elect Scheduler B. A wakes up and still believes it is the leader. If both schedulers can issue commands, two expensive workloads may be assigned to the same resource. The problem is not that one machine crashed; it is that the system has two competing stories about who is authorized to act."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "A useful mental model",
+          "paragraphs": [
+            "Consensus establishes one agreed history of control-plane decisions. The replicated state machine then interprets that history. Consensus does not itself prevent a stale process from calling an external API; that boundary needs fencing or an idempotent, authority-aware resource API."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "What an interviewer is listening for",
+          "paragraphs": [
+            "Name the failure model before choosing an algorithm. Distinguish agreement from external side effects. Explain what must remain safe during a partition, and identify which operations can become unavailable."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "The agreement problem is not merely selecting a leader",
+          "paragraphs": [
+            "Consider an AI scheduling control plane with replicas A, B, and C. The active scheduler writes an assignment saying that training job J owns eight GPUs on worker W. Suppose A acknowledges the assignment and crashes before the other replicas record it. If B becomes leader and allocates the same GPUs to another job, the system has created a conflicting ownership history. The central question is not which process is currently alive. It is which decisions are durable and which new leader is permitted to act on them. Consensus solves agreement about an ordered log; separate resource-level fencing is still required to prevent an old owner from acting outside that log.",
+            "A replicated state machine begins with a deterministic transition function. Given identical initial state and identical committed commands in identical order, all healthy replicas compute the same logical result. That is why a consensus protocol orders commands rather than simply copying whichever memory image appears newest. Commands may include assigning a lease, changing a configuration, creating a workflow, or recording a failover epoch. The state machine should avoid nondeterministic behavior such as reading local wall clocks during application unless the chosen time is explicitly recorded in the command.",
+            "Safety is the requirement that two legitimate replicas do not decide incompatible histories. Liveness is the requirement that the system eventually makes progress when the network and membership assumptions allow it. A design can preserve safety while becoming unavailable: a minority partition must refuse to commit new writes. This is a deliberate tradeoff, not a software bug. In an interview, first state the failure model and consistency requirement, then explain what you intentionally sacrifice during partitions."
+          ],
+          "bullets": [
+            "Interview practice: state the invariant, trace the failure, then defend the tradeoff."
+          ],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-02",
+      "section": "02 · Raft",
+      "title": "Raft from first principles: roles, terms and elections",
+      "lead": "Detailed read-aloud chapter · Scroll vertically; pause at each example and explain it in your own words.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "Raft in one picture",
+          "paragraphs": [
+            "Raft organizes servers into followers, candidates and leaders. At a given term, a leader normally handles proposals and replicates log entries.",
+            "Terms are monotonically increasing election epochs. They help replicas reject messages from obsolete terms."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": "Client → Leader → Followers\n              ↘ commit on majority → apply to state machine"
+        },
+        {
+          "type": "section",
+          "title": "Leader election walkthrough",
+          "paragraphs": [
+            "A follower that does not hear a leader within its randomized election timeout becomes a candidate, increments its term, votes for itself and requests votes.",
+            "A candidate wins only after obtaining votes from a majority. Voters also enforce a log freshness condition to prevent electing a candidate with an outdated log."
+          ],
+          "bullets": [
+            "Randomized timeouts reduce split votes.",
+            "A node votes at most once per term.",
+            "A higher term causes a server to step down."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Terms and the stale leader",
+          "paragraphs": [
+            "Consider a leader in term 8 that becomes isolated. The majority elects a new leader in term 9. The old leader might still think it owns the role.",
+            "Raft prevents that old leader from committing new entries without a majority, but external systems that do not check ownership may still accept stale actions. This is where fencing or idempotent external APIs matter."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Election walkthrough",
+          "paragraphs": [
+            "At term 41, all three nodes are followers. The current leader stops responding. One follower times out, becomes a candidate for term 42, votes for itself, and requests votes. If its log is sufficiently up to date and it wins two votes, it becomes leader. A competing candidate cannot also win a majority in that same term because each voter grants at most one vote per term."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Why terms matter",
+          "paragraphs": [
+            "A term is a logical epoch, not a wall-clock timestamp. When a node sees a higher term, it updates its term and steps down. Terms help nodes reject stale leadership claims; a term alone is not a substitute for fencing at an external storage or compute resource."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "What not to say",
+          "paragraphs": [
+            "Do not say timeouts prove a node has failed. Timeouts only indicate suspected failure. Safety comes from election and log rules, not from accurate failure detection."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Trace a complete Raft election",
+          "paragraphs": [
+            "Imagine a three-member Raft group with A, B, and C at term seven. A is leader and sends periodic AppendEntries heartbeats. A crashes. B waits for a randomized election timeout, increments its current term to eight, votes for itself, persists that vote, and sends RequestVote to C. C checks that the request term is current, that it has not voted for someone else in term eight, and that B’s log is at least as up to date as C’s log. If these conditions hold, C grants its vote. B now has two votes, a majority of three, and becomes leader for term eight.",
+            "Why randomize election timeouts? If B and C always begin elections simultaneously, each can vote for itself and neither obtains a majority. Randomization reduces repeated collisions. It does not guarantee that an election always finishes within a fixed deadline under arbitrary network delays. Once elected, B immediately sends AppendEntries messages to establish authority. A delayed heartbeat from old term seven cannot demote B because receivers compare terms. If B encounters a higher term, B steps down.",
+            "The log freshness test matters as much as the vote count. A candidate with an obsolete log must not replace a leader if doing so could lose committed entries. Raft compares the last log term first and then the last log index. A candidate with a higher last-log term is considered more up to date; with equal terms, the longer log wins. This rule works with the leader completeness property and Raft’s commitment restrictions to preserve committed history across elections.",
+            "For communication practice, describe the election as a timeline rather than a glossary: the leader stops sending heartbeats, a follower times out, the candidate advances the term, a majority votes based on log freshness, and the winner begins replication. Then explain the failure case: if the network divides three nodes into a group of two and a group of one, only the group of two can elect a leader and commit."
+          ],
+          "bullets": [
+            "Interview practice: state the invariant, trace the failure, then defend the tradeoff."
+          ],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-03",
+      "section": "03 · Replication",
+      "title": "Replicated logs, commitment and client retries",
+      "lead": "Detailed read-aloud chapter · Scroll vertically; pause at each example and explain it in your own words.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "AppendEntries and log replication",
+          "paragraphs": [
+            "The leader appends a command to its log, sends AppendEntries with the preceding log index and term, and followers reject inconsistent prefixes.",
+            "Followers can truncate conflicting uncommitted suffixes and catch up. The log matching property ensures that equal index-and-term entries imply identical preceding entries."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Commitment and application",
+          "paragraphs": [
+            "A leader tracks replication progress and advances commitIndex according to Raft commitment rules. For current-term entries, majority replication permits the leader to commit; earlier entries can become committed indirectly.",
+            "Once committed, replicas apply commands in log order. Do not tell an interviewer that any arbitrary old-term entry becomes committed solely because a majority currently stores it."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Leader crashes before replying",
+          "paragraphs": [
+            "A client sends a command. The leader may commit it and crash before returning the response. The client cannot know whether the command took effect.",
+            "Retrying blindly may execute a business action twice. Include a client request ID and durable deduplication state in the replicated state machine for logical operations. External APIs still need their own idempotency mechanisms."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Split votes and retry",
+          "paragraphs": [
+            "In a four-way election race, candidates can split votes and no leader emerges. Randomized election timeouts help break symmetry.",
+            "A temporary lack of leader harms availability, not safety. After network stability and successful majority election, the system resumes progress."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Write path, step by step",
+          "paragraphs": [
+            "The client sends a command to the leader. The leader appends an entry locally, replicates it to followers, and waits for the appropriate commit conditions. After commitment, replicas apply commands in log order. If the client times out after commitment but before receiving a response, retrying without a stable request identifier can execute the logical operation again at the application layer."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "The critical crash window",
+          "paragraphs": [
+            "Consider an API call that succeeds, followed immediately by a worker crash before its result is persisted. Consensus for the worker metadata cannot retroactively tell you whether the external call succeeded. Persist an operation ID before the call and require the target API to deduplicate or expose a way to reconcile the outcome."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Commit is not the same as apply",
+          "paragraphs": [
+            "A log entry can be committed but not yet applied to a state machine on a lagging follower. Reads therefore require an explicit consistency strategy, such as a leader read barrier or a suitable lease under stated timing assumptions."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Trace an append, a crash, and a retry",
+          "paragraphs": [
+            "Suppose the leader has a replicated log with entries one through twelve committed. A client submits Allocate(job-42, gpu-7) with idempotency key req-901. The leader appends entry thirteen locally, sends AppendEntries to followers, and waits for a majority acknowledgement. When a follower persists the entry, the leader can advance its commit index according to Raft’s term-aware commitment rules. It then applies the command to its deterministic state machine and responds to the client. The order of persistence, replication, commitment, and application is essential; an entry appearing in one log does not mean it is committed.",
+            "Now change the timeline. The leader commits entry thirteen and crashes before returning the response. The client sees a timeout and retries. The new leader must not interpret the retry as a completely new business request. Store a stable request identifier and the resulting decision in replicated state so repeated submissions can return the same logical outcome. Consensus makes the deduplication record durable, but the application still needs a deduplication policy and retention window.",
+            "Consider a more difficult variation: the leader appends entry thirteen to its own disk but never replicates it to a majority. A different leader may overwrite that uncommitted suffix. Therefore an API must not promise successful execution based only on the leader’s local append. Explain the distinction between accepted, replicated, committed, applied, and externally completed. Each stage answers a different question and has different failure semantics.",
+            "If a committed command triggers an external API, a second challenge appears. The state machine might record an intent, then a worker calls a GPU control API and crashes before recording success. After recovery, the system cannot infer whether the external call took effect. Use an operation ID created before the call, require idempotent or queryable downstream behavior, and reconcile until the durable desired state matches the observed state. Raft cannot make an arbitrary external API atomic with its log."
+          ],
+          "bullets": [
+            "Interview practice: state the invariant, trace the failure, then defend the tradeoff."
+          ],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-04",
+      "section": "04 · Recovery",
+      "title": "Snapshots, reconfiguration and safe recovery",
+      "lead": "Detailed read-aloud chapter · Scroll vertically; pause at each example and explain it in your own words.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "Snapshotting and log compaction",
+          "paragraphs": [
+            "A long-lived replicated log cannot grow forever. Periodically snapshot the applied state and retain metadata required to resume replication.",
+            "A follower far behind may receive a snapshot rather than millions of individual log entries. Snapshots must be consistent with applied state and include index and term boundaries."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Membership changes",
+          "paragraphs": [
+            "Changing voters carelessly can create disjoint majorities. Raft uses carefully designed configuration transitions, commonly joint consensus, to preserve quorum overlap across membership changes.",
+            "Operationally, replacement of failed voters and zone migrations must be treated as correctness-sensitive workflows."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Snapshot safety",
+          "paragraphs": [
+            "A snapshot is a compact representation of state after applying a prefix of the committed log. A lagging follower can install a snapshot instead of replaying an enormous history. Snapshot metadata must identify the included log index and term so later entries line up correctly."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Membership changes",
+          "paragraphs": [
+            "Changing from one replica set to another is itself a distributed-systems problem. Naively switching configurations can create two disjoint majorities. Production protocols use safe reconfiguration mechanisms, such as joint consensus in Raft, so the transition preserves quorum overlap."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Operational design",
+          "paragraphs": [
+            "Test restore from snapshots, checksum integrity, disk exhaustion, corrupted state, slow followers, and replacement of failed nodes. Backups are not a substitute for verifying the consistency of restored metadata."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Snapshots and membership changes are safety-sensitive",
+          "paragraphs": [
+            "Long-running Raft clusters cannot retain every historical log entry forever. A snapshot stores the state machine’s materialized state at an included log index and term. The snapshot must be internally consistent with committed state. A follower that falls far behind can receive an InstallSnapshot transfer rather than replaying millions of old commands. The snapshot reduces recovery time, but does not eliminate the need to persist the latest term, vote, and remaining log correctly.",
+            "Membership changes are not equivalent to editing a list of server addresses. Suppose a five-node cluster is replaced with a different five-node cluster in one uncoordinated step. Two disjoint majorities might each believe they can commit. Raft joint consensus is one technique that requires agreement under overlapping old and new configurations during transition. Other production implementations use carefully constrained single-server changes. The correct interview response is to name the implementation’s membership algorithm and explain how quorum intersection is preserved.",
+            "A common operational failure is restoring a stale snapshot into an active cluster as if it were authoritative. Snapshots carry an index and term and must be installed through protocol-aware mechanisms. Restoring an arbitrary disk image from backup can violate the cluster’s identity and membership assumptions. For disaster recovery, distinguish restoring a replicated metadata service from restoring the resources managed by that service. The two recovery workflows have different correctness and RPO considerations."
+          ],
+          "bullets": [
+            "Interview practice: state the invariant, trace the failure, then defend the tradeoff."
+          ],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-05",
+      "section": "05 · Paxos",
+      "title": "Paxos and Multi-Paxos: the agreement mechanism",
+      "lead": "Detailed read-aloud chapter · Scroll vertically; pause at each example and explain it in your own words.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "Basic Paxos: actors and promise",
+          "paragraphs": [
+            "Paxos uses proposers, acceptors and learners. A proposer first asks acceptors to promise not to accept lower-numbered proposals.",
+            "Acceptors report any previously accepted value. The proposer must preserve the highest-numbered accepted value it learns, preventing incompatible choices."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Prepare and accept phases",
+          "paragraphs": [
+            "Phase 1: proposer sends Prepare(n); a quorum promises and reports previously accepted proposals. Phase 2: proposer sends Accept(n,value) consistent with those reports; a quorum accepting chooses the value.",
+            "Unique increasing proposal numbers matter. A chosen value remains safe even when different proposers compete."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Multi-Paxos versus Raft",
+          "paragraphs": [
+            "Basic Paxos decides one value; Multi-Paxos optimizes repeated decisions with stable leadership. Raft structures leader election and log replication explicitly for understandability.",
+            "Both require careful engineering around recovery, configuration changes and client retries. Do not assume one is universally faster or safer."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Quorum intersection is necessary, not sufficient",
+          "paragraphs": [
+            "Majority overlap supplies a foundation for safety, but protocol rules determine what information crosses the intersection.",
+            "Flexible quorum schemes may use different read and write quorum sizes as long as required intersections are maintained. Latency, failure tolerance and topology affect the choice."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Paxos intuition",
+          "paragraphs": [
+            "An acceptor promises not to accept proposals below a promised ballot. A proposer that gathers a quorum of promises must respect the highest-numbered previously accepted value reported by that quorum. This is the mechanism that prevents a later successful proposal from contradicting an earlier chosen value."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "From one value to a log",
+          "paragraphs": [
+            "Basic Paxos chooses a value for one instance. Multi-Paxos extends the pattern to a sequence of instances and typically uses a stable leader to avoid repeating expensive preparation for every command. Raft makes a leader-oriented replicated log explicit and packages membership and recovery rules in an approachable form."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Quorum caveat",
+          "paragraphs": [
+            "Two majorities intersect, but intersection alone does not make an arbitrary protocol correct. The acceptor promise rules, ballot ordering, and chosen-value propagation are essential to the safety proof."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Understand Paxos as promises and accepted values",
+          "paragraphs": [
+            "Basic Paxos chooses one value among competing proposals. A proposer sends Prepare with ballot number n. Acceptors promise not to accept proposals with lower ballot numbers and report previously accepted proposals. If the proposer obtains a quorum, it must propose the value associated with the highest-numbered accepted proposal reported by that quorum, if one exists. It then sends Accept(n, value). When a quorum accepts the same proposal, the value is chosen. This rule prevents a later successful proposal from choosing a conflicting value.",
+            "Consider three acceptors A, B, and C. Proposer P obtains promises from A and B for ballot ten, and proposes value X. A and B accept X, so X is chosen. A competing proposer Q later obtains promises from B and C for ballot eleven. B reports that it accepted X at ballot ten. Q must carry X forward rather than selecting Y, even if Q originally preferred Y. The intersecting member B transfers information about the earlier choice. The intersection alone is not sufficient; the prepare and value-selection rules are what make the intersection useful.",
+            "Basic Paxos selects one value, whereas a replicated service needs an ordered stream of decisions. Multi-Paxos commonly uses a stable leader to avoid running a full prepare phase for every slot. Raft integrates leader election, log replication, and safety rules into a more directly understandable design. Do not claim that Paxos is inherently unsafe or that Raft is universally faster. Compare the exact variants, storage implementations, batching, networking, and operational characteristics.",
+            "An excellent interview explanation separates three layers: consensus chooses a value, a replicated log sequences many values, and the application state machine interprets those values. This prevents confusion between protocol-level agreement and business-level effects."
+          ],
+          "bullets": [
+            "Interview practice: state the invariant, trace the failure, then defend the tradeoff."
+          ],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-06",
+      "section": "06 · Production",
+      "title": "Designing a consensus-backed control plane",
+      "lead": "Detailed read-aloud chapter · Scroll vertically; pause at each example and explain it in your own words.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "Consensus service architecture",
+          "paragraphs": [
+            "A practical coordination service exposes a small strongly consistent key-value or log API, stores durable WAL records, and replicates metadata across zones.",
+            "Applications watch committed changes, acquire logical ownership and perform side effects through guarded APIs. Keep consensus state small and avoid placing large model checkpoints directly in the replicated log."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": "API clients → Coordination service (3/5 voters) → Committed metadata\n                                  ↓\n                     Schedulers / workers / controllers"
+        },
+        {
+          "type": "section",
+          "title": "Leases versus fencing",
+          "paragraphs": [
+            "A lease limits ownership to a time window, but clock skew and long pauses can make an old owner dangerous. A fencing token is a monotonically increasing epoch checked by the protected resource.",
+            "For example, storage accepts writes only when token ≥ highest token previously observed. An old worker with token 41 is rejected after token 42 has been accepted."
+          ],
+          "bullets": [
+            "A fencing token works only if the resource actually enforces it.",
+            "Do not equate an expiring lease with safe rejection of stale writes."
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Latency and capacity calculation",
+          "paragraphs": [
+            "Suppose five replicas span three availability zones and a proposal requires a durable local append plus acknowledgments from a majority. Commit latency is influenced by the leader-to-quorum round trip, storage fsync, batching and contention.",
+            "A 20 ms cross-zone path does not imply a universal 20 ms commit; measure p50/p99 and account for concurrent replication and disk latency. Scaling read replicas does not necessarily scale serialized consensus write throughput."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Control plane versus data plane",
+          "paragraphs": [
+            "The control plane stores authoritative metadata such as ownership, desired state, and operation status. The data plane performs actual work: starting containers, allocating GPUs, or invoking cloud APIs. Keep the consensus log small and deterministic; do not stream model weights or large datasets through it."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Fencing design",
+          "paragraphs": [
+            "Every leadership change increments an ownership epoch. The scheduler includes the epoch with a resource mutation. The resource must remember the highest accepted epoch and reject lower ones. A fencing token works only if the resource enforces it; simply logging the token does not protect the external boundary."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Reliability signals",
+          "paragraphs": [
+            "Track leader changes, election duration, proposal latency, commit latency, quorum health, log lag, snapshot duration, rejected stale epochs, and operations stuck in reconciliation. Tie alerts to user-facing availability and recovery objectives."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Define the API before drawing boxes",
+          "paragraphs": [
+            "For a production coordination service, begin with operations such as CompareAndSwap(key, expectedVersion, newValue), Get(key, consistency), Watch(prefix, resumeRevision), and GrantLease(ttl). Each write should have a stable request ID and a documented response semantics. A successful linearizable write means its result can be placed at a single point between invocation and response in a total order consistent with real-time precedence. A watch stream may be eventually delivered and should not be confused with the consistency of the underlying write.",
+            "Partition the system into an API gateway, consensus-backed metadata shards, a watch distribution layer, durable snapshot storage, and an operations plane. The leader of each shard proposes writes; followers persist and replicate. The service must authenticate clients, enforce quotas, handle slow watchers, and expose cluster health. Most applications do not need to run a bespoke consensus implementation. Prefer a proven coordination service unless a measured requirement justifies owning protocol complexity.",
+            "For recovery, specify what is persisted before acknowledging a write, how replicas bootstrap after restart, how the cluster detects membership drift, and what operators do when quorum is lost. Avoid a dangerous manual override that simply forces two isolated groups to act as leaders. A production runbook should distinguish a recoverable follower outage from catastrophic quorum loss and require explicit operator decisions when data loss is possible."
+          ],
+          "bullets": [
+            "Interview practice: state the invariant, trace the failure, then defend the tradeoff."
+          ],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-07",
+      "section": "07 · Geography",
+      "title": "Multi-region latency, partitions and alternatives",
+      "lead": "Detailed read-aloud chapter · Scroll vertically; pause at each example and explain it in your own words.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "Multi-region tradeoffs",
+          "paragraphs": [
+            "A global quorum may require long-haul round trips and can make every control-plane write expensive. Regional consensus groups with carefully designed ownership boundaries may offer lower latency.",
+            "For disaster recovery, decide which metadata must be globally authoritative, which can be eventually replicated, and what happens when regions cannot communicate."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "When not to use consensus",
+          "paragraphs": [
+            "Consensus is unnecessary for many immutable blobs, cache entries, analytics events and independently partitioned workloads.",
+            "Use consensus for critical shared decisions requiring ordered agreement, such as ownership, membership and authoritative configuration. Avoid making every request dependent on a global coordinator."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Geography and latency",
+          "paragraphs": [
+            "With a three-region majority, a write commonly requires at least one inter-region round trip to reach a quorum, plus local processing. This increases latency compared with single-region consensus. Putting all voters across distant continents can make every control-plane mutation unnecessarily slow."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Failure-domain tradeoff",
+          "paragraphs": [
+            "A five-node cluster tolerates two failed voters for majority availability, but only if the remaining three can communicate. Correlated failures, network partitions, and poor placement can eliminate quorum even when three machines are technically running."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Alternatives",
+          "paragraphs": [
+            "Use a regional consensus cluster for strongly consistent control-plane state and asynchronous replication for distant read replicas when the product allows it. For high-volume telemetry or immutable blobs, consider logs, object storage, or eventually consistent systems instead of routing everything through consensus."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Reason quantitatively about regions and quorums",
+          "paragraphs": [
+            "A five-node cluster needs three votes to form a majority. It tolerates two node failures only if the remaining three can communicate and maintain required storage durability. If replicas are spread across three regions with placement two, two, one, loss of the two-replica region leaves three replicas and a quorum. Loss of either other region leaves at least three. However, latency depends on which peers acknowledge and where the leader runs; geographic fault tolerance and write latency must be considered together.",
+            "If a write requires a leader-to-follower round trip and local durable persistence, a cross-region quorum may impose tens or hundreds of milliseconds of coordination latency depending on geography and storage. Batching can improve throughput but does not remove the latency floor of synchronous quorum acknowledgement. For high-volume model inference, do not place a consensus round trip on every token-generation operation. Use consensus for infrequent control-plane decisions, while allowing the data plane to operate from validated configuration and fenced ownership.",
+            "If you require active-active writes across distant regions, clarify whether the application truly requires linearizable ordering across all writes. A single global consensus group is conceptually simple but can become a latency and availability bottleneck. Shard independent metadata, localize ownership where possible, and use asynchronous replication for data whose semantics tolerate staleness. Describe the tradeoff explicitly rather than saying multi-region is automatically more reliable."
+          ],
+          "bullets": [
+            "Interview practice: state the invariant, trace the failure, then defend the tradeoff."
+          ],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-08",
+      "section": "08 · AI infrastructure",
+      "title": "GPU scheduler ownership and agent execution",
+      "lead": "Detailed read-aloud chapter · Scroll vertically; pause at each example and explain it in your own words.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "GPU scheduler ownership",
+          "paragraphs": [
+            "Two schedulers must not simultaneously assign the same exclusive GPU allocation. Store authoritative placement decisions in a consistent control plane, and give assignments epochs or generations.",
+            "Workers validate the current generation before acting. The execution plane remains separate so that the consensus layer does not sit on every token-generation request."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Agent orchestration and durable execution",
+          "paragraphs": [
+            "Consensus can establish which worker owns a workflow and where its checkpoint metadata lives. Durable execution records step transitions so a new worker can resume after a crash.",
+            "Neither alone guarantees exactly-once payment, email, failover or cloud API side effects. Use stable operation IDs, API idempotency, reconciliation and compensating steps."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "OCI FSDR control-plane analogy",
+          "paragraphs": [
+            "Imagine an FSDR failover orchestration whose coordinator dies after issuing an external failover API call. Before the call, persist a stable operation ID and intent. After recovery, query operation status or retry using the same idempotency key.",
+            "Consensus can protect authoritative workflow ownership, while the durable workflow engine handles checkpoints and replay. Keep the recovery behavior explicit and test crash boundaries."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "GPU scheduler example",
+          "paragraphs": [
+            "A leader assigns a scarce accelerator to Job J. Before issuing the allocation, it commits a desired-state record containing job ID, resource ID, generation, and operation ID. The executor applies the command with the generation as a fence. If the scheduler crashes, its replacement reconciles actual resource state against desired state rather than blindly issuing the allocation again."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Agent workflow example",
+          "paragraphs": [
+            "An agent step that sends a payment or changes infrastructure is not an ordinary repeatable computation. Persist the intent and stable idempotency key before the tool call. On recovery, inspect the durable step state and reconcile with the tool provider. Require human approval for sensitive operations and record an audit trail."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Connecting to OCI FSDR",
+          "paragraphs": [
+            "Disaster recovery plans contain long-running, failure-prone operations across many services. Consensus can coordinate ownership of the orchestrator, while a durable workflow tracks each step, its request ID, completion evidence, retries, and compensation policy. The two mechanisms solve different problems."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Separate ownership decisions from resource enforcement",
+          "paragraphs": [
+            "An AI workload scheduler might use a consensus-backed record that maps GPU worker W to ownership epoch 142 and job J. When scheduler S1 loses its lease, scheduler S2 acquires epoch 143. If S1 later wakes up and sends a delayed Allocate command with epoch 142, the GPU agent must reject it. The important property is monotonicity at the resource that performs the side effect. Merely checking the epoch in the scheduler is insufficient because the scheduler itself can be stale.",
+            "An agent workflow may similarly store the next action and checkpoint in a durable log. Consensus can protect the authoritative workflow state, but a remote payment, ticket creation, or infrastructure mutation requires its own idempotency or reconciliation contract. Explain why the correct abstraction is often at-least-once delivery plus effectively-once business effects, not a blanket exactly-once claim.",
+            "At scale, keep coordination traffic proportional to changes in ownership and durable state rather than per-token or per-GPU-kernel work. If a model-serving cluster has thousands of workers, the consensus group may manage partitions, leases, and desired configurations while workers stream telemetry independently. This separation improves throughput and limits the blast radius of coordination latency."
+          ],
+          "bullets": [
+            "Interview practice: state the invariant, trace the failure, then defend the tradeoff."
+          ],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-09",
+      "section": "09 · System design",
+      "title": "Worked design: resilient AI workload scheduler",
+      "lead": "Detailed read-aloud chapter · Scroll vertically; pause at each example and explain it in your own words.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "Worked architecture: resilient scheduler",
+          "paragraphs": [
+            "Design a three-zone scheduling control plane: five coordination voters, stateless API frontends, elected scheduling owners, a durable workflow store, and workers enforcing assignment generations.",
+            "Walk through a leader crash, partition, delayed worker, duplicated request and a region outage. Explain what is safe, what remains available, and which components are the bottlenecks."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": "Users → API → Durable intent → Elected scheduler → GPU workers\n                     ↘ Consensus metadata + fencing epochs"
+        },
+        {
+          "type": "section",
+          "title": "Senior Staff tradeoff discussion",
+          "paragraphs": [
+            "The best answer starts with requirements: fault model, latency budget, write volume, geographical topology, recovery time and cost.",
+            "Defend why the critical coordination path uses consensus, why bulk data does not, and how you measure operational health. Discuss migration, rollout, observability and incident response, not just boxes and arrows."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Failure injection exercise",
+          "paragraphs": [
+            "Scenario: term-12 leader is paused for 40 seconds. A majority elects term-13 leader and reallocates GPU worker W. The old leader resumes and sends an assignment.",
+            "Correct answer: the worker or assignment authority must reject stale epoch 12. If the resource cannot enforce epochs, introduce an idempotent guarded assignment API or isolate ownership behind a single authoritative service."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Requirements and APIs",
+          "paragraphs": [
+            "Define createJob(jobId, specification, idempotencyKey), getJob(jobId), cancelJob(jobId), and watchJob(jobId). Nonfunctional goals include no conflicting allocation, recovery after worker crashes, bounded scheduling latency, auditability, and isolation between tenants."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Data model",
+          "paragraphs": [
+            "Job: ID, tenant, desired state, observed state, version. Allocation: resource ID, job ID, ownership epoch, expiration policy. Operation: stable ID, type, attempt, state, external request ID, result reference. Store the small authoritative state in a consensus-backed metadata service; store large artifacts elsewhere."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Failure walkthrough",
+          "paragraphs": [
+            "Leader A commits an allocation intent and crashes. Leader B is elected, reads the committed intent, and checks whether the executor already acted. B retries with the same idempotency key if needed. If A later resumes, its old epoch is rejected by the executor. This is how coordination, fencing, and reconciliation work together."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Tradeoffs to defend",
+          "paragraphs": [
+            "A single-region quorum is fast but loses write availability if the region is lost. Cross-region voters improve geographic survivability but increase latency. Strongly consistent allocation metadata is worth the cost; bulk model data does not need the same path."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Defend the scheduler design under pressure",
+          "paragraphs": [
+            "Assume a hypothetical fleet of 10,000 GPUs across three availability zones. The scheduler must place training jobs, avoid double allocation, recover within thirty seconds after a leader crash, and tolerate a single zone failure. Begin by clarifying whether allocations are exclusive, whether running jobs can survive scheduler failure, and whether capacity reservations must be durable before execution. These questions reveal the required consistency boundary.",
+            "Choose a five-replica metadata quorum with zone-aware placement, and store job intent, allocation records, and ownership epochs in the replicated state machine. Separate the leader’s planning loop from the worker agents that enforce allocations. Each allocation includes job ID, worker ID, monotonically increasing epoch, stable operation ID, and expiration or explicit release semantics. Worker agents reject stale epochs and deduplicate operation IDs. The scheduler reconciles actual GPU state with durable desired state after crashes.",
+            "Failure test one: the leader commits an allocation and crashes before responding. The new leader reads the committed record and returns the existing result when the client retries. Failure test two: the old leader is partitioned but still connected to one worker. The worker refuses its old epoch after accepting a newer one. Failure test three: a zone is lost and quorum remains. Scheduling continues if sufficient capacity exists; already running jobs follow the separate data-plane failure policy.",
+            "Capacity is not only a count of GPUs. Placement may depend on GPU model, topology, interconnect bandwidth, memory, locality, and tenant quota. A good Senior Staff answer separates the correctness-critical allocation transaction from optimization heuristics. The heuristic can be changed without weakening the exclusive-ownership invariant."
+          ],
+          "bullets": [
+            "Interview practice: state the invariant, trace the failure, then defend the tradeoff."
+          ],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-10",
+      "section": "10 · Interview mastery",
+      "title": "Concepts you must remember and explain",
+      "lead": "Detailed read-aloud chapter · Scroll vertically; pause at each example and explain it in your own words.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "Important concepts to remember",
+          "paragraphs": [
+            "Consensus chooses a safe order of decisions; replicated state machines apply those decisions. Majorities overlap, but protocol-specific rules establish safety.",
+            "Raft terms are election epochs. A leader without majority cannot safely commit new decisions. Client retries need deduplication. External side effects require independent guards."
+          ],
+          "bullets": [
+            "Safety vs liveness",
+            "Quorum intersection",
+            "Raft election and log matching",
+            "Commit rules and recovery",
+            "Paxos promises and accepted values",
+            "Fencing, leases and idempotency",
+            "Control-plane versus data-plane separation"
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Explain it in 30 seconds",
+          "paragraphs": [
+            "Distributed consensus lets replicas agree on an authoritative sequence of decisions despite failures. Raft elects a leader and replicates a log, committing decisions under quorum and term rules. In AI infrastructure, I would use it for scheduler ownership and critical metadata—not for every inference request—and protect external actions with fencing and idempotency."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Explain it in two minutes",
+          "paragraphs": [
+            "Start with the split-brain problem: if two schedulers both believe they own a workload, they may make conflicting decisions. A replicated consensus log gives the control plane an authoritative order.",
+            "In Raft, a candidate wins a majority vote, the leader appends commands and followers replicate them. Quorum and term rules preserve safety during leader changes. A minority partition cannot keep committing.",
+            "Then discuss implementation boundaries: use consensus for small authoritative metadata, enforce fencing epochs at resources, and use durable workflows plus stable idempotency keys for external side effects. Close with availability, latency and observability tradeoffs."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Explain it in five minutes",
+          "paragraphs": [
+            "Draw the five-voter coordination cluster across three zones, with API frontends and an independent execution plane. Explain election terms, majority quorums, log matching, current-term commitment and replay.",
+            "Walk through a crash after commit but before client acknowledgment. Demonstrate how client request IDs and deduplication protect logical commands, and why external calls require their own recovery contract.",
+            "Compare Raft with Multi-Paxos, explain why global quorums increase latency, and finish with monitoring: election rate, commit latency, replication lag, quorum health, stale-token rejection and recovery time."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Common mistakes and final cheat sheet",
+          "paragraphs": [
+            "Do not say consensus makes a system always available, or that a lease alone prevents stale writes. Do not claim exactly-once side effects simply because a log is replicated.",
+            "A strong Staff+ answer separates safety, liveness, business idempotency, failure detection and operational recovery."
+          ],
+          "bullets": [
+            "Quorum = floor(N/2)+1",
+            "Majority overlap ≠ complete protocol",
+            "Raft leader election requires majority + log freshness",
+            "Commitment must respect Raft term rules",
+            "Fence stale owners at the resource",
+            "Keep consensus off the inference data path",
+            "Explain failure and recovery, not only happy path"
+          ],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Your 30-second answer",
+          "paragraphs": [
+            "Distributed consensus lets replicas agree on one ordered history despite crashes and network delays. Raft does this through majority-based elections, terms, and replicated logs. It protects authoritative control-plane state, while fencing and idempotency protect actions performed outside the consensus group."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Your two-minute answer",
+          "paragraphs": [
+            "Start with the split-brain risk: two controllers must not make conflicting decisions about the same resource. Explain that Raft elects one leader per term with majority votes, replicates commands to a quorum, and applies committed entries in order. A minority partition cannot continue committing. Then draw the boundary: the log records decisions, but a stale process might still call an external API. Use ownership epochs, resource-enforced fencing, durable operation IDs, and reconciliation to protect those effects. Finish by explaining the availability and latency costs of majority quorum."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Senior Staff framing",
+          "paragraphs": [
+            "Lead with requirements and invariants. State the failure assumptions, draw the write path, quantify quorum and latency, walk through a leader crash, and explain why the design still behaves safely. Show what you would measure in production and what tradeoff would make you choose a different architecture."
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Explain the architecture like a Staff engineer",
+          "paragraphs": [
+            "Begin an interview with the invariants, not the vendor names. State that at most one current owner may issue accepted commands for an exclusive resource, committed metadata must survive tolerated failures, and clients must receive unambiguous retry semantics. Then define the fault model, quorum size, and enforcement boundary. Only after those foundations should you describe Raft, Paxos, metadata storage, or an external coordination service.",
+            "For a thirty-second explanation, say: distributed consensus lets replicas agree on an authoritative sequence of decisions despite crashes and message delays. Raft does this with elected leaders, terms, replicated logs, and majority commitment. It preserves safety during partitions by preventing minority groups from committing. Applications still need fencing and idempotency for external effects.",
+            "For a two-minute explanation, add a concrete example: a scheduler leader writes an allocation, replicates it to a majority, and acknowledges only after commitment. If it crashes, a new leader retains committed history. A stale scheduler cannot safely mutate a GPU merely because it once held leadership; the GPU agent must reject lower ownership epochs. This demonstrates the difference between agreeing on metadata and enforcing resource ownership.",
+            "For a five-minute explanation, discuss leader completeness, log matching, term-aware commitment, quorum intersection, membership changes, linearizable reads, snapshotting, partitions, and operational recovery. Close with alternatives: a single leader may be simpler for low-criticality workloads, while a managed consensus service reduces protocol ownership risk. Explain which choice you would make and what measurements could change your decision."
+          ],
+          "bullets": [
+            "Interview practice: state the invariant, trace the failure, then defend the tradeoff."
+          ],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-11",
+      "section": "11 · Interview",
+      "title": "Senior Staff interview questions and model answers",
+      "lead": "Practice aloud: answer before reading the model explanation.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "What happens when a leader is partitioned from its quorum?",
+          "paragraphs": [
+            "It may continue believing it is leader, but cannot commit new log entries. The majority side may elect a new leader. External systems must enforce fencing to reject stale operations.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Why do majorities intersect?",
+          "paragraphs": [
+            "For N voters, two sets larger than N/2 must share at least one member. Consensus protocols use this overlap with additional voting and value-selection rules to preserve agreement.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Can Raft guarantee exactly-once API calls?",
+          "paragraphs": [
+            "No. Raft orders durable decisions; external effects can be ambiguous after timeouts. Use stable operation IDs, downstream idempotency, reconciliation, and durable completion records.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "What is the difference between an accepted and committed entry?",
+          "paragraphs": [
+            "An entry can exist on one or more logs without being committed. Raft uses majority replication plus its term-aware commitment rule to establish commitment.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "How do you prevent stale leaders from controlling GPUs?",
+          "paragraphs": [
+            "Persist a monotonically increasing ownership epoch and require each GPU agent to reject commands with older epochs. The enforcement must happen at the resource boundary.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "What is a linearizable read?",
+          "paragraphs": [
+            "A read whose result can be placed at a single instant between invocation and response, respecting real-time order. A Raft leader needs an appropriate current-leadership check or read protocol.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "What changes when a quorum spans regions?",
+          "paragraphs": [
+            "Synchronous write latency rises with network round trips, while failure-domain resilience may improve. Placement must balance latency, region loss scenarios, and quorum survival.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Why use joint consensus during reconfiguration?",
+          "paragraphs": [
+            "It prevents a transition in which disjoint old and new voting groups can independently commit incompatible histories.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "How does Multi-Paxos differ from basic Paxos?",
+          "paragraphs": [
+            "Basic Paxos chooses one value; Multi-Paxos extends the mechanism to repeated log slots, often using stable leadership to amortize preparation.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "How would you recover a lost quorum?",
+          "paragraphs": [
+            "First establish which durable state survives and which members can be trusted. Follow protocol-specific recovery procedures; never blindly force two partitions into independent leadership.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "What is the FLP result?",
+          "paragraphs": [
+            "In a fully asynchronous model with even one possible crash, deterministic consensus cannot guarantee termination in every execution. Practical systems rely on timing assumptions for progress.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "When should you avoid consensus?",
+          "paragraphs": [
+            "Avoid it for high-volume data-plane operations that do not require global ordering. Use local decisions, partitioned ownership, or eventual consistency when business semantics allow.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    },
+    {
+      "id": "chapter-12",
+      "section": "12 · Review",
+      "title": "Cheat sheet, common mistakes, and speaking drills",
+      "lead": "Practice aloud: answer before reading the model explanation.",
+      "blocks": [
+        {
+          "type": "section",
+          "title": "Important concepts",
+          "paragraphs": [
+            "Consensus, replicated state machine, quorum intersection, safety, liveness, term, election timeout, log matching, leader completeness, commit index, linearizability, snapshot, joint consensus, fencing, idempotency.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Common mistake: confusing election and ownership",
+          "paragraphs": [
+            "Electing a leader does not instantly revoke a stale process’s ability to reach external resources. Fencing must be enforced by the resource.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Common mistake: calling a replicated write committed too early",
+          "paragraphs": [
+            "Local persistence or one follower acknowledgement is not sufficient when a majority and protocol commitment rules are required.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Common mistake: promising availability during every partition",
+          "paragraphs": [
+            "A minority partition deliberately loses write availability to protect consistency.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Speaking drill: thirty seconds",
+          "paragraphs": [
+            "Explain consensus without naming Raft or Paxos until the second sentence. State the problem, guarantee, and limitation.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Speaking drill: two minutes",
+          "paragraphs": [
+            "Walk through a three-node election, a committed write, a crash, and a retry. Describe each state transition in chronological order.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Speaking drill: five minutes",
+          "paragraphs": [
+            "Design a five-node control plane, justify quorum placement, explain fencing at GPU workers, and answer what happens after zone loss.",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        },
+        {
+          "type": "section",
+          "title": "Final interview checklist",
+          "paragraphs": [
+            "Can I derive majority size? Trace elections? Distinguish accepted from committed? Explain Paxos promises? Defend snapshot recovery? Propose safe external side effects? Explain linearizable reads?",
+            "Interview practice: articulate the key guarantee, name one failure that challenges it, and describe the concrete mechanism that preserves correctness. For this question, avoid listing technologies without explaining the invariant."
+          ],
+          "bullets": [],
+          "code": null,
+          "diagram": null
+        }
+      ]
+    }
+  ],
+  "disclaimer": "Ten scrollable teaching chapters. Read aloud at your own pace; this is not a verified 90-minute transcript.",
+  "readingMode": "long-form"
+}
