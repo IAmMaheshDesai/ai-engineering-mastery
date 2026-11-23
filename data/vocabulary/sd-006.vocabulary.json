@@ -1,0 +1,92 @@
+[
+  {
+    "word": "Linearizability",
+    "meaning": "A guarantee that each operation fits into a legal sequential history while respecting real-time order of nonoverlapping calls.",
+    "sentence": "The history violated linearizability when a read began after a successful update and returned the old pointer."
+  },
+  {
+    "word": "Availability",
+    "meaning": "Eventual successful completion of each required operation at a live participant under the stated model.",
+    "sentence": "The minority preserved safety while relinquishing availability for strong writes."
+  },
+  {
+    "word": "Network partition",
+    "meaning": "A communication failure that separates participants along paths needed by a protocol.",
+    "sentence": "The network partition left both regions running but unable to exchange durable acknowledgments."
+  },
+  {
+    "word": "Indistinguishability",
+    "meaning": "A condition in which a participant has the same local evidence across executions requiring different conclusions.",
+    "sentence": "Indistinguishability explains why an isolated reader cannot safely infer the remote write."
+  },
+  {
+    "word": "Asynchronous model",
+    "meaning": "A model without a known upper bound on message delay or execution speed.",
+    "sentence": "In the asynchronous model a missed heartbeat does not prove that a peer crashed."
+  },
+  {
+    "word": "Liveness",
+    "meaning": "A property requiring that progress eventually occur under specified conditions.",
+    "sentence": "We stated the connectivity assumptions needed for the controller's liveness."
+  },
+  {
+    "word": "Safety",
+    "meaning": "A condition excluding a forbidden outcome in every allowed history.",
+    "sentence": "The design preserved safety by withholding conflicting promotion grants."
+  },
+  {
+    "word": "Quorum",
+    "meaning": "A protocol-defined set of participants whose combined responses authorize a specified step.",
+    "sentence": "The former leader could not gather a quorum to confirm its authority."
+  },
+  {
+    "word": "Bounded staleness",
+    "meaning": "A freshness promise limiting how far a read may trail an authoritative history under a defined measure.",
+    "sentence": "A recent heartbeat alone could not establish bounded staleness."
+  },
+  {
+    "word": "Watermark",
+    "meaning": "A recorded boundary for a particular kind of verified progress.",
+    "sentence": "The recovery watermark identified the contiguous log prefix that could survive a receiver restart."
+  },
+  {
+    "word": "Critical path",
+    "meaning": "The sequence of dependent work that determines when an operation can complete.",
+    "sentence": "The distant replica entered the critical path after the local follower failed."
+  },
+  {
+    "word": "Escrow",
+    "meaning": "A scheme that partitions rights in advance so local actions can preserve a global bound.",
+    "sentence": "Quota escrow kept the isolated region from overspending the tenant's entitlement."
+  },
+  {
+    "word": "Failure domain",
+    "meaning": "Components subject to a common cause of failure.",
+    "sentence": "The witness and the validation service shared a failure domain."
+  },
+  {
+    "word": "Reconciliation",
+    "meaning": "Comparing divergent or incomplete observations and taking steps to establish the intended state.",
+    "sentence": "Reconciliation verified loaded model digests before the region resumed admission."
+  },
+  {
+    "word": "Convergence",
+    "meaning": "The replicas' eventual agreement after receiving the required updates and applying their merge rules.",
+    "sentence": "Convergence revealed the quota violation but could not erase the historical overspend."
+  },
+  {
+    "word": "Revocation",
+    "meaning": "Withdrawal of a previously granted permission or capability.",
+    "sentence": "Global revocation remained pending while a disconnected gate held an unexpired permit."
+  },
+  {
+    "word": "Recovery point objective",
+    "meaning": "A target for tolerable data loss associated with a specified recovery scenario.",
+    "sentence": "The recovery point objective was more stringent than the observed replication delay during the drill."
+  },
+  {
+    "word": "Semantic availability",
+    "meaning": "The fraction or extent of successful service measured against the requested operation's actual contract.",
+    "sentence": "Counting stale responses as strong successes inflated the team's semantic availability report."
+  }
+]

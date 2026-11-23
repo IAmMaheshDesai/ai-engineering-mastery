@@ -1,0 +1,92 @@
+[
+  {
+    "word": "durable acceptance",
+    "meaning": "A committed promise to retain responsibility for accepted work.",
+    "sentence": "Durable acceptance does not imply immediate searchability."
+  },
+  {
+    "word": "retained log",
+    "meaning": "An ordered record history preserved under a finite retention policy.",
+    "sentence": "Independent consumers replay the retained log."
+  },
+  {
+    "word": "partition key",
+    "meaning": "The value used to assign related records to an ordering scope.",
+    "sentence": "We choose the conversation ID as the partition key."
+  },
+  {
+    "word": "hot key",
+    "meaning": "A key whose demand overloads its serial or partitioned path.",
+    "sentence": "The hot key creates lag despite spare fleet capacity."
+  },
+  {
+    "word": "consumer frontier",
+    "meaning": "The progress boundary a consumer can safely skip after restart.",
+    "sentence": "The consumer frontier cannot pass unfinished records."
+  },
+  {
+    "word": "redelivery",
+    "meaning": "Delivering work again after missing or uncertain acknowledgment.",
+    "sentence": "Redelivery consults the transactional event marker."
+  },
+  {
+    "word": "effect namespace",
+    "meaning": "The scope distinguishing intended logical effects of an event.",
+    "sentence": "The rebuild uses a new effect namespace."
+  },
+  {
+    "word": "rebalance",
+    "meaning": "A coordinated change in partition assignment among consumers.",
+    "sentence": "The rebalance does not automatically stop external work."
+  },
+  {
+    "word": "backpressure",
+    "meaning": "Propagation of resource constraints toward upstream production or admission.",
+    "sentence": "Backpressure prevents the executor queue from exhausting memory."
+  },
+  {
+    "word": "in-flight credit",
+    "meaning": "Permission to occupy a bounded amount of outstanding work.",
+    "sentence": "Return the in-flight credit when execution releases memory."
+  },
+  {
+    "word": "retry amplification",
+    "meaning": "Extra load created when failures cause repeated attempts.",
+    "sentence": "Retry amplification delays recovery after the burst."
+  },
+  {
+    "word": "net drain rate",
+    "meaning": "Service capacity remaining after ongoing arrivals are served.",
+    "sentence": "The net drain rate is two hundred tasks per second."
+  },
+  {
+    "word": "retention headroom",
+    "meaning": "Remaining capacity or time before required history becomes unavailable.",
+    "sentence": "Retention headroom must cover catch-up as well as repair."
+  },
+  {
+    "word": "poison event",
+    "meaning": "A record that repeatedly fails processing under the current consumer.",
+    "sentence": "The poison event requires an invariant-aware repair policy."
+  },
+  {
+    "word": "quarantine",
+    "meaning": "Controlled isolation of failed or suspicious data with identity and reason preserved.",
+    "sentence": "Quarantine storage follows the same access policy as the main stream."
+  },
+  {
+    "word": "contiguous prefix",
+    "meaning": "An unbroken initial sequence whose members all meet a condition.",
+    "sentence": "Only the completed contiguous prefix may be acknowledged."
+  },
+  {
+    "word": "projection publication",
+    "meaning": "Making a verified derived-data version usable by readers.",
+    "sentence": "Projection publication waits for access checks."
+  },
+  {
+    "word": "schema compatibility",
+    "meaning": "The ability of producers and consumers to interpret records across versions.",
+    "sentence": "Schema compatibility must last through the replay window."
+  }
+]

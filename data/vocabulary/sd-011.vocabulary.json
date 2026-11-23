@@ -1,0 +1,92 @@
+[
+  {
+    "word": "recovery frontier",
+    "meaning": "The latest complete state boundary from which safe service can resume.",
+    "sentence": "We selected the recovery frontier only after verifying the manifest and log chain."
+  },
+  {
+    "word": "failure domain",
+    "meaning": "A set of components that can fail together through a shared cause.",
+    "sentence": "The shared identity provider crosses both regional failure domains."
+  },
+  {
+    "word": "common-cause failure",
+    "meaning": "One event or dependency that disables multiple otherwise redundant components.",
+    "sentence": "A malformed global configuration caused a common-cause failure."
+  },
+  {
+    "word": "fencing",
+    "meaning": "Preventing a stale owner from performing protected operations.",
+    "sentence": "Resource-side fencing rejected the old region’s write."
+  },
+  {
+    "word": "ownership epoch",
+    "meaning": "An ordered generation identifying a period of authority.",
+    "sentence": "The new controller operates under ownership epoch forty-two."
+  },
+  {
+    "word": "acknowledgment boundary",
+    "meaning": "The persistence or completion condition required before success is reported.",
+    "sentence": "The acknowledgment boundary includes a durable remote copy."
+  },
+  {
+    "word": "degraded service",
+    "meaning": "An explicitly reduced but still useful operating capability.",
+    "sentence": "Our degraded service preserves approved priority inference traffic."
+  },
+  {
+    "word": "critical path",
+    "meaning": "The longest prerequisite chain determining earliest completion under stated resource assumptions.",
+    "sentence": "GPU allocation is on the recovery critical path."
+  },
+  {
+    "word": "headroom",
+    "meaning": "Capacity beyond current demand that absorbs growth or recovery work.",
+    "sentence": "Replication headroom lets us drain the backlog while new writes continue."
+  },
+  {
+    "word": "reconciliation",
+    "meaning": "Comparing intended and observed state to resolve uncertainty or divergence.",
+    "sentence": "The successor performs reconciliation before retrying the attachment."
+  },
+  {
+    "word": "idempotency key",
+    "meaning": "A stable request identity used to deduplicate repeated logical operations under a defined contract.",
+    "sentence": "We reused the idempotency key after the response was lost."
+  },
+  {
+    "word": "recoverability",
+    "meaning": "The ability to restore, interpret, validate, and safely expose protected state.",
+    "sentence": "A successful backup does not establish recoverability."
+  },
+  {
+    "word": "quiesce",
+    "meaning": "Temporarily stop new work while allowing controlled stabilization.",
+    "sentence": "We quiesce new tool actions before the planned switchover."
+  },
+  {
+    "word": "failback",
+    "meaning": "A controlled transition from recovery infrastructure back to the intended operating topology.",
+    "sentence": "Failback waits until the returning replica is current."
+  },
+  {
+    "word": "blast radius",
+    "meaning": "The scope of customers, resources, or capabilities affected by an event.",
+    "sentence": "Tenant-scoped mutation budgets reduce the blast radius of a faulty plan."
+  },
+  {
+    "word": "precondition",
+    "meaning": "A fact that must hold before an operation is allowed.",
+    "sentence": "Exclusive ownership is a precondition for destructive recovery actions."
+  },
+  {
+    "word": "postcondition",
+    "meaning": "A fact that must be verified after an operation completes.",
+    "sentence": "A correct business canary is a postcondition for routing traffic."
+  },
+  {
+    "word": "decision record",
+    "meaning": "A durable explanation of a choice, its evidence, assumptions, and review triggers.",
+    "sentence": "The decision record explains why we reserved warm GPU capacity."
+  }
+]

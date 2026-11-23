@@ -1,0 +1,450 @@
+[
+  {
+    "id": "sd-003-fc-001",
+    "topicId": "sd-003",
+    "type": "interview",
+    "front": "What is the first design question before selecting a distributed lock?",
+    "back": "Which conflicting state transitions could violate a customer-visible invariant?",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-002",
+    "topicId": "sd-003",
+    "type": "failure",
+    "front": "When can best-effort duplicate suppression be reasonable?",
+    "back": "When concurrent work is safe and its principal downside is bounded extra cost.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-003",
+    "topicId": "sd-003",
+    "type": "failure",
+    "front": "Why can distinct lock names for one device break exclusion?",
+    "back": "Each namespace independently grants access to the same underlying resource.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-004",
+    "topicId": "sd-003",
+    "type": "interview",
+    "front": "What simpler primitive may protect a single conditional reservation?",
+    "back": "A transaction or conditional update checking the expected state and version at mutation time.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-005",
+    "topicId": "sd-003",
+    "type": "interview",
+    "front": "Why include an attempt GUID in a sequential node name?",
+    "back": "To identify a possibly successful creation when its generated path never reached the client.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-006",
+    "topicId": "sd-003",
+    "type": "interview",
+    "front": "What distinguishes a queue GUID from a sequence suffix?",
+    "back": "The GUID identifies a request; the service-assigned sequence determines its admitted order.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-007",
+    "topicId": "sd-003",
+    "type": "concept",
+    "front": "Can a new session inherit an old ephemeral-node grant by recognizing its GUID?",
+    "back": "No. Establish a valid new grant under the new session.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-008",
+    "topicId": "sd-003",
+    "type": "concept",
+    "front": "Why does a lost create reply threaten liveness?",
+    "back": "A blind retry may enqueue behind the caller's own unknown entry.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-009",
+    "topicId": "sd-003",
+    "type": "interview",
+    "front": "Why watch only the previous exclusive contender?",
+    "back": "Ordinary release enables one successor, so the other waiters need no wake-up.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-010",
+    "topicId": "sd-003",
+    "type": "tradeoff",
+    "front": "The predecessor is absent at watch setup. What now?",
+    "back": "Re-evaluate the queue immediately.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-011",
+    "topicId": "sd-003",
+    "type": "concept",
+    "front": "Why does a watch event require a recheck?",
+    "back": "The predecessor's disappearance does not prove this attempt is live and currently eligible.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-012",
+    "topicId": "sd-003",
+    "type": "concept",
+    "front": "What fairness does a sequential queue provide?",
+    "back": "Ordering of admitted contenders under its service order, subject to session and progress conditions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-013",
+    "topicId": "sd-003",
+    "type": "failure",
+    "front": "How many wake-ups can repeated wake-all cause when 100 waiters drain?",
+    "back": "5,050 under the idealized one-grant-per-release model.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-014",
+    "topicId": "sd-003",
+    "type": "failure",
+    "front": "Why might several readers correctly wake at once?",
+    "back": "After a preceding writer leaves, multiple shared read grants can be compatible.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-015",
+    "topicId": "sd-003",
+    "type": "concept",
+    "front": "How can reader preference starve a writer?",
+    "back": "New readers continually bypass a waiting writer as existing readers leave.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-016",
+    "topicId": "sd-003",
+    "type": "failure",
+    "front": "How can two upgrades deadlock?",
+    "back": "Each reader retains a shared grant while waiting for the other's grant to disappear.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-017",
+    "topicId": "sd-003",
+    "type": "concept",
+    "front": "What does an atomic compare-and-delete on release prevent?",
+    "back": "A delayed cleanup removing a replacement holder's grant.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-018",
+    "topicId": "sd-003",
+    "type": "interview",
+    "front": "What is the danger of session-level advisory locks with pooling?",
+    "back": "The database session and lock can survive the application request or rollback.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-019",
+    "topicId": "sd-003",
+    "type": "concept",
+    "front": "Why can a valid lock service still allow an obsolete pointer write?",
+    "back": "The protected external service may accept a delayed command without checking authority.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-020",
+    "topicId": "sd-003",
+    "type": "failure",
+    "front": "Why check readiness again after acquiring a materialization lock?",
+    "back": "The preceding holder may already have published the requested artifact.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-021",
+    "topicId": "sd-003",
+    "type": "concept",
+    "front": "What does an edge from A to B in a wait-for graph mean?",
+    "back": "A is waiting for a resource held by B.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-022",
+    "topicId": "sd-003",
+    "type": "concept",
+    "front": "Why does a global resource order prevent circular wait?",
+    "back": "Wait dependencies must advance consistently in that order and cannot form a strictly increasing cycle.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-023",
+    "topicId": "sd-003",
+    "type": "concept",
+    "front": "What if a new dependency violates the order of already-held locks?",
+    "back": "Release or roll back safely, reacquire in order and revalidate the dependency.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-024",
+    "topicId": "sd-003",
+    "type": "tradeoff",
+    "front": "How does livelock differ from a deadlock?",
+    "back": "Participants keep changing state or retrying while useful progress still fails.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-025",
+    "topicId": "sd-003",
+    "type": "tradeoff",
+    "front": "What signal helps identify starvation?",
+    "back": "Age of the oldest eligible waiter segmented by workload class.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-026",
+    "topicId": "sd-003",
+    "type": "tradeoff",
+    "front": "How does a lock convoy appear?",
+    "back": "A slow holder creates a growing queue despite an acyclic wait graph.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-027",
+    "topicId": "sd-003",
+    "type": "interview",
+    "front": "At 50 ms of serialized hold time, what is the optimistic service rate?",
+    "back": "About 20 holders per second before handoff overhead.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-028",
+    "topicId": "sd-003",
+    "type": "concept",
+    "front": "Why avoid serializing a thousand successful cache readers?",
+    "back": "They can read the same immutable publication concurrently.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-029",
+    "topicId": "sd-003",
+    "type": "failure",
+    "front": "Can expiring a session retract an already issued provider request?",
+    "back": "Only an explicit downstream cancellation or ordering contract could guarantee that.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-030",
+    "topicId": "sd-003",
+    "type": "tradeoff",
+    "front": "What does a transfer timeout reveal about completion?",
+    "back": "The caller missed a timely definitive outcome and needs lookup or safe replay.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-031",
+    "topicId": "sd-003",
+    "type": "failure",
+    "front": "How should cancellation identify its target?",
+    "back": "Name the exact acquisition attempt or grant, with a documented race against success.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-003-fc-032",
+    "topicId": "sd-003",
+    "type": "concept",
+    "front": "What test exposes an unchecked external publication?",
+    "back": "Delay an old write across takeover and verify the protected resource after final delivery.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

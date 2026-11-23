@@ -1,0 +1,87 @@
+[
+  {
+    "word": "Mutual exclusion",
+    "meaning": "A rule allowing only compatible participants inside a protected operation.",
+    "sentence": "The reservation table enforces mutual exclusion between competing writers."
+  },
+  {
+    "word": "Critical section",
+    "meaning": "The work whose execution must be coordinated to preserve an invariant.",
+    "sentence": "The final pointer update is our shortest useful critical section."
+  },
+  {
+    "word": "Contender",
+    "meaning": "A participant attempting to acquire a grant.",
+    "sentence": "Each contender watches the previous eligible queue entry."
+  },
+  {
+    "word": "Advisory lock",
+    "meaning": "A lock whose protection depends on writers following its convention.",
+    "sentence": "The maintenance script bypassed the advisory lock."
+  },
+  {
+    "word": "Ephemeral node",
+    "meaning": "A ZooKeeper record whose lifetime is tied to its creating session.",
+    "sentence": "Session expiry removed the worker's ephemeral node."
+  },
+  {
+    "word": "Predecessor",
+    "meaning": "The earlier live queue entry that an exclusive waiter must track.",
+    "sentence": "When its predecessor disappeared, the waiter reread the queue."
+  },
+  {
+    "word": "Acquisition attempt",
+    "meaning": "One identifiable request to obtain a grant.",
+    "sentence": "The acquisition attempt survived a lost create reply."
+  },
+  {
+    "word": "Conditional release",
+    "meaning": "Removing a lock only when the expected grant still matches.",
+    "sentence": "Conditional release preserved the successor's lease."
+  },
+  {
+    "word": "Lock ordering",
+    "meaning": "A shared order in which participants acquire multiple resources.",
+    "sentence": "Lock ordering eliminated the cycle between rack and quota reservations."
+  },
+  {
+    "word": "Deadlock",
+    "meaning": "A cycle of dependencies that prevents the participants from progressing.",
+    "sentence": "Both sessions continued to renew during the deadlock."
+  },
+  {
+    "word": "Livelock",
+    "meaning": "Repeated activity that prevents useful completion.",
+    "sentence": "Synchronized retries produced livelock."
+  },
+  {
+    "word": "Starvation",
+    "meaning": "Persistent denial of progress to a particular participant.",
+    "sentence": "A writer-age alert exposed starvation during peak reads."
+  },
+  {
+    "word": "Lock convoy",
+    "meaning": "A queue that forms behind a slow or delayed holder.",
+    "sentence": "The transfer under the global lock created a convoy."
+  },
+  {
+    "word": "Stampede",
+    "meaning": "A burst of duplicate work caused by simultaneous demand for a missing result.",
+    "sentence": "Staged publication reduced the cold-cache stampede."
+  },
+  {
+    "word": "Revalidation",
+    "meaning": "Checking that previously observed conditions still hold before acting.",
+    "sentence": "Revalidation showed the earlier worker had already finished."
+  },
+  {
+    "word": "Wait-for graph",
+    "meaning": "A graph linking waiting participants to the holders they depend on.",
+    "sentence": "The wait-for graph showed a cycle involving the quota manager."
+  },
+  {
+    "word": "Publication barrier",
+    "meaning": "The protected point at which staged data becomes authoritative.",
+    "sentence": "The publication barrier rejects incomplete manifests."
+  }
+]

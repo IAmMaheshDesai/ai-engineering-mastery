@@ -1,0 +1,492 @@
+[
+  {
+    "id": "sd-014-fc-001",
+    "topicId": "sd-014",
+    "type": "concept",
+    "front": "How does a retained log differ from a competing work queue?",
+    "back": "A retained log supports independent progress and replay of ordered history; a work queue distributes tasks under acknowledgment or lease semantics. Inspect actual product behavior.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-002",
+    "topicId": "sd-014",
+    "type": "concept",
+    "front": "Which asynchronous boundaries should be distinguished?",
+    "back": "Acceptance, durable append, delivery, processing, effect completion, and recorded progress.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-003",
+    "topicId": "sd-014",
+    "type": "failure",
+    "front": "Why is broker acceptance not proof that a document is searchable?",
+    "back": "Chunking, embedding, indexing, version publication, and authorization may still be incomplete.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-004",
+    "topicId": "sd-014",
+    "type": "concept",
+    "front": "Why keep business event identity separate from log position?",
+    "back": "A position identifies an append occurrence; multiple occurrences can represent one retried business event.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-005",
+    "topicId": "sd-014",
+    "type": "tradeoff",
+    "front": "How should a partition key be chosen?",
+    "back": "From the smallest business scope requiring order, balancing independent parallelism against cross-key invariants.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-006",
+    "topicId": "sd-014",
+    "type": "interview",
+    "front": "A hot key emits 7k/s to a 5k/s partition while fleet capacity is spare. What happens?",
+    "back": "That partition backlog grows 2k/s; aggregate spare capacity cannot automatically process the same ordered key.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-007",
+    "topicId": "sd-014",
+    "type": "failure",
+    "front": "Why can increasing partition count disrupt application ordering?",
+    "back": "Routing may move a key while old records remain elsewhere; a migration/version boundary is needed under the actual product contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-008",
+    "topicId": "sd-014",
+    "type": "concept",
+    "front": "Does ordered fetch imply ordered business completion?",
+    "back": "No. Parallel workers may finish later records first; preserve per-entity order or enforce version preconditions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-009",
+    "topicId": "sd-014",
+    "type": "concept",
+    "front": "Why is replication factor alone not a durability guarantee?",
+    "back": "Acknowledgment thresholds, eligible replicas, placement, persistence assumptions, and recovery policy determine survival.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-010",
+    "topicId": "sd-014",
+    "type": "failure",
+    "front": "What does a lost append acknowledgment mean?",
+    "back": "The append may already be durable. Retry under the supported transport identity and retain stable business identity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-011",
+    "topicId": "sd-014",
+    "type": "tradeoff",
+    "front": "What does producer idempotence not automatically cover?",
+    "back": "Duplicate upstream business generation, a different producer incarnation outside its scope, or arbitrary external effects.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-012",
+    "topicId": "sd-014",
+    "type": "concept",
+    "front": "What are the two basic consumer progress crash windows?",
+    "back": "Progress first can skip an unapplied effect; effect first can repeat after redelivery unless atomic or repeat-safe.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-013",
+    "topicId": "sd-014",
+    "type": "concept",
+    "front": "How can a database projection handle redelivery safely?",
+    "back": "Commit the event marker and business update in the same transaction, scoped to the projection/effect namespace.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-014",
+    "topicId": "sd-014",
+    "type": "failure",
+    "front": "Why is a marker committed before the effect in another transaction unsafe?",
+    "back": "A crash can leave a marker that makes replay skip an effect that never occurred.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-015",
+    "topicId": "sd-014",
+    "type": "tradeoff",
+    "front": "Do broker transactions make a remote payment exactly once?",
+    "back": "Not automatically. The external effect must cooperate through a supported atomic, idempotent, or reconcilable contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-016",
+    "topicId": "sd-014",
+    "type": "concept",
+    "front": "What does a safe scalar restart frontier represent?",
+    "back": "A prefix whose work may safely be skipped under the declared processing and replay contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-017",
+    "topicId": "sd-014",
+    "type": "interview",
+    "front": "If 102 finishes before 100 and 101, can restart move to 103?",
+    "back": "No. Under the contiguous-position model, advance only after the unfinished prefix is safely complete.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-018",
+    "topicId": "sd-014",
+    "type": "failure",
+    "front": "What can survive a consumer rebalance outside transport ownership?",
+    "back": "Already-dispatched GPU work or external effects; group reassignment does not necessarily stop them.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-019",
+    "topicId": "sd-014",
+    "type": "tradeoff",
+    "front": "Why separate long-running execution from broker discovery?",
+    "back": "A durable task system can own leases, retries, and outputs independently of short consumer sessions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-020",
+    "topicId": "sd-014",
+    "type": "concept",
+    "front": "What must replay define?",
+    "back": "Purpose, effect/projection namespace, schema compatibility, authorization, retention/payload availability, and resource budgets.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-021",
+    "topicId": "sd-014",
+    "type": "concept",
+    "front": "What is end-to-end backpressure?",
+    "back": "Downstream resource constraints change upstream production or admission across every buffering layer.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-022",
+    "topicId": "sd-014",
+    "type": "failure",
+    "front": "Why is a count-only queue bound insufficient for AI payloads?",
+    "back": "Prompt and payload sizes vary; bytes, tokens, concurrency, and deadlines can dominate resources.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-023",
+    "topicId": "sd-014",
+    "type": "interview",
+    "front": "With 60k free queue slots and net growth 400 tasks/s, what is fill time?",
+    "back": "150 seconds under fixed-rate assumptions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-024",
+    "topicId": "sd-014",
+    "type": "interview",
+    "front": "After a 90-second burst, why is the example backlog 56k?",
+    "back": "It starts at 20k and grows by (1000−600)×90 = 36k.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-025",
+    "topicId": "sd-014",
+    "type": "interview",
+    "front": "How long to drain 56k when service is 600/s and new arrivals 400/s?",
+    "back": "280 seconds at net 200/s, assuming fixed rates and no other bottleneck.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-026",
+    "topicId": "sd-014",
+    "type": "failure",
+    "front": "Why can immediate retries defeat pressure controls?",
+    "back": "They amplify offered load and can keep the system overloaded after original demand falls.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-027",
+    "topicId": "sd-014",
+    "type": "concept",
+    "front": "When should a credit be returned?",
+    "back": "When the corresponding bounded resource is actually released, not merely when the client times out.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-028",
+    "topicId": "sd-014",
+    "type": "concept",
+    "front": "What does 50k records/s × 800 bytes imply?",
+    "back": "40 MB/s decimal logical stored-record data before replication and other overhead.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-029",
+    "topicId": "sd-014",
+    "type": "interview",
+    "front": "What is the example three-copy 24-hour record-data estimate?",
+    "back": "50,000×800×86,400×3 = 10.368 TB decimal, excluding overhead, reserve, and compression changes.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-030",
+    "topicId": "sd-014",
+    "type": "failure",
+    "front": "Why can a slow consumer lose replayability despite a time-retention setting?",
+    "back": "Byte limits or expiry can remove needed records before repair and net catch-up finish.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-031",
+    "topicId": "sd-014",
+    "type": "tradeoff",
+    "front": "Why is compaction not always a full event-history replacement?",
+    "back": "Latest-per-key behavior can remove transitions a rebuild requires; actual tombstone and deletion semantics matter.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-032",
+    "topicId": "sd-014",
+    "type": "failure",
+    "front": "Should every poison event simply be skipped?",
+    "back": "No. Skipping may violate entity order or security invariants; quarantine, pause, repair, and replay need explicit policy.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-033",
+    "topicId": "sd-014",
+    "type": "concept",
+    "front": "Why separate retrieval freshness from authorization revocation?",
+    "back": "Delayed indexing may be acceptable while stale permission enforcement can expose data.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-034",
+    "topicId": "sd-014",
+    "type": "tradeoff",
+    "front": "What can dynamic batching improve and worsen?",
+    "back": "It can amortize execution cost but adds queue delay, memory pressure, and correlated batch failure/cancellation complexity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-014-fc-035",
+    "topicId": "sd-014",
+    "type": "concept",
+    "front": "What should pipeline observability measure beyond broker lag?",
+    "back": "Accepted-to-usable freshness, bytes/time lag, hot keys, completion gaps, retries, uncertainty, retention headroom, and governed failures.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

@@ -1,0 +1,450 @@
+[
+  {
+    "id": "sd-004-fc-001",
+    "topicId": "sd-004",
+    "type": "interview",
+    "front": "What property of a history does a consistency model specify?",
+    "back": "Which observations of concurrent operations are allowed for the stated object and failure model.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-002",
+    "topicId": "sd-004",
+    "type": "failure",
+    "front": "A read begins after a write completes and returns an older unique value. When is that a linearizability violation?",
+    "back": "When it is a current read of the same register with no intervening change that restores the old value.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-003",
+    "topicId": "sd-004",
+    "type": "failure",
+    "front": "Can a read finishing after a successful write legally return the prior value?",
+    "back": "It can if the read overlapped the write and all observed results fit one order placing that read first.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-004",
+    "topicId": "sd-004",
+    "type": "interview",
+    "front": "What constraint distinguishes sequential consistency from linearizability?",
+    "back": "Sequential consistency preserves process program order. Linearizability additionally preserves real-time precedence of nonoverlapping operations.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-005",
+    "topicId": "sd-004",
+    "type": "interview",
+    "front": "Can two successful concurrent CAS operations both claim the same initially empty slot?",
+    "back": "No, under the single-slot sequential specification the first success changes the precondition for the other.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-006",
+    "topicId": "sd-004",
+    "type": "interview",
+    "front": "What might a timed-out write contribute to a successful later read?",
+    "back": "It might have applied despite the missing response; the history must account for uncertain outcomes.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-007",
+    "topicId": "sd-004",
+    "type": "concept",
+    "front": "What does read-your-writes constrain?",
+    "back": "A session's subsequent reads must reflect its earlier writes or permissible later state.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-008",
+    "topicId": "sd-004",
+    "type": "concept",
+    "front": "What does monotonic reads protect on region change?",
+    "back": "A session that observed a particular progress frontier must not regress behind it on a later read.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-009",
+    "topicId": "sd-004",
+    "type": "interview",
+    "front": "What failure does writes-follow-reads prevent?",
+    "back": "A dependent write becoming visible before the relevant state read by its author in a causally ordered view.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-010",
+    "topicId": "sd-004",
+    "type": "tradeoff",
+    "front": "Why bind a minimum-revision token to a lineage?",
+    "back": "Restoration or migration can reuse numbers in a history that omits the old write.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-011",
+    "topicId": "sd-004",
+    "type": "concept",
+    "front": "When can a numeric revision floor be satisfied locally?",
+    "back": "When the same stream's applied prefix covers that revision and other access preconditions hold.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-012",
+    "topicId": "sd-004",
+    "type": "concept",
+    "front": "What should a replica do when unable to meet a session floor?",
+    "back": "Wait within deadline, route to a qualifying replica or explicitly fail the constrained read.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-013",
+    "topicId": "sd-004",
+    "type": "failure",
+    "front": "Which edges construct happens-before for the lesson's data history?",
+    "back": "Program order, reads-from or communication edges included in the model, and their transitive closure.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-014",
+    "topicId": "sd-004",
+    "type": "failure",
+    "front": "What does East do when a dependent approval arrives before its evaluation?",
+    "back": "Stage it until required dependencies become visible or obtain them using the supported protocol.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-015",
+    "topicId": "sd-004",
+    "type": "concept",
+    "front": "How do (1,0) and (0,1) compare as vector clocks?",
+    "back": "They are incomparable; each has a larger component than the other.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-016",
+    "topicId": "sd-004",
+    "type": "failure",
+    "front": "Does vector dominance select a business winner for concurrent edits?",
+    "back": "No. The application needs a conflict policy compatible with the object's meaning.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-017",
+    "topicId": "sd-004",
+    "type": "concept",
+    "front": "Under which conditions does eventual convergence apply?",
+    "back": "Specify quiescence or the relevant update set, eventual delivery and repair, and compatible deterministic merge behavior.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-018",
+    "topicId": "sd-004",
+    "type": "interview",
+    "front": "Why is set union robust to duplicate delivery for a grow-only set?",
+    "back": "Union is idempotent, associative and commutative.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-019",
+    "topicId": "sd-004",
+    "type": "concept",
+    "front": "Can last-writer-wins converge while losing accepted intent?",
+    "back": "Yes. A deterministic winner may discard a legitimate concurrent edit.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-020",
+    "topicId": "sd-004",
+    "type": "failure",
+    "front": "How can a stale fill survive a newer invalidation?",
+    "back": "The cache drops the invalidation while empty, then accepts an older in-flight fill.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-021",
+    "topicId": "sd-004",
+    "type": "concept",
+    "front": "What does retaining a version floor protect?",
+    "back": "It rejects late fills older than a previously observed invalidation, while the floor remains available.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-022",
+    "topicId": "sd-004",
+    "type": "concept",
+    "front": "Why is quorum intersection alone insufficient for linearizable reads?",
+    "back": "A read can expose a partially replicated write that a later majority misses without further protocol machinery.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-023",
+    "topicId": "sd-004",
+    "type": "concept",
+    "front": "What role can read write-back play in an atomic register?",
+    "back": "It propagates the selected tagged value to a sufficient quorum before the read completes.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-024",
+    "topicId": "sd-004",
+    "type": "tradeoff",
+    "front": "Why cannot two incomparable local log offsets define one global snapshot?",
+    "back": "Their numeric order encodes no common time or consistent cut across the shards.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-025",
+    "topicId": "sd-004",
+    "type": "tradeoff",
+    "front": "What extra guarantee does strict serializability add to serializability?",
+    "back": "The serial transaction order must respect real-time precedence between nonoverlapping transactions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-026",
+    "topicId": "sd-004",
+    "type": "tradeoff",
+    "front": "What is write skew?",
+    "back": "Concurrent transactions read a shared predicate and write disjoint records, jointly violating an invariant.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-027",
+    "topicId": "sd-004",
+    "type": "interview",
+    "front": "What is a safe read timestamp?",
+    "back": "A timestamp through which a replica can establish the required snapshot visibility under its protocol.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-028",
+    "topicId": "sd-004",
+    "type": "concept",
+    "front": "Why track worker readiness separately from desired generation?",
+    "back": "Ordering a pointer change does not imply every worker loaded or admitted traffic to the new model.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-029",
+    "topicId": "sd-004",
+    "type": "failure",
+    "front": "What must a rollback increment even when it points to older weights?",
+    "back": "The publication generation; the artifact identity can legitimately revert.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-030",
+    "topicId": "sd-004",
+    "type": "tradeoff",
+    "front": "What does a 1 percent strong-read fallback cost at 25,000 polls per second?",
+    "back": "250 additional reads per second on the fallback path under the illustrative load.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-031",
+    "topicId": "sd-004",
+    "type": "failure",
+    "front": "How can a test establish cross-client order without synchronized wall clocks?",
+    "back": "Send a message after write acknowledgment and initiate the other client's read only upon receipt.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-004-fc-032",
+    "topicId": "sd-004",
+    "type": "concept",
+    "front": "What does one impossible complete history establish?",
+    "back": "It refutes the claimed model for that execution if the checker, assumptions and event record are valid.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

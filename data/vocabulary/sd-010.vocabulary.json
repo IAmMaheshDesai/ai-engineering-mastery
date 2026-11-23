@@ -1,0 +1,92 @@
+[
+  {
+    "word": "Aggregate",
+    "meaning": "The consistency boundary whose state and invariants govern a command.",
+    "sentence": "The rollout aggregate rejects a second activation at the same revision."
+  },
+  {
+    "word": "Command",
+    "meaning": "A request to perform a domain action.",
+    "sentence": "The command included the revision the operator had reviewed."
+  },
+  {
+    "word": "Domain event",
+    "meaning": "An accepted fact expressed in the language of the modeled business process.",
+    "sentence": "The domain event identified the checkpoint that received approval."
+  },
+  {
+    "word": "Reducer",
+    "meaning": "A deterministic function that evolves a prior state using a recorded fact.",
+    "sentence": "The reducer preserved the suspended state when an old readiness observation arrived."
+  },
+  {
+    "word": "Projection",
+    "meaning": "A derived representation optimized for a particular query or use.",
+    "sentence": "The fleet projection exposed a watermark with each report."
+  },
+  {
+    "word": "Stream revision",
+    "meaning": "A position within one aggregate's accepted event sequence.",
+    "sentence": "The handler appended only if the stream revision still matched six."
+  },
+  {
+    "word": "Expected revision",
+    "meaning": "The prior stream position required for a conditional append.",
+    "sentence": "The stale expected revision exposed a conflicting operator decision."
+  },
+  {
+    "word": "Causation identifier",
+    "meaning": "A reference to the action or fact that caused another message.",
+    "sentence": "The callback carried a causation identifier for the initial rollout."
+  },
+  {
+    "word": "Correlation identifier",
+    "meaning": "An identifier that groups related work across boundaries.",
+    "sentence": "The correlation identifier connected the command and regional observations."
+  },
+  {
+    "word": "Watermark",
+    "meaning": "A boundary through which a specific consumer has processed its input.",
+    "sentence": "The dashboard watermark showed why the new suspension was still missing."
+  },
+  {
+    "word": "Checkpoint",
+    "meaning": "Durable evidence of a consumer's progress or execution state.",
+    "sentence": "The projector committed its checkpoint with the updated view."
+  },
+  {
+    "word": "Snapshot",
+    "meaning": "A materialized state associated with a precise history prefix.",
+    "sentence": "The snapshot represented deployment D immediately after revision four hundred."
+  },
+  {
+    "word": "Upcaster",
+    "meaning": "A transformation that presents older event representations in a supported newer shape.",
+    "sentence": "The upcaster retained unknown approval details instead of fabricating an actor."
+  },
+  {
+    "word": "Rehydration",
+    "meaning": "Reconstruction of aggregate state from retained history and compatible snapshots.",
+    "sentence": "Rehydration loaded the snapshot before applying sixty later events."
+  },
+  {
+    "word": "Idempotent",
+    "meaning": "Producing the intended result safely under repeated processing of the same logical input.",
+    "sentence": "An idempotent projector ignored a duplicate delivery of the accepted event."
+  },
+  {
+    "word": "Bitemporal",
+    "meaning": "Distinguishing when a fact applies from when it became known or recorded.",
+    "sentence": "The bitemporal report answered what operators knew when they made the decision."
+  },
+  {
+    "word": "Shadow projection",
+    "meaning": "A separate derived view built and evaluated alongside the current production view.",
+    "sentence": "The shadow projection caught up before the query route switched."
+  },
+  {
+    "word": "Quarantine",
+    "meaning": "Isolation of input that cannot safely be processed under the current contract.",
+    "sentence": "Quarantine preserved the event while its partition remained visibly incomplete."
+  }
+]

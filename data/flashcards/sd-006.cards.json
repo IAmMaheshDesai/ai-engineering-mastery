@@ -1,0 +1,450 @@
+[
+  {
+    "id": "sd-006-fc-001",
+    "topicId": "sd-006",
+    "type": "interview",
+    "front": "Which consistency property appears in the classic CAP register result?",
+    "back": "Atomic consistency, commonly called linearizability for a read/write register.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-002",
+    "topicId": "sd-006",
+    "type": "failure",
+    "front": "What temporal relation forces a reader to account for a write in the two-region counterexample?",
+    "back": "The write completes before the read begins, with no intervening writes.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-003",
+    "topicId": "sd-006",
+    "type": "failure",
+    "front": "Why do the two isolated-reader histories require different answers?",
+    "back": "The register was changed in one history and stayed at its original value in the other.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-004",
+    "topicId": "sd-006",
+    "type": "interview",
+    "front": "Could a randomized guess guarantee a correct isolated read?",
+    "back": "No. The same local evidence occurs in both histories, so randomness cannot guarantee the right value in both.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-005",
+    "topicId": "sd-006",
+    "type": "interview",
+    "front": "What does formal availability require of a request to a nonfailed node?",
+    "back": "It must eventually complete successfully according to the specified operation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-006",
+    "topicId": "sd-006",
+    "type": "interview",
+    "front": "How does a fast unavailable response affect strong-read availability?",
+    "back": "It preserves an honest failure signal while failing the requested successful strong read.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-007",
+    "topicId": "sd-006",
+    "type": "concept",
+    "front": "Why is a short deadline different from the theorem's liveness condition?",
+    "back": "A finite but late success can satisfy eventual completion while missing a product deadline.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-008",
+    "topicId": "sd-006",
+    "type": "concept",
+    "front": "During a fixed five-voter 3/2 split, which side can potentially commit?",
+    "back": "The three-voter side if its eligible voters, leader and storage satisfy the protocol.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-009",
+    "topicId": "sd-006",
+    "type": "interview",
+    "front": "Why can a majority-side client still fail?",
+    "back": "Authentication, routing, ingress or data dependencies may require inaccessible resources.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-010",
+    "topicId": "sd-006",
+    "type": "tradeoff",
+    "front": "What is an asymmetric partition?",
+    "back": "A failure where communication works in one direction or on one protocol path but needed replies cannot complete.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-011",
+    "topicId": "sd-006",
+    "type": "concept",
+    "front": "What does the E in PACELC ask about?",
+    "back": "The tradeoff between latency and consistency during ordinary operation without a partition.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-012",
+    "topicId": "sd-006",
+    "type": "concept",
+    "front": "Parallel local flush is 4 ms and eligible follower replies are 8 and 70 ms. When can a three-voter leader commit?",
+    "back": "At 8 ms under the stated parallel-dispatch and current-term assumptions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-013",
+    "topicId": "sd-006",
+    "type": "failure",
+    "front": "What happens to that commit stage after the 8 ms follower is unavailable?",
+    "back": "The other follower becomes necessary, raising that trace's commit stage to 70 ms.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-014",
+    "topicId": "sd-006",
+    "type": "failure",
+    "front": "What is wrong with equating remote durable replication and fresh follower reads?",
+    "back": "The replica can have durable bytes it has not applied, and a current read may require authority evidence.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-015",
+    "topicId": "sd-006",
+    "type": "concept",
+    "front": "How can a model-serving application move coordination off its hot path?",
+    "back": "Strongly order shared publication decisions while serving authorized pinned immutable artifacts locally.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-016",
+    "topicId": "sd-006",
+    "type": "failure",
+    "front": "Why might two local quota counters overspend?",
+    "back": "Both regions can independently allocate against the same apparent spare capacity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-017",
+    "topicId": "sd-006",
+    "type": "concept",
+    "front": "How do preallocated rights protect a global quota?",
+    "back": "Each region spends only its own bounded rights and transfers must prevent double credit.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-018",
+    "topicId": "sd-006",
+    "type": "interview",
+    "front": "What availability cost arises from splitting spendable rights?",
+    "back": "Unused rights can be stranded in an unreachable region.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-019",
+    "topicId": "sd-006",
+    "type": "concept",
+    "front": "Which data naturally supports a union merge?",
+    "back": "Immutable observations with stable unique IDs, if the application accepts their independent admission.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-020",
+    "topicId": "sd-006",
+    "type": "failure",
+    "front": "Why does an immutable digest alone fail to guarantee permission?",
+    "back": "Identity of bytes does not establish whether a tenant's current policy still allows access.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-021",
+    "topicId": "sd-006",
+    "type": "concept",
+    "front": "What extra evidence is needed to report a withdrawal globally effective?",
+    "back": "Required serving paths have installed the denial or all outstanding authorization has safely expired or been independently fenced.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-022",
+    "topicId": "sd-006",
+    "type": "concept",
+    "front": "What is the difference between a desired revision and a ready revision?",
+    "back": "Desired records the authoritative selection. Ready requires the serving region to have verified and loaded the model.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-023",
+    "topicId": "sd-006",
+    "type": "concept",
+    "front": "Can a client-provided minimum revision prove it read the globally latest value?",
+    "back": "No. It establishes a lower bound for that client's view, not knowledge of later writers.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-024",
+    "topicId": "sd-006",
+    "type": "tradeoff",
+    "front": "Why does a recent replica heartbeat fail as a proof of bounded staleness?",
+    "back": "It can be sent recently by a follower whose applied state is far behind.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-025",
+    "topicId": "sd-006",
+    "type": "tradeoff",
+    "front": "Which watermark matters when rebuilding a replica from a remote log?",
+    "back": "The highest contiguous durable, replayable prefix together with the state needed to apply it.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-026",
+    "topicId": "sd-006",
+    "type": "tradeoff",
+    "front": "What is the difference between RPO and actual lost history?",
+    "back": "RPO is an objective under specified failures. Actual loss depends on the concrete acknowledged history and recoverable prefix.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-027",
+    "topicId": "sd-006",
+    "type": "interview",
+    "front": "Why can DNS cutover alone be insufficient during database promotion?",
+    "back": "Old clients may use cached routes or existing connections and continue sending writes.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-028",
+    "topicId": "sd-006",
+    "type": "concept",
+    "front": "Which event should trigger a stale-read test against the isolated endpoint?",
+    "back": "Completion of a conflicting write on the majority before the strong read is invoked on the old side.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-029",
+    "topicId": "sd-006",
+    "type": "failure",
+    "front": "Why retain unknown as an enforcement status?",
+    "back": "A disconnected region cannot supply current evidence, and missing telemetry does not establish zero violations.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-030",
+    "topicId": "sd-006",
+    "type": "tradeoff",
+    "front": "What risk arises on rejoin from a delayed older policy update?",
+    "back": "It could undo a newer denial unless generation and lineage comparisons reject it.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-031",
+    "topicId": "sd-006",
+    "type": "failure",
+    "front": "How should latency be segmented for current and pinned reads?",
+    "back": "Measure by requested semantics, served semantics, region and end-to-end deadline.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-006-fc-032",
+    "topicId": "sd-006",
+    "type": "concept",
+    "front": "A 9,600 GiB backlog has a 20 GiB/s bottleneck. What is the ideal drain time before new arrivals?",
+    "back": "480 seconds. Additional traffic and overhead increase the time.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

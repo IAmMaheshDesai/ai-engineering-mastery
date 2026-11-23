@@ -1,0 +1,450 @@
+[
+  {
+    "id": "sd-005-fc-001",
+    "topicId": "sd-005",
+    "type": "interview",
+    "front": "What capacity can an additional asynchronous read replica normally add?",
+    "back": "It can serve eligible reads independently while still replaying the primary's write stream.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-002",
+    "topicId": "sd-005",
+    "type": "failure",
+    "front": "Why can a follower with a received change still return an earlier value?",
+    "back": "Receive, durable flush and local application are separate stages.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-003",
+    "topicId": "sd-005",
+    "type": "failure",
+    "front": "Which measurement distinguishes read saturation from write saturation?",
+    "back": "Measure per-operation and per-stage contention on each leader and follower under the real query mix.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-004",
+    "topicId": "sd-005",
+    "type": "interview",
+    "front": "What does a session's minimum applied-position token establish?",
+    "back": "A follower covering that position can include the session's preceding write; unrelated later writes may still be absent.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-005",
+    "topicId": "sd-005",
+    "type": "interview",
+    "front": "What distinguishes a logical split from a physical move?",
+    "back": "A split changes key boundaries; a move reassigns responsibility or data placement.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-006",
+    "topicId": "sd-005",
+    "type": "interview",
+    "front": "When does partitioning improve write throughput?",
+    "back": "When conflicting operations can be separated into independent groups without a remaining globally serialized dependency.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-007",
+    "topicId": "sd-005",
+    "type": "concept",
+    "front": "What query cost follows hash striping a time series?",
+    "back": "Range queries may read and merge several ordered streams.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-008",
+    "topicId": "sd-005",
+    "type": "concept",
+    "front": "What information makes cross-shard pagination stable?",
+    "back": "A defined snapshot, deterministic total order and sufficient cursor state across participating streams.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-009",
+    "topicId": "sd-005",
+    "type": "interview",
+    "front": "Why can one hot key defeat a uniform hash?",
+    "back": "Every operation for that key still maps to the same bucket.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-010",
+    "topicId": "sd-005",
+    "type": "tradeoff",
+    "front": "Why co-locate activation request outcomes with model pointers?",
+    "back": "A retried command can recover its original result across crashes and migration under the same ordering boundary.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-011",
+    "topicId": "sd-005",
+    "type": "concept",
+    "front": "How many residues keep their original node under modulo four to modulo five over zero through nineteen?",
+    "back": "Four residues, yielding 20 percent unchanged under uniform distribution.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-012",
+    "topicId": "sd-005",
+    "type": "concept",
+    "front": "Why map stable buckets to physical groups?",
+    "back": "Selected buckets can move without remapping keys belonging to other buckets.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-013",
+    "topicId": "sd-005",
+    "type": "failure",
+    "front": "What limits the balancing benefit of many virtual nodes?",
+    "back": "Unequal key popularity, resource constraints and costs of migration remain.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-014",
+    "topicId": "sd-005",
+    "type": "failure",
+    "front": "Which policy prevents two replica tokens on one machine from faking redundancy?",
+    "back": "Enforce physical-node uniqueness and required failure-domain separation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-015",
+    "topicId": "sd-005",
+    "type": "concept",
+    "front": "Why check placement rules during every transition?",
+    "back": "An intermediate copy removal may violate durability even if both endpoints look valid.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-016",
+    "topicId": "sd-005",
+    "type": "failure",
+    "front": "What evidence ties snapshot and change stream together?",
+    "back": "A source lineage and consistent snapshot position with retained ordered changes after that position.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-017",
+    "topicId": "sd-005",
+    "type": "concept",
+    "front": "Why copy deletes and tombstones?",
+    "back": "Otherwise an older copy can restore data intentionally removed from the authoritative state.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-018",
+    "topicId": "sd-005",
+    "type": "interview",
+    "front": "What is unsafe about a maximum observed replay position?",
+    "back": "It can hide unapplied gaps or uncommitted transactions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-019",
+    "topicId": "sd-005",
+    "type": "concept",
+    "front": "Why fence the source before switching the destination writer?",
+    "back": "It establishes a final bound on admitted source writes and excludes competing histories.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-020",
+    "topicId": "sd-005",
+    "type": "failure",
+    "front": "What if replay throughput equals sustained incoming changes?",
+    "back": "The backlog does not drain under steady rates.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-021",
+    "topicId": "sd-005",
+    "type": "concept",
+    "front": "How long does a 9 GiB backlog take to drain at a net 12 MiB per second?",
+    "back": "768 seconds, excluding fluctuations and other costs.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-022",
+    "topicId": "sd-005",
+    "type": "concept",
+    "front": "What should be compared before accepting a checksum mismatch?",
+    "back": "Ensure both digests describe the same logical frontier, key scope and canonical representation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-023",
+    "topicId": "sd-005",
+    "type": "concept",
+    "front": "When is flipping the route back to the source unsafe?",
+    "back": "When the target may have accepted changes absent from the old source.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-024",
+    "topicId": "sd-005",
+    "type": "tradeoff",
+    "front": "Why use a fresh ownership generation even after returning to the old group?",
+    "back": "Delayed requests from its prior tenure must remain distinguishable.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-025",
+    "topicId": "sd-005",
+    "type": "tradeoff",
+    "front": "What is a placement hard constraint?",
+    "back": "A rule such as residency or distinct failure domains that an optimizer must not trade away for load balance.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-026",
+    "topicId": "sd-005",
+    "type": "tradeoff",
+    "front": "When can a repair move properly worsen short-term load balance?",
+    "back": "When restoring required independent durability has priority and capacity remains safe.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-027",
+    "topicId": "sd-005",
+    "type": "interview",
+    "front": "How does a noisy tenant affect metrics design?",
+    "back": "Track bounded heavy hitters and sampled traces to expose skew without unbounded metric cardinality.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-028",
+    "topicId": "sd-005",
+    "type": "concept",
+    "front": "What is the difference between recovery of a cache and recovery of a release pointer?",
+    "back": "Cache contents may be reconstructible while the pointer may encode the only authoritative accepted history.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-029",
+    "topicId": "sd-005",
+    "type": "failure",
+    "front": "Why separate model artifacts from pointer consensus?",
+    "back": "The large immutable data and small ordered decisions have different transfer and recovery costs.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-030",
+    "topicId": "sd-005",
+    "type": "tradeoff",
+    "front": "Which failure test distinguishes safe cutover from ordinary copying?",
+    "back": "Delay a source mutation or its reply across the barrier and verify its exact result on the destination.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-031",
+    "topicId": "sd-005",
+    "type": "failure",
+    "front": "What should a recovered placement directory agree with?",
+    "back": "Durable shard generations, compatible recovered data frontiers and pending migration records.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-005-fc-032",
+    "topicId": "sd-005",
+    "type": "concept",
+    "front": "What makes a regional recovery test customer meaningful?",
+    "back": "Restore a real release operation and referenced artifact using only surviving dependencies.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

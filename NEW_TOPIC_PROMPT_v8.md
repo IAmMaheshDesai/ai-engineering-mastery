@@ -1,14 +1,10 @@
 # AI ENGINEERING MASTERY
 
-## FINAL MASTER TOPIC GENERATOR — VERSION 7.0
+## FINAL MASTER TOPIC GENERATOR — VERSION 8.0 — HTML-FIRST TECHNICAL MASTERCLASS
 
 ### Senior Staff AI Infrastructure | Distributed Systems | Architecture | Interview & Communication Mastery
 
-
-
 ---
-
-
 
 ## TOPIC CONFIGURATION
 
@@ -18,13 +14,9 @@
 **Target Companies:** OpenAI, Anthropic, Meta, Google, NVIDIA\
 **Target Level:** Senior Staff / Staff+ Software Engineer and AI Infrastructure Architect\
 **Learning Duration:** 75–90 minutes of substantive read-aloud instruction\
-**Primary Output:** Four content files plus one ZIP package (HTML lesson, flashcards, vocabulary, research)
-
-
+**Primary Output:** Five files plus one installation-ready ZIP (HTML lesson, flashcards, vocabulary, research, updated catalog)
 
 ---
-
-
 
 ## 1. YOUR ROLE AND MISSION
 
@@ -42,11 +34,7 @@ My objectives are to develop deep engineering expertise, transition into AI infr
 
 **Your priority is genuine understanding—not superficial topic coverage or memorized interview answers.**
 
-
-
 ---
-
-
 
 ## 2. RESEARCH AND COMPANY-SPECIFIC PREPARATION
 
@@ -78,11 +66,7 @@ Include sources, URLs, publication dates when available, and evidence limitation
 
 If current research cannot be accessed, disclose that limitation.
 
-
-
 ---
-
-
 
 ## 3. TEACHING DEPTH — NON-NEGOTIABLE
 
@@ -90,7 +74,7 @@ Generate a complete, instructor-quality technical masterclass.
 
 ### Word Count
 
-Target **7,500–9,000 spoken teaching words**, excluding JSON metadata, flashcards, vocabulary, references, code-only sections, and diagram labels not intended to be read aloud.
+Target **7,500–9,000 spoken teaching words**, excluding navigation and HTML metadata, flashcards, vocabulary, references, code-only sections, and diagram labels not intended to be read aloud.
 
 At 100 words per minute, this supports approximately 75–90 minutes of continuous reading.
 
@@ -110,11 +94,7 @@ Do not fragment explanations into dozens of short PowerPoint-style slides.
 
 Treat each slide as a beautifully structured, ChatGPT-quality technical textbook chapter.
 
-
-
 ---
-
-
 
 ## 4. MANDATORY TEACHING METHOD
 
@@ -144,11 +124,7 @@ Define unfamiliar terminology before using it extensively.
 
 Do not oversimplify technical guarantees.
 
-
-
 ---
-
-
 
 ## 5. REQUIRED TECHNICAL EXAMPLES
 
@@ -172,11 +148,7 @@ Explain every important formula and algorithm.
 
 Distinguish guarantees provided by a protocol from guarantees requiring additional application mechanisms.
 
-
-
 ---
-
-
 
 ## 6. COMPLETE PRODUCTION SYSTEM DESIGN
 
@@ -203,17 +175,13 @@ Explain why the architecture works, not merely what components it contains.
 
 Include an architecture defense exercise with a model solution.
 
-
-
 ---
-
-
 
 ## 7. PRESENTATION AND READ-ALOUD QUALITY
 
 The content must render beautifully inside my existing AI Engineering Mastery fullscreen presentation.
 
-**Do not modify the application shell, CSS, JavaScript, navigation, presentation controls, or visual theme.** Generate a separate per-topic HTML fragment for rich chapter bodies; it is not a replacement for the application HTML.
+**Do not modify the application shell, shared CSS, JavaScript, navigation, presentation controls, or visual theme.** Generate a standalone topic HTML document using the supplied template, with marked chapter articles that the application can extract. The standalone wrapper is not a replacement for the application shell.
 
 Author the entire lesson directly in HTML. No lesson JSON is permitted.
 
@@ -234,6 +202,20 @@ Prioritize readability, logical flow, and comfortable vertical scrolling.
 
 Avoid dense walls of text, unexplained jargon, superficial bullets, repetitive filler, and unnecessary slide breaks.
 
+### Authoritative HTML template and UX contract
+
+Inspect the attached `AEM_SLIDE_TEMPLATE.html` (including its CSS, chapter markup and standalone JavaScript) before writing the lesson. Reuse its visual system and working standalone reader, not its example teaching content. Inspect the latest project ZIP for shared styles and embedded-reader behavior; only article markup is imported by the main application. Do not rely on standalone styles or scripts to make imported chapters work.
+
+- Compact borderless chapter heading: eyebrow, h1 and short lead. No large hero banner, orange focus rectangle, redundant heading or decorative whitespace.
+- Use the entire selected reading width, with natural paragraph breaks, meaningful emphasis and consistent heading hierarchy. Preserve the existing centered 1×–5× reading widths (100%, 1800, 1440, 1200, 960 px) and independent font zoom in the main reader.
+- Each chapter must have a compact labeled **Jump to a section** native select, using `.section-picker` and `.aem-section-select`. Its option values must be actual section anchors, e.g. `#section-1-2`. Do not use an expanded grid of links. The supplied template contains the dropdown handler but its sample article lacks the dropdown itself: explicitly add the markup to every generated chapter.
+- Preserve keyboard navigation, visible accessible focus on interactive controls, fullscreen and existing Back to top behavior. In standalone mode, retain the template's pager Back to top button; in the main app the shared bottom panel owns this control immediately before Close. Back to top must scroll the correct container and focus the current chapter's section select without changing its selected value. Do not add a duplicate button inside an article.
+- Update standalone chapter navigation links, chapter select options and page title to match all generated chapters. Preserve the template's working navigation and copy handlers outside the articles.
+- Use topic-specific inline SVG architecture diagrams, sequence diagrams, state matrices, failure timelines, numerical illustrations and comparison tables. Prefer at least one meaningful visual in each technical chapter, and at least five diagrams and five tables overall where technically justified. Avoid decorative or repetitive linear flows. Explain each diagram in prose, label arrows and state changes, and distinguish safe, pending and failed states with text as well as color.
+- Use `.visual-lab`, `.aem-diagram`, `.aem-flow`, `.node`, `.aem-table-wrap`, `.case-study`, `.takeaway`, `.qa` and `.concept-list` where appropriate. Use responsive SVG viewBox, unique SVG IDs, accessible titles/descriptions, semantic tables with captions and scoped headers, and horizontal overflow wrappers. No clipped content at narrow widths.
+- Use expandable native `details.qa` model answers. Use AIBL Dark code panels with `tok-key`, `tok-fn`, `tok-str`, `tok-num`, `tok-com` spans for appropriate lexical tokens, preserving exact original code text for copying. Do not invent unsupported highlighting classes or label pseudocode executable Python.
+- Prefer existing shared classes and safe inline SVG presentation attributes; do not require a new stylesheet or runtime library. Keep all substantive teaching content inside marked articles.
+
 ### Communication Training
 
 Write in natural, professional American English.
@@ -250,11 +232,7 @@ Include occasional prompts to pause and explain the concept independently before
 
 The goal is to improve both engineering understanding and technical speaking confidence.
 
-
-
 ---
-
-
 
 ## 8. SENIOR STAFF INTERVIEW MASTERCLASS
 
@@ -308,11 +286,7 @@ Provide 30-second, two-minute, and five-minute exercises, plus whiteboard and fa
 
 Provide a concise summary for last-minute review.
 
-
-
 ---
-
-
 
 ## 9. OCI AND AI INFRASTRUCTURE CONNECTIONS
 
@@ -336,11 +310,7 @@ Distinguish hypothetical designs from my actual professional experience.
 
 Do not invent projects or accomplishments attributed to me.
 
-
-
 ---
-
-
 
 ## 10. FLASHCARDS — REQUIRED
 
@@ -365,11 +335,7 @@ Use the exact flashcard schema from the attached project.
 
 Avoid trivial questions and ambiguous answers.
 
-
-
 ---
-
-
 
 ## 11. VOCABULARY — REQUIRED
 
@@ -390,11 +356,7 @@ These are optional topic suggestions for my personal dictionary.
 
 **Never overwrite my existing dictionary, definitions, or vocabulary review history.**
 
-
-
 ---
-
-
 
 ## 12. RESEARCH DOCUMENT — REQUIRED
 
@@ -413,49 +375,53 @@ Do not fabricate citations or present speculative interview questions as confirm
 
 This Markdown must render correctly in the application's fullscreen **Research & Sources** viewer.
 
-
-
 ---
 
+## 13. EXACT OUTPUT FILES — HTML-FIRST CONTRACT
 
+Generate these five files, with the configured topic ID substituted consistently:
 
-## 13. EXACT OUTPUT FILES — DO NOT CHANGE
-
-Generate exactly four content files. No lesson JSON.
-
-**2. Technical flashcards**
-
-```
-data/flashcards/[TOPIC_ID].cards.json
-```
-
-Must be an array of card objects, each including `id`, `topicId`, `type`, `front`, `back`, and `companies`.
-
-**3. Topic vocabulary**
-
-```
-data/vocabulary/[TOPIC_ID].vocabulary.json
+```text
+data/
+├── flashcards/[TOPIC_ID].cards.json
+├── lesson-html/[TOPIC_ID].html
+├── research/[TOPIC_ID].research.md
+├── topics.json
+└── vocabulary/[TOPIC_ID].vocabulary.json
 ```
 
-Must use the exact existing vocabulary schema.
+### 13.1 HTML lesson
 
-**4. Research and sources**
+Use a complete standalone document based on the attached template. The existing build extracts only `article[data-aem-chapter]` elements, in document order. Use exactly one marked article per chapter, no nested marked articles, unique chapter IDs and section IDs, and one h1 per chapter. Follow this minimal structural example (replace every sample with real content):
 
+```html
+<article data-aem-chapter="1" id="chapter-1">
+  <div class="aem-rich">
+    <header class="hero compact-chapter-header">
+      <div class="aem-eyebrow">01 · Foundations</div>
+      <h1 tabindex="-1">Chapter title</h1>
+      <p class="aem-lead">Chapter learning objective.</p>
+    </header>
+    <label class="section-picker">Jump to a section
+      <select class="aem-section-select" aria-label="Jump to a section">
+        <option value="">Choose a section</option>
+        <option value="#section-1-1">Start with the problem</option>
+        <option value="#section-1-2">Chapter summary</option>
+      </select>
+    </label>
+    <section class="teaching-section" id="section-1-1">
+      <h2>Start with the problem</h2>
+      <p>Complete teaching narrative goes here.</p>
+    </section>
+    <section class="teaching-section takeaway" id="section-1-2">
+      <h2>Chapter summary</h2>
+      <p>Meaningful summary goes here.</p>
+    </section>
+  </div>
+</article>
 ```
-data/research/[TOPIC_ID].research.md
-```
 
-Must contain the research, company evidence, citations, and further reading.
-
-**1. Complete HTML lesson**
-
-`data/lesson-html/[TOPIC_ID].html`
-
-Author one `<article data-aem-chapter="1">` per chapter, in reading order, with an h1 title. HTML alone determines chapter count, titles and content. A standalone document is also accepted; the application extracts only marked articles.
-
-Use semantic HTML for substantial explanatory paragraphs, nested headings, comparison tables, worked calculations, callouts, architecture diagrams, failure timelines, sequence diagrams, and clearly labeled pseudocode. Make diagrams readable with HTML/CSS structure and accessible textual descriptions; do not substitute decorative diagrams for technical explanation. Favor responsive, horizontally scrollable wrappers around wide tables and diagrams when the existing stylesheet supports them.
-
-For code, use the existing copy-enabled panel contract:
+Use the template's actual code-panel contract:
 
 ```html
 <div class="aem-code-panel">
@@ -463,38 +429,34 @@ For code, use the existing copy-enabled panel contract:
     <span>PYTHON</span>
     <button type="button" class="aem-copy" data-aem-copy>Copy code</button>
   </div>
-  <pre><code>def example():
-    return True</code></pre>
+  <pre><code><span class="tok-key">def</span> <span class="tok-fn">example</span>():
+    <span class="tok-key">return</span> True</code></pre>
 </div>
 ```
 
-HTML-escape all code (`&` → `&amp;`, `<` → `&lt;`, `>` → `&gt;`). Label Python, Java, Bash, JSON, HTTP, and pseudocode accurately. Preserve the existing **AIBL Dark** code theme and copy interaction; do not implement another copy handler or invent unsupported syntax-highlighting hooks. Do not claim a language is syntax-highlighted unless the existing application actually supports it.
+HTML-escape code text and preserve indentation. Use the existing standalone template CSS and trusted navigation scripts outside marked articles only. Inside articles, prohibit scripts, style blocks, iframes, inline event handlers, javascript URLs, external runtime dependencies and duplicate application controls. No remote fonts or images required for offline rendering. Do not add lesson JSON or a JSON fallback. HTML alone defines the chapters and teaching content.
 
-**Safety and compatibility:** Do not include `<html>`, `<head>`, `<body>`, `<script>`, `<iframe>`, inline event handlers (such as `onclick`), `javascript:` URLs, embedded scripts, or external runtime dependencies. Do not introduce standalone CSS in the fragment; shared styles belong in `app.css`, which this generation must not change. Use existing classes and safe semantic HTML. Avoid IDs that collide with application controls. The HTML must be fully self-contained for offline use after `python3 build.py`.
+### 13.2 Flashcards
 
-**Content completeness:** Include the entire teaching narrative in HTML. Do not generate or maintain duplicate lesson JSON. Use compact chapter headings without large banners and full-width text, tables and diagrams.
+JSON array; each object has `id`, `topicId`, `type`, `front`, `back`, `companies`. Use stable IDs such as `[TOPIC_ID]-fc-001` and supported types verified against the project (existing examples include `concept`, `interview`, `failure`, `tradeoff`). Preserve existing card IDs when revising equivalent cards. Company tags describe relevance, not confirmed interview provenance.
 
-**Fallback:** If the lesson HTML is absent, the topic is unpublished. The reader loads chapter content exclusively from HTML. Do not modify other topics.
+### 13.3 Vocabulary
 
-### Schema Requirements
+JSON array of objects with `word`, `meaning`, `sentence` (verified existing schema). Add optional fields only if supported by the current application. Do not write personal dictionary or progress data.
 
-Inspect the latest uploaded AI Engineering Mastery project ZIP before generating files.
+### 13.4 Research
 
-Treat the project’s HTML chapter contract, resource JSON schemas, and build script as authoritative.
+Complete Markdown document with the evidence categories and sources required above. Use working source URLs and clear company-specific sections.
 
-Do not invent unsupported fields or block types.
+### 13.5 Catalog — data/topics.json
 
-Do not modify HTML, CSS, JavaScript, presentation controls, or the existing catalog unless explicitly requested.
+Read the latest complete catalog from the project ZIP or separately supplied `topics.json`. Preserve all unrelated entries, order, fields and metadata. For an existing planned topic, update only its matching record: retain stable `id`, `number`, `title`, `category`, `companies`, `difficulty` and other existing fields unless explicitly instructed otherwise; set `lesson` to `data/lesson-html/[TOPIC_ID].html`, `status` to `available` only when the content is complete, and `durationMinutes` to the measured rounded read-aloud duration. For a genuinely new topic, append a schema-compatible record with unique ID and number, agreed title/category, companies, difficulty, durationMinutes, status, lesson and description. Never create a one-topic replacement catalog or silently overwrite a different topic. If the current catalog is missing, ask for it before final packaging; do not invent the remaining entries.
 
-For an existing topic, preserve its stable topic ID.
+### Inputs and compatibility
 
-For a new topic, use the supplied ID.
-
-
+Required inputs: configured topic ID/name, attached HTML template, and latest project ZIP (or complete current catalog plus representative flashcard and vocabulary files). The actual project build and renderer are authoritative for integration; the template is authoritative for visual design. If an input is missing, request only the missing material needed for compatibility. Do not modify application source, other topics, user progress or personal dictionary.
 
 ---
-
-
 
 ## 14. QUALITY ASSURANCE
 
@@ -520,78 +482,35 @@ Before delivering, verify:
 18. Successful execution of `python3 build.py` when the project is available for testing.
 19. One marked article per chapter, in reading order.
 20. HTML contains the complete teaching content and no truncated chapters.
-21. No forbidden scripts, event handlers, iframes, or external dependencies in the HTML fragment.
+21. No forbidden scripts, event handlers, iframes, or external dependencies inside marked chapter articles; standalone template scripts remain outside them.
 22. Tables, diagrams, code panels, and copy buttons follow existing application conventions.
 23. AIBL Dark syntax highlighting and Copy behavior are tested in a browser when browser testing is available; otherwise disclose that only static checks were run.
 24. Existing navigation, zoom, fullscreen, dictionary, flashcards, research, and progress are unchanged.
-25. Spoken word count is measured once from canonical teaching text, from HTML only.
+25. Spoken word count is measured once from canonical teaching text, from HTML only; exclude duplicate navigation labels, code, diagram labels and reference lists. Expand the lesson with substantive explanations if below 7,500 words; disclose any remaining shortfall.
+26. Every section dropdown option resolves to a unique section in its own chapter; all standalone chapter links and options match the chapter count.
+27. Compare the updated catalog to the original: no unrelated records changed; target ID and lesson path match the package.
+28. Test standalone and embedded application separately when possible: section jump, Back to top and dropdown focus, arrow keys, width modes, fullscreen, zoom, code copying, flashcards, vocabulary and research. Test narrow and ultrawide layouts; distinguish static checks from actual browser tests.
+29. Extract the ZIP into a temporary copy of the latest project and run its original build.py; check that the topic is available, all resources are discovered and other topics remain intact. Verify ZIP integrity and exact paths. Never overwrite the source project during testing.
 
 Do not claim validation passed unless it was actually performed.
 
 If the content is incomplete, report exactly what remains unfinished.
 
-
-
 ---
-
-
 
 ## 15. FINAL DELIVERABLES
 
-Deliver **four individual downloadable files plus one ZIP**:
+Deliver five individual downloadable files and one ZIP named `AI_Engineering_Mastery_[TOPIC_ID]_Content.zip`.
 
-1.
+The ZIP must contain exactly the five files under the `data/` paths shown in section 13, with no extra enclosing directory, no lesson JSON, no application code, no template copy, no user progress and no placeholder files. Include the complete updated catalog, not a patch or partial catalog. It must be ready to extract into the same project version used for generation. Warn that if the catalog changed since generation, merge the target record into the latest catalog rather than overwrite newer entries.
 
-```
-[TOPIC_ID].cards.json
-```
+Provide actual verified download links for all five files and the ZIP. Explain installation: extract into the project root, run `python3 build.py`, and reopen `AI_Engineering_Mastery_OFFLINE.html` (or use the hosted reader).
 
-1.
+Provide a concise completion report containing spoken teaching word count, estimated read-aloud duration at 100 words/minute, chapter count, worked example count, diagram and table counts, interview question count, flashcard count, vocabulary count, research source count, catalog change summary, build and browser validation status, and any remaining limitations.
 
-```
-[TOPIC_ID].vocabulary.json
-```
-
-1.
-
-```
-[TOPIC_ID].research.md
-```
-
-1.
-
-```
-AI_Engineering_Mastery_[TOPIC_ID]_Content.zip
-```
-
-4. `data/lesson-html/[TOPIC_ID].html` — rich chapter presentation fragment
-
-The ZIP must contain all four files in their correct directory structure.
-
-It must be ready to extract into the existing AI Engineering Mastery project.
-
-Do not replace application code or user progress.
-
-Provide a concise completion report containing:
-
-- Spoken teaching word count
-- Estimated reading duration
-- Chapter count
-- Worked example count
-- Interview question count
-- Flashcard count
-- Vocabulary count
-- Research source count
-- Validation status
-- Any remaining limitations
-
-Do not shorten the lesson to fit one response. Use file-generation tools to create complete files.
-
-
+Do not shorten the lesson to fit one response. Use file-generation tools to create complete files. Never claim a file exists or a test passed without verifying it.
 
 ---
-
-
 
 ## 16. SUCCESS STANDARD
 
@@ -611,4 +530,4 @@ After studying this lesson, I must be able to:
 
 **Prepare me to operate at Senior Staff engineering level—not merely to pass an interview.**
 
-**END OF AI ENGINEERING MASTERY MASTER TOPIC GENERATOR — VERSION 7.0**
+**END OF AI ENGINEERING MASTERY MASTER TOPIC GENERATOR — VERSION 8.0 — HTML-FIRST TECHNICAL MASTERCLASS**

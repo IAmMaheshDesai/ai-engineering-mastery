@@ -1,0 +1,492 @@
+[
+  {
+    "id": "sd-011-fc-001",
+    "topicId": "sd-011",
+    "type": "concept",
+    "front": "What does a recovery contract need besides a deadline?",
+    "back": "A named business capability, covered failure, recoverable state guarantee, security boundary, and degraded workload capacity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-002",
+    "topicId": "sd-011",
+    "type": "concept",
+    "front": "How do RPO and RTO differ?",
+    "back": "RPO bounds acceptable loss of committed business state. RTO bounds elapsed impact-to-restoration time for a defined capability.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-003",
+    "topicId": "sd-011",
+    "type": "failure",
+    "front": "Why can a green endpoint still violate RTO?",
+    "back": "Authorization, state, dependencies, latency, or required capacity may still be unavailable.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-004",
+    "topicId": "sd-011",
+    "type": "concept",
+    "front": "What is a complete recovery frontier?",
+    "back": "A boundary identifying all state required for safe recovery, including referenced objects and needed logs, not just received bytes.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-005",
+    "topicId": "sd-011",
+    "type": "tradeoff",
+    "front": "What does asynchronous remote replication trade?",
+    "back": "Lower foreground coordination cost and some partition-time local progress for exposure of acknowledged state not yet durable remotely.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-006",
+    "topicId": "sd-011",
+    "type": "concept",
+    "front": "What must zero RPO specify?",
+    "back": "The acknowledgment rule, protected state class, covered failures, durability boundary, and assumptions about copies and keys.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-007",
+    "topicId": "sd-011",
+    "type": "failure",
+    "front": "Why does a witness not replace a durable data copy?",
+    "back": "It can participate in authority decisions but cannot reconstruct data it never stored.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-008",
+    "topicId": "sd-011",
+    "type": "concept",
+    "front": "What makes fencing effective?",
+    "back": "The protected effect boundary rejects stale authority, or a reliable supported isolation mechanism excludes the old owner.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-009",
+    "topicId": "sd-011",
+    "type": "failure",
+    "front": "Why is a timeout not proof of primary death?",
+    "back": "A network partition or delay can hide a live primary that still serves other clients.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-010",
+    "topicId": "sd-011",
+    "type": "failure",
+    "front": "What state should follow an ambiguous remote-action timeout?",
+    "back": "Unknown outcome, followed by lookup, safe same-identity replay under contract, or explicit reconciliation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-011",
+    "topicId": "sd-011",
+    "type": "concept",
+    "front": "Why persist an action key before dispatch?",
+    "back": "A successor can recover the same logical action identity after a crash instead of issuing an unrelated duplicate.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-012",
+    "topicId": "sd-011",
+    "type": "tradeoff",
+    "front": "What is the limit of a durable orchestration log?",
+    "back": "It preserves intent and observed outcomes but does not make arbitrary external effects transactional or exactly once.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-013",
+    "topicId": "sd-011",
+    "type": "concept",
+    "front": "How do recovery DAGs determine earliest finish times?",
+    "back": "Each step finishes after its duration plus the latest finish among its prerequisites; resource contention can add delay.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-014",
+    "topicId": "sd-011",
+    "type": "interview",
+    "front": "Why is the example DAG thirteen minutes rather than seventeen?",
+    "back": "Replay overlaps network and GPU work. The critical path is network 2 + GPU 6 + load 3 + validate 2.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-015",
+    "topicId": "sd-011",
+    "type": "concept",
+    "front": "At 120 MB/s input and 150 MB/s replication, what is net catch-up capacity?",
+    "back": "30 MB/s, assuming delivery and apply can sustain those rates.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-016",
+    "topicId": "sd-011",
+    "type": "interview",
+    "front": "How long does a 144,000 MB backlog take to drain at net 30 MB/s?",
+    "back": "4,800 seconds, or eighty minutes. Dividing by 150 MB/s ignores concurrent new writes.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-017",
+    "topicId": "sd-011",
+    "type": "failure",
+    "front": "Why can log retention threaten the primary?",
+    "back": "A lagging standby can force retained logs to grow until primary storage is exhausted; alert and define bounded retention or reseeding.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-018",
+    "topicId": "sd-011",
+    "type": "concept",
+    "front": "How much unavailable time is allowed by 99.95% over thirty days?",
+    "back": "21.6 minutes under a time-based definition without exclusions: 43,200 × 0.0005.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-019",
+    "topicId": "sd-011",
+    "type": "tradeoff",
+    "front": "When can component availabilities be multiplied?",
+    "back": "Only under a suitable independence model with compatible success definitions and measurement windows.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-020",
+    "topicId": "sd-011",
+    "type": "failure",
+    "front": "Which shared dependencies can defeat multi-region redundancy?",
+    "back": "Identity, key access, DNS or routing authority, deployment pipelines, configuration, and logical corruption.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-021",
+    "topicId": "sd-011",
+    "type": "concept",
+    "front": "Why distinguish replication from historical backup?",
+    "back": "Replication supplies recent copies but can propagate deletion or corruption; retained independent versions cover different failure classes.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-022",
+    "topicId": "sd-011",
+    "type": "interview",
+    "front": "What is the example serial restore floor for 6 TB at 2 GB/s plus 900 GB at 0.5 GB/s?",
+    "back": "50 minutes plus 30 minutes = eighty minutes before provisioning and validation, using decimal units and no overlap.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-023",
+    "topicId": "sd-011",
+    "type": "failure",
+    "front": "Why can checksum-valid backups be unrecoverable?",
+    "back": "Missing keys, incompatible software, broken incremental/log chains, or missing referenced state can prevent a usable restore.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-024",
+    "topicId": "sd-011",
+    "type": "concept",
+    "front": "What does inference recovery readiness require?",
+    "back": "Compatible model, tokenizer, runtime, policy, reachable dependencies, and tested latency at contracted emergency throughput.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-025",
+    "topicId": "sd-011",
+    "type": "interview",
+    "front": "How many 80-request/s replicas meet a 4,800-request/s emergency target?",
+    "back": "At least sixty under the measured request distribution and latency/utilization constraint, before extra failure reserve.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-026",
+    "topicId": "sd-011",
+    "type": "tradeoff",
+    "front": "What does admission control protect during traffic shift?",
+    "back": "It prevents demand beyond tested standby capacity from causing overload and retry amplification, at the expense of rejected or deferred work.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-027",
+    "topicId": "sd-011",
+    "type": "concept",
+    "front": "Which training state may a consistent checkpoint need?",
+    "back": "Model, optimizer, scheduler, data position, randomness, and attempt-consistent metadata as required by the continuation contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-028",
+    "topicId": "sd-011",
+    "type": "interview",
+    "front": "Derive the simple blocking checkpoint interval.",
+    "back": "Minimize C/T + T/(2M). Setting −C/T² + 1/(2M) = 0 gives T ≈ sqrt(2CM), under rare uniform interruptions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-029",
+    "topicId": "sd-011",
+    "type": "tradeoff",
+    "front": "When is the simple checkpoint formula insufficient?",
+    "back": "Overlapped I/O, correlated failures, rank-local recovery, bandwidth contention, or nonuniform failure timing change the model.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-030",
+    "topicId": "sd-011",
+    "type": "failure",
+    "front": "Why must agent recovery preserve tool-effect records?",
+    "back": "Restoring conversation text does not establish whether an external action already happened; replay can duplicate harmful effects.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-031",
+    "topicId": "sd-011",
+    "type": "concept",
+    "front": "Why should recovery drills disable outbound effects?",
+    "back": "A restored workflow can otherwise repeat real purchases, emails, or destructive operations during validation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-032",
+    "topicId": "sd-011",
+    "type": "failure",
+    "front": "Why is failback unsafe merely because the old region is healthy?",
+    "back": "It may be stale or divergent. Establish authoritative lineage, reconcile or reseed, verify reverse replication, then transition ownership.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-033",
+    "topicId": "sd-011",
+    "type": "tradeoff",
+    "front": "Can you add per-stage p99 timings to get end-to-end p99?",
+    "back": "No. Quantiles do not add that way, especially with correlated stages. Measure joint runs or disclose scenario assumptions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-034",
+    "topicId": "sd-011",
+    "type": "interview",
+    "front": "How should you respond to an impossible reliability budget?",
+    "back": "Clarify the contract, quantify capacity and restore floors, offer scoped alternatives or investment, and record an accountable decision.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-011-fc-035",
+    "topicId": "sd-011",
+    "type": "concept",
+    "front": "What belongs in a recovery decision record?",
+    "back": "Objective, options, evidence, assumptions, owner, rejected alternatives, and measurable triggers for reconsideration.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

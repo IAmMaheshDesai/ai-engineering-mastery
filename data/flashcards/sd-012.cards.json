@@ -1,0 +1,492 @@
+[
+  {
+    "id": "sd-012-fc-001",
+    "topicId": "sd-012",
+    "type": "concept",
+    "front": "Why does active-active ingress not imply multi-master data?",
+    "back": "Ingress, compute, read placement, write authority, and external-effect ownership are independent design axes.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-002",
+    "topicId": "sd-012",
+    "type": "concept",
+    "front": "What is partitioned active-active?",
+    "back": "Regions concurrently own different partitions while each partition retains one authoritative writer.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-003",
+    "topicId": "sd-012",
+    "type": "tradeoff",
+    "front": "When is active-passive attractive?",
+    "back": "When one ordered write history is valuable, write locality is acceptable, and arbitrary conflict merge would be costly or unsafe.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-004",
+    "topicId": "sd-012",
+    "type": "failure",
+    "front": "Why is a route flip insufficient for failover?",
+    "back": "The destination still needs complete state, supported authority transfer, policy, capacity, and reconciled external effects.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-005",
+    "topicId": "sd-012",
+    "type": "concept",
+    "front": "What makes a warm standby ready?",
+    "back": "Usable data, keys and identities, compatible application/artifacts, reachability, safe authority transition, and tested workload capacity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-006",
+    "topicId": "sd-012",
+    "type": "failure",
+    "front": "Why preserve data lineage through promotion?",
+    "back": "The same sequence number in a new lineage may refer to a different event than in an old divergent history.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-007",
+    "topicId": "sd-012",
+    "type": "concept",
+    "front": "What belongs in an ownership-directory record?",
+    "back": "Partition or tenant, owner region, ownership epoch, directory revision, permitted locations, and migration state.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-008",
+    "topicId": "sd-012",
+    "type": "failure",
+    "front": "What should an old owner do with a stale-route request?",
+    "back": "Reject or safely forward under the current authority contract; it must not execute locally with stale ownership.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-009",
+    "topicId": "sd-012",
+    "type": "concept",
+    "front": "What is the migration transfer frontier?",
+    "back": "The complete state boundary the destination must verify before it can safely become the writer.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-010",
+    "topicId": "sd-012",
+    "type": "failure",
+    "front": "A coordinator crashes after ownership changed. What is authoritative?",
+    "back": "The durable ownership record, not whether the activation notification or response arrived.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-011",
+    "topicId": "sd-012",
+    "type": "tradeoff",
+    "front": "Why might tenant colocation help transactions?",
+    "back": "It keeps related mutations within one authority boundary, but can create hot partitions and constrain independent scaling.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-012",
+    "topicId": "sd-012",
+    "type": "concept",
+    "front": "What does causal-vector dominance establish?",
+    "back": "One version includes another’s causal history when its components dominate; incomparable vectors indicate concurrency, not a merge decision.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-013",
+    "topicId": "sd-012",
+    "type": "tradeoff",
+    "front": "Why can last-writer-wins be wrong despite convergence?",
+    "back": "It can discard legitimate concurrent actions, and physical-clock ordering may not match real-time or business intent.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-014",
+    "topicId": "sd-012",
+    "type": "concept",
+    "front": "How does a grow-only counter merge?",
+    "back": "Each stable writer advances its own monotonic component; replicas merge by componentwise maximum and sum the result.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-015",
+    "topicId": "sd-012",
+    "type": "concept",
+    "front": "Which algebraic properties make state merge duplicate- and order-safe?",
+    "back": "Commutativity, associativity, and idempotence, together with the data type’s update and delivery assumptions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-016",
+    "topicId": "sd-012",
+    "type": "interview",
+    "front": "Merge [107,60] and [100,65]. What is the total?",
+    "back": "The merged vector is [107,65], totaling 172.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-017",
+    "topicId": "sd-012",
+    "type": "failure",
+    "front": "Why does a correct merged counter not enforce a quota of 170?",
+    "back": "Both partitioned regions may approve locally using incomplete remote state, then converge to an overspend of 172.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-018",
+    "topicId": "sd-012",
+    "type": "tradeoff",
+    "front": "How can preallocated rights protect a hard quota?",
+    "back": "Regions spend disjoint exclusive shares whose total respects the bound; safe transfer is required and unused rights may be stranded.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-019",
+    "topicId": "sd-012",
+    "type": "failure",
+    "front": "Why is reusing a counter writer ID after losing durable state unsafe?",
+    "back": "New increments may be hidden by an older higher component or violate the monotonic-writer model.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-020",
+    "topicId": "sd-012",
+    "type": "failure",
+    "front": "Why can deleted data reappear after naive set merge?",
+    "back": "Old replicas retain additions; safe removal needs defined semantics and sufficient causal/removal metadata.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-021",
+    "topicId": "sd-012",
+    "type": "concept",
+    "front": "Why does a five-voter 2–2–1 placement survive one region loss?",
+    "back": "Any such loss leaves at least three voters, provided the remaining voters can communicate.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-022",
+    "topicId": "sd-012",
+    "type": "failure",
+    "front": "What if the one-voter region is lost and the two remaining regions partition?",
+    "back": "Each side has only two voters, below the majority of three; neither can make new quorum progress.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-023",
+    "topicId": "sd-012",
+    "type": "concept",
+    "front": "Why does a leader in a two-voter region require WAN evidence?",
+    "back": "Its local copies provide only two votes, so a majority of three includes at least one remote voter.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-024",
+    "topicId": "sd-012",
+    "type": "tradeoff",
+    "front": "Why is quorum intersection alone not a linearizability proof?",
+    "back": "Actual ordering, concurrent-write rules, leader protocol, recovery, and reconfiguration semantics still matter.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-025",
+    "topicId": "sd-012",
+    "type": "concept",
+    "front": "What does consensus within each shard not automatically provide?",
+    "back": "Atomicity of a business operation spanning multiple independently ordered shards.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-026",
+    "topicId": "sd-012",
+    "type": "concept",
+    "front": "What must a minimum-version token identify?",
+    "back": "The relevant tenant/partition, lineage, and required frontier, with validation and no authorization bypass.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-027",
+    "topicId": "sd-012",
+    "type": "failure",
+    "front": "Why must a cache participate in version-aware reads?",
+    "back": "Checking a fresh database and returning an older cached value still violates the promised minimum frontier.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-028",
+    "topicId": "sd-012",
+    "type": "tradeoff",
+    "front": "What can a lagging region do when it receives a valid read token?",
+    "back": "Wait within a bound, forward to a satisfying authority, or return a defined consistency-unavailable result.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-029",
+    "topicId": "sd-012",
+    "type": "failure",
+    "front": "How should a token for a permanently lost write behave?",
+    "back": "Report the defined unsatisfied recovery outcome; do not wait forever or reinterpret a new-lineage sequence as the old event.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-030",
+    "topicId": "sd-012",
+    "type": "interview",
+    "front": "Three regions serve 60k/s, each with a 40k/s ceiling. What is uniform load after one fails?",
+    "back": "30k/s per survivor, or 75% of each ceiling, before routing skew and other reserves.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-031",
+    "topicId": "sd-012",
+    "type": "failure",
+    "front": "Why can enough aggregate GPU count still fail recovery?",
+    "back": "Hardware class, memory, tenancy, fabric connectivity, and placement shape may make those GPUs unusable for the workload.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-032",
+    "topicId": "sd-012",
+    "type": "concept",
+    "front": "What gates regional model readiness?",
+    "back": "Complete verified model, tokenizer, runtime and policy compatibility, plus tested serving capacity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-033",
+    "topicId": "sd-012",
+    "type": "tradeoff",
+    "front": "Why separate retrieval freshness from authorization freshness?",
+    "back": "Delayed discoverability may be acceptable while stale revocation can expose unauthorized data.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-034",
+    "topicId": "sd-012",
+    "type": "interview",
+    "front": "Why can global agent inference coexist with home-region effect ownership?",
+    "back": "Model compute can move independently while one durable authority serializes approvals, state, tool identities, and reconciliation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-012-fc-035",
+    "topicId": "sd-012",
+    "type": "concept",
+    "front": "What is the regional eligibility set during failover?",
+    "back": "Regions satisfying health, approved residency, required artifacts/policy, and usable capacity; if empty, apply the declared unavailable or queue policy.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

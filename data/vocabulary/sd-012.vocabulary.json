@@ -1,0 +1,92 @@
+[
+  {
+    "word": "write authority",
+    "meaning": "The right to order and commit mutations for a defined data scope.",
+    "sentence": "Local ingress does not imply local write authority."
+  },
+  {
+    "word": "home region",
+    "meaning": "The region designated to own a tenant or partition.",
+    "sentence": "The command is forwarded to the tenant’s home region."
+  },
+  {
+    "word": "partitioned ownership",
+    "meaning": "Distributing exclusive ownership over disjoint data scopes.",
+    "sentence": "Partitioned ownership gives both regions useful work without dual writers for one tenant."
+  },
+  {
+    "word": "lineage",
+    "meaning": "The particular causal or authoritative history that gives a version its meaning.",
+    "sentence": "A token from the old lineage cannot be satisfied by an unrelated new event."
+  },
+  {
+    "word": "transfer frontier",
+    "meaning": "The complete state boundary needed before ownership moves.",
+    "sentence": "The destination verified the transfer frontier before activation."
+  },
+  {
+    "word": "stale route",
+    "meaning": "Routing information that no longer matches current ownership.",
+    "sentence": "The old region returns a versioned response for a stale route."
+  },
+  {
+    "word": "convergence",
+    "meaning": "Replica agreement after required updates are delivered under defined merge rules.",
+    "sentence": "Convergence does not by itself enforce a global quota."
+  },
+  {
+    "word": "commutative",
+    "meaning": "Producing the same result when operand order is reversed.",
+    "sentence": "Our counter merge is commutative."
+  },
+  {
+    "word": "associative",
+    "meaning": "Producing the same result under different grouping of operations.",
+    "sentence": "Associative merge permits batched state exchange."
+  },
+  {
+    "word": "idempotent merge",
+    "meaning": "A merge whose repeated application of the same state has no additional effect.",
+    "sentence": "Idempotent merge tolerates duplicate state messages."
+  },
+  {
+    "word": "causal ancestry",
+    "meaning": "The updates whose history is included in a version.",
+    "sentence": "A vector can distinguish causal ancestry from concurrency."
+  },
+  {
+    "word": "spending rights",
+    "meaning": "Exclusive preallocated permission to consume part of a bounded resource.",
+    "sentence": "The isolated region can admit work only while spending rights remain."
+  },
+  {
+    "word": "minimum-version token",
+    "meaning": "Evidence of the least state frontier a subsequent read must include.",
+    "sentence": "The frontend forwards the minimum-version token to the replica."
+  },
+  {
+    "word": "regional eligibility",
+    "meaning": "The set of policy and readiness conditions a destination must satisfy.",
+    "sentence": "Regional eligibility includes residency as well as health."
+  },
+  {
+    "word": "routing skew",
+    "meaning": "Uneven traffic distribution during or after a route change.",
+    "sentence": "Admission control protects a survivor from routing skew."
+  },
+  {
+    "word": "quorum placement",
+    "meaning": "Distribution of voting replicas across failure and network domains.",
+    "sentence": "Quorum placement must be checked against regional loss sets."
+  },
+  {
+    "word": "artifact publication",
+    "meaning": "Making a verified complete artifact version available for use.",
+    "sentence": "Artifact publication waits until required regional objects are present."
+  },
+  {
+    "word": "failure headroom",
+    "meaning": "Usable reserve capacity for a declared failure scenario.",
+    "sentence": "The model upgrade reduced our failure headroom."
+  }
+]

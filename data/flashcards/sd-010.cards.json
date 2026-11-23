@@ -1,0 +1,450 @@
+[
+  {
+    "id": "sd-010-fc-001",
+    "topicId": "sd-010",
+    "type": "interview",
+    "front": "Which record is authoritative in an event-sourced aggregate?",
+    "back": "The accepted ordered stream of domain facts, subject to its documented retained base.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-002",
+    "topicId": "sd-010",
+    "type": "failure",
+    "front": "How does a command differ from an event?",
+    "back": "A command requests an action that can be rejected. An event records an accepted fact or observation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-003",
+    "topicId": "sd-010",
+    "type": "failure",
+    "front": "Why not replay yesterday's command under today's policy?",
+    "back": "The historical decision might now have a different outcome. Fold its recorded facts.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-004",
+    "topicId": "sd-010",
+    "type": "interview",
+    "front": "What must a reducer produce given identical initial state and event prefix?",
+    "back": "The same semantic state independent of wall clock, randomness and mutable external systems.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-005",
+    "topicId": "sd-010",
+    "type": "interview",
+    "front": "What does an expected-revision append prevent?",
+    "back": "Another command committing on the same aggregate after the handler evaluated an obsolete prefix.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-006",
+    "topicId": "sd-010",
+    "type": "interview",
+    "front": "Why should a genuine conflict on a withdrawal not be blindly retried?",
+    "back": "After activation starts, withdrawal may require different approval or a different command.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-007",
+    "topicId": "sd-010",
+    "type": "concept",
+    "front": "Can a per-deployment revision enforce a tenant-wide GPU limit?",
+    "back": "No. Use a wider coordination boundary or bounded reservations that implement the shared invariant.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-008",
+    "topicId": "sd-010",
+    "type": "concept",
+    "front": "How can a retry be valid despite its stale expected revision?",
+    "back": "Its command identity may identify an already committed matching request whose outcome is recoverable.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-009",
+    "topicId": "sd-010",
+    "type": "interview",
+    "front": "Why store a request fingerprint with command identity?",
+    "back": "Detect reuse of the same key for materially different intent.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-010",
+    "topicId": "sd-010",
+    "type": "tradeoff",
+    "front": "What does an event ID identify across deliveries?",
+    "back": "One immutable domain fact, independent of the consumer's delivery count or cursor.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-011",
+    "topicId": "sd-010",
+    "type": "concept",
+    "front": "What does a stream revision order?",
+    "back": "Accepted facts within that stream's declared lineage.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-012",
+    "topicId": "sd-010",
+    "type": "concept",
+    "front": "How does a subscription cursor differ from an aggregate revision?",
+    "back": "The cursor tracks progress through a selected delivery stream and may cover many aggregates.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-013",
+    "topicId": "sd-010",
+    "type": "failure",
+    "front": "What question uses recorded time rather than occurrence time?",
+    "back": "What did the system know at a particular earlier instant?",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-014",
+    "topicId": "sd-010",
+    "type": "failure",
+    "front": "What distinguishes a correction from compensation?",
+    "back": "A correction changes the interpretation of recorded history. Compensation performs remedial business action.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-015",
+    "topicId": "sd-010",
+    "type": "concept",
+    "front": "Does CQRS require event sourcing?",
+    "back": "No. Separate command and query models can be maintained over ordinary transactional state.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-016",
+    "topicId": "sd-010",
+    "type": "failure",
+    "front": "Does CQRS require separate databases?",
+    "back": "No. Separate models can share a database or be maintained synchronously.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-017",
+    "topicId": "sd-010",
+    "type": "concept",
+    "front": "What should a dashboard return after a requested minimum revision exceeds its progress?",
+    "back": "Wait, route appropriately or explicitly report pending progress under its contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-018",
+    "topicId": "sd-010",
+    "type": "interview",
+    "front": "Why is skipping directly from 48 to 50 dangerous?",
+    "back": "A required event at 49 might be lost if the checkpoint claims a contiguous prefix.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-019",
+    "topicId": "sd-010",
+    "type": "concept",
+    "front": "When might missing numerical stream revisions be valid?",
+    "back": "The subscription deliberately filters out some events; use its actual cursor contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-020",
+    "topicId": "sd-010",
+    "type": "failure",
+    "front": "How can a counter projection survive duplicate delivery?",
+    "back": "Transact its update with durable progress or deduplication evidence, or persist immutable event contributions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-021",
+    "topicId": "sd-010",
+    "type": "concept",
+    "front": "What can be lost between an initial listing and subscribing from now?",
+    "back": "Every event accepted after the listing boundary but before the subscription starts.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-022",
+    "topicId": "sd-010",
+    "type": "concept",
+    "front": "When should two independently built projections be compared?",
+    "back": "At a common verified input frontier with agreement on the metric's semantics.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-023",
+    "topicId": "sd-010",
+    "type": "concept",
+    "front": "What determines whether a snapshot is safe to replay from?",
+    "back": "Correct stream, exact applied prefix, compatible versions, integrity and durable publication.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-024",
+    "topicId": "sd-010",
+    "type": "tradeoff",
+    "front": "What can an upcaster do with a historical field that was never captured?",
+    "back": "Preserve its unknown status or use documented known semantics; it cannot recreate missing evidence.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-025",
+    "topicId": "sd-010",
+    "type": "tradeoff",
+    "front": "Why separate projection rebuild identities from provider credentials?",
+    "back": "A historical fold should not be able to dispatch live side effects.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-026",
+    "topicId": "sd-010",
+    "type": "tradeoff",
+    "front": "An activation completed externally after a suspension. What should be recorded?",
+    "back": "A late observation linked to the old activation, with current transition guards preserving suspension.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-027",
+    "topicId": "sd-010",
+    "type": "interview",
+    "front": "How much backlog accumulates at 400 inputs/s and 300 processed/s for 300 seconds?",
+    "back": "30,000 events under the stated constant rates.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-028",
+    "topicId": "sd-010",
+    "type": "concept",
+    "front": "What does a dead-letter queue fail to prove?",
+    "back": "That the affected view has incorporated the quarantined fact or has complete coverage.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-029",
+    "topicId": "sd-010",
+    "type": "failure",
+    "front": "What observable test detects a mislabeled snapshot offset?",
+    "back": "Compare snapshot-plus-tail state with an independent full fold at the exact same revision.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-030",
+    "topicId": "sd-010",
+    "type": "tradeoff",
+    "front": "Why can retaining a digest be insufficient for historical reconstruction?",
+    "back": "The corresponding immutable content or interpretation may be unavailable.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-031",
+    "topicId": "sd-010",
+    "type": "failure",
+    "front": "When can a dashboard rebuild be slower than command recovery without violating safety?",
+    "back": "When command decisions can use a verified aggregate and the lagging view has no authority over those actions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-010-fc-032",
+    "topicId": "sd-010",
+    "type": "concept",
+    "front": "When would CRUD plus audit history be preferable?",
+    "back": "When simple access and limited history meet the business need without the long-lived replay obligations.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

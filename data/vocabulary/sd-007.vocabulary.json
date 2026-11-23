@@ -1,0 +1,92 @@
+[
+  {
+    "word": "Idempotent operation",
+    "meaning": "An operation whose repeated application preserves the specified observable effect.",
+    "sentence": "Submitting the same reservation remains idempotent within its documented scope."
+  },
+  {
+    "word": "Logical intent",
+    "meaning": "One authorized business decision that can span multiple transmissions.",
+    "sentence": "All three requests referred to the same logical intent."
+  },
+  {
+    "word": "Ambiguous outcome",
+    "meaning": "A state where the caller cannot determine whether a remote action took effect.",
+    "sentence": "The worker recorded an ambiguous outcome after losing the first reply."
+  },
+  {
+    "word": "Deduplication",
+    "meaning": "Recognizing repeated representations of a defined logical action.",
+    "sentence": "The billing ledger performs deduplication using the charge identity."
+  },
+  {
+    "word": "Semantic equivalence",
+    "meaning": "Agreement about meaning even if the serialized responses differ.",
+    "sentence": "The refreshed artifact URL preserves semantic equivalence with the original receipt."
+  },
+  {
+    "word": "Canonicalization",
+    "meaning": "Converting inputs to a defined representation for comparison.",
+    "sentence": "The service versions its canonicalization rules so old retries still match."
+  },
+  {
+    "word": "Fingerprint",
+    "meaning": "A compact representation used to compare materially relevant request fields.",
+    "sentence": "The handler rejected a repeated key whose fingerprint had changed."
+  },
+  {
+    "word": "Atomicity",
+    "meaning": "A guarantee that a group of changes commits as one unit.",
+    "sentence": "Atomicity links the debit to its durable request record."
+  },
+  {
+    "word": "Transactional outbox",
+    "meaning": "Stored pending events committed in the same transaction as a business mutation.",
+    "sentence": "The transactional outbox preserved the pending billing event after a broker outage."
+  },
+  {
+    "word": "Consumer inbox",
+    "meaning": "Durable processing evidence associated with a particular sink effect.",
+    "sentence": "The consumer inbox suppressed a replayed invoice event."
+  },
+  {
+    "word": "Redrive",
+    "meaning": "Submitting previously failed or held messages for another processing pass.",
+    "sentence": "The operator checked retention limits before authorizing a redrive."
+  },
+  {
+    "word": "Tombstone",
+    "meaning": "A compact retained record showing that an identity was previously consumed or deleted.",
+    "sentence": "A tombstone prevented recreation after the response body expired."
+  },
+  {
+    "word": "Retry budget",
+    "meaning": "A bound on additional work spent attempting a logical operation again.",
+    "sentence": "The retry budget protected first attempts during the network outage."
+  },
+  {
+    "word": "Jitter",
+    "meaning": "A randomized variation in delay that spreads correlated retries over time.",
+    "sentence": "Adding jitter reduced the spike after clients regained connectivity."
+  },
+  {
+    "word": "Hedged request",
+    "meaning": "An overlapping attempt sent to reduce tail response time.",
+    "sentence": "The service limited each hedged request to an independently healthy replica."
+  },
+  {
+    "word": "Contiguous prefix",
+    "meaning": "An ordered sequence with no missing lower position through its endpoint.",
+    "sentence": "The sink advanced progress only through the largest committed contiguous prefix."
+  },
+  {
+    "word": "Reconciliation",
+    "meaning": "A process for resolving differences using durable evidence from authoritative systems.",
+    "sentence": "Reconciliation linked the unknown promotion to operation 771."
+  },
+  {
+    "word": "Replay horizon",
+    "meaning": "The maximum interval during which a prior action remains eligible for supported retry.",
+    "sentence": "The replay horizon must include restoration and operator redrive."
+  }
+]

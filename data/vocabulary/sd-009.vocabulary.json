@@ -1,0 +1,92 @@
+[
+  {
+    "word": "Durable execution",
+    "meaning": "Recoverable logical progress across process lifetimes using persistent evidence.",
+    "sentence": "Durable execution let a new worker resume the plan after the host failed."
+  },
+  {
+    "word": "Execution history",
+    "meaning": "An ordered record of facts used to recover workflow progress.",
+    "sentence": "The execution history contained the promotion intent but no terminal result."
+  },
+  {
+    "word": "Logical action",
+    "meaning": "One business operation that can span several attempts.",
+    "sentence": "Every retry referred to the same logical action."
+  },
+  {
+    "word": "Attempt token",
+    "meaning": "An identifier that distinguishes one execution attempt from later replacements.",
+    "sentence": "The engine rejected the completion bearing an obsolete attempt token."
+  },
+  {
+    "word": "Replay",
+    "meaning": "Reconstructing coordination state by consuming recorded inputs and decisions.",
+    "sentence": "Replay supplied the stored replica-check result to the decision code."
+  },
+  {
+    "word": "Nondeterminism",
+    "meaning": "Variation that can change commands when the same recorded history is processed again.",
+    "sentence": "Reading a live feature flag introduced nondeterminism into the promotion branch."
+  },
+  {
+    "word": "Outbox",
+    "meaning": "Durable dispatch obligations committed with the state transition that created them.",
+    "sentence": "The relay recovered the pending outbox row after restarting."
+  },
+  {
+    "word": "Inbox",
+    "meaning": "Durable receipt records for incoming signals or events.",
+    "sentence": "The approval was already present in the run's inbox."
+  },
+  {
+    "word": "Durable timer",
+    "meaning": "A persisted wake-up obligation that survives loss of a worker.",
+    "sentence": "The durable timer became eligible while every activity worker was offline."
+  },
+  {
+    "word": "Reconciliation",
+    "meaning": "Recovering an authoritative understanding of uncertain external effects.",
+    "sentence": "Reconciliation found the remote operation that the first worker had started."
+  },
+  {
+    "word": "Idempotency window",
+    "meaning": "The period during which repeated matching requests retain their documented effect semantics.",
+    "sentence": "The support team verified the idempotency window before allowing automatic replay."
+  },
+  {
+    "word": "Fan-in",
+    "meaning": "Joining multiple branch outcomes according to a defined completion predicate.",
+    "sentence": "The fan-in required a distinct result from each expected disk."
+  },
+  {
+    "word": "Quiescent boundary",
+    "meaning": "A point suitable for migration because concurrent obligations are settled or explicitly transferred.",
+    "sentence": "The plan rolled to a new history at a quiescent boundary."
+  },
+  {
+    "word": "Input fingerprint",
+    "meaning": "A stable representation binding a request identity to its intended input.",
+    "sentence": "An input fingerprint mismatch exposed accidental reuse of the request key."
+  },
+  {
+    "word": "Projection",
+    "meaning": "A derived view of authoritative execution facts for querying or display.",
+    "sentence": "The dashboard projection lagged the authoritative journal by two updates."
+  },
+  {
+    "word": "Compensation",
+    "meaning": "An explicit corrective action with its own business semantics and preconditions.",
+    "sentence": "Compensation required confirming that the earlier target had received no conflicting writes."
+  },
+  {
+    "word": "Cold replay",
+    "meaning": "Reconstruction without the benefit of a warm worker cache.",
+    "sentence": "Cold replay after a fleet evacuation dominated recovery latency."
+  },
+  {
+    "word": "Recovery point",
+    "meaning": "The boundary up to which data or execution state is recoverable after a specified failure.",
+    "sentence": "The workflow and the customer database had different recovery points."
+  }
+]

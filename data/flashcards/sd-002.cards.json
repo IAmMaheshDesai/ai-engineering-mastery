@@ -2,9 +2,9 @@
   {
     "id": "sd-002-fc-001",
     "topicId": "sd-002",
-    "type": "concept",
-    "front": "Why is election alone insufficient?",
-    "back": "A stale former leader may still send commands; resources must reject obsolete authority.",
+    "type": "interview",
+    "front": "Why can a successful election leave an obsolete worker dangerous?",
+    "back": "Its process or messages can survive the election. Mutations need enforcement at the resource.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -17,8 +17,8 @@
     "id": "sd-002-fc-002",
     "topicId": "sd-002",
     "type": "failure",
-    "front": "What is a lease?",
-    "back": "Time-bounded authority under explicit renewal and timing assumptions.",
+    "front": "What determines when a lease expires?",
+    "back": "The grant's documented clock, validity window and renewal rules.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -30,9 +30,9 @@
   {
     "id": "sd-002-fc-003",
     "topicId": "sd-002",
-    "type": "tradeoff",
-    "front": "What is an ownership epoch?",
-    "back": "A logical generation identifying a period of resource authority.",
+    "type": "failure",
+    "front": "Which event should normally advance an application ownership epoch?",
+    "back": "A new grant or explicit authority transition for that resource, independent of database leader churn.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -45,8 +45,8 @@
     "id": "sd-002-fc-004",
     "topicId": "sd-002",
     "type": "interview",
-    "front": "What is a fencing token?",
-    "back": "An ordered generation checked by a resource to reject stale owners.",
+    "front": "What two checks make a larger number usable as a fence?",
+    "back": "Verify its authorized provenance and resource scope, then compare or install it atomically at the mutation boundary.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -58,9 +58,9 @@
   {
     "id": "sd-002-fc-005",
     "topicId": "sd-002",
-    "type": "concept",
-    "front": "Why not use UUIDs as fences?",
-    "back": "UUIDs identify requests but do not express newer-versus-older ownership.",
+    "type": "interview",
+    "front": "When can a UUID fence safely?",
+    "back": "When a trusted install establishes the exact current UUID and writes must match it. UUID ordering alone conveys no grant order.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -72,9 +72,9 @@
   {
     "id": "sd-002-fc-006",
     "topicId": "sd-002",
-    "type": "failure",
-    "front": "What does a paused leader threaten?",
-    "back": "It can resume after handoff and issue obsolete side effects.",
+    "type": "interview",
+    "front": "A worker pauses after checking its grant. Why does another check immediately before send still leave risk?",
+    "back": "It may pause after that check or the message may be delayed in transit.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -86,9 +86,9 @@
   {
     "id": "sd-002-fc-007",
     "topicId": "sd-002",
-    "type": "tradeoff",
-    "front": "Where must fencing be enforced?",
-    "back": "At the protected resource or an authoritative gateway controlling its mutations.",
+    "type": "concept",
+    "front": "Where does enforcement end for an asynchronous provider?",
+    "back": "At the component that controls the promised effect. Admission fencing may need a separate contract for already queued work.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -100,9 +100,9 @@
   {
     "id": "sd-002-fc-008",
     "topicId": "sd-002",
-    "type": "interview",
-    "front": "Why must check and mutation be atomic?",
-    "back": "Separate checks allow races between conflicting commands.",
+    "type": "concept",
+    "front": "Why must installation serialize with actual mutation commits?",
+    "back": "A request validated earlier could otherwise commit after the new floor installs.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -114,9 +114,9 @@
   {
     "id": "sd-002-fc-009",
     "topicId": "sd-002",
-    "type": "concept",
-    "front": "What must survive worker restart?",
-    "back": "The highest accepted fencing generation and relevant operation state.",
+    "type": "interview",
+    "front": "What should a reimaged node do before accepting placement?",
+    "back": "Recover trusted lineage, install current authority and reconcile actual device ownership.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -128,9 +128,9 @@
   {
     "id": "sd-002-fc-010",
     "topicId": "sd-002",
-    "type": "failure",
-    "front": "Does fencing cancel accepted API calls?",
-    "back": "No. Already accepted operations may complete and require reconciliation.",
+    "type": "tradeoff",
+    "front": "Will installing a newer epoch retract a remote operation already accepted?",
+    "back": "Only if the provider explicitly guarantees that behavior. Track in-flight operations separately.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -142,9 +142,9 @@
   {
     "id": "sd-002-fc-011",
     "topicId": "sd-002",
-    "type": "tradeoff",
-    "front": "What is a Raft term?",
-    "back": "A consensus election generation, distinct from an application ownership epoch.",
+    "type": "concept",
+    "front": "Why might one Raft term include many application epochs?",
+    "back": "The same database leader can order multiple grants to different sessions or resources.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -156,9 +156,9 @@
   {
     "id": "sd-002-fc-012",
     "topicId": "sd-002",
-    "type": "interview",
-    "front": "Why use majority election?",
-    "back": "Any two majorities intersect. In Raft the shared voter obeys one vote per term and a log freshness rule.",
+    "type": "concept",
+    "front": "How can two candidates reading the same expired grant be serialized?",
+    "back": "Have each condition its acquisition on the same revision at one authoritative store.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -170,9 +170,9 @@
   {
     "id": "sd-002-fc-013",
     "topicId": "sd-002",
-    "type": "concept",
-    "front": "Majority of five voters?",
-    "back": "Three voters.",
+    "type": "failure",
+    "front": "Which side of a 3/2 split among five static voters can grant through majority consensus?",
+    "back": "Only the three-voter side can form a majority, subject to the rest of the protocol.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -185,8 +185,8 @@
     "id": "sd-002-fc-014",
     "topicId": "sd-002",
     "type": "failure",
-    "front": "Failures tolerated by five voters?",
-    "back": "Two, provided the remaining three can communicate.",
+    "front": "Does tolerating two failed voters imply tolerating two failed zones?",
+    "back": "Only if those zones cannot remove more than two voters and the remaining service dependencies survive.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -198,9 +198,9 @@
   {
     "id": "sd-002-fc-015",
     "topicId": "sd-002",
-    "type": "tradeoff",
-    "front": "Why use monotonic clocks for elapsed time?",
-    "back": "Wall clocks can jump; monotonic clocks measure local elapsed intervals.",
+    "type": "concept",
+    "front": "What extra property matters beyond a monotonic timer for lease reasoning?",
+    "back": "Its rate and suspend behavior must match the elapsed-time assumptions.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -212,9 +212,9 @@
   {
     "id": "sd-002-fc-016",
     "topicId": "sd-002",
-    "type": "interview",
-    "front": "Does a lease prove the old process died?",
-    "back": "No. Expiration allows reassignment but the old process may remain alive.",
+    "type": "failure",
+    "front": "What can expiry legitimately tell a replacement?",
+    "back": "It may seek a new grant under the authority's rules. The old process may remain fully alive.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -227,8 +227,8 @@
     "id": "sd-002-fc-017",
     "topicId": "sd-002",
     "type": "concept",
-    "front": "What is an ABA ownership bug?",
-    "back": "The same owner ID returns after transfers; stale commands look current without epochs.",
+    "front": "Why is comparing only owner name unsafe when ownership goes A to B to A?",
+    "back": "A delayed command from A's first session can look current again.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -240,9 +240,9 @@
   {
     "id": "sd-002-fc-018",
     "topicId": "sd-002",
-    "type": "failure",
-    "front": "How do epochs prevent ABA?",
-    "back": "Each transfer gets a new generation even if the owner identity repeats.",
+    "type": "interview",
+    "front": "How does conditional release avoid deleting a reincarnated owner?",
+    "back": "Compare the specific session and epoch in the same transaction as the release.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -254,9 +254,9 @@
   {
     "id": "sd-002-fc-019",
     "topicId": "sd-002",
-    "type": "tradeoff",
-    "front": "What is a safe handoff order?",
-    "back": "Claim, install verified floors, reconcile accepted effects, then activate the ready resources with a conditional transition.",
+    "type": "concept",
+    "front": "When is a multi-node takeover complete?",
+    "back": "When its declared readiness predicate is satisfied for a specific membership and barrier set.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -268,9 +268,9 @@
   {
     "id": "sd-002-fc-020",
     "topicId": "sd-002",
-    "type": "interview",
-    "front": "Why persist operation IDs first?",
-    "back": "Record a client-generated idempotency key and payload before dispatch. The external handle may exist only in a lost response.",
+    "type": "failure",
+    "front": "What identity can be known before a provider returns an operation ID?",
+    "back": "A stable client request key bound to the intended action.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -283,8 +283,8 @@
     "id": "sd-002-fc-021",
     "topicId": "sd-002",
     "type": "concept",
-    "front": "What does an API timeout prove?",
-    "back": "Only that the caller lacks a timely result, not that the operation failed.",
+    "front": "What if the fence installation timed out but a subsequent query reports a newer epoch?",
+    "back": "The installer is itself stale. Reconcile without lowering the floor.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -296,44 +296,51 @@
   {
     "id": "sd-002-fc-022",
     "topicId": "sd-002",
-    "type": "failure",
-    "front": "How should GPU agents use epochs?",
-    "back": "Reject obsolete scheduler commands before accepting reservations.",
+    "type": "concept",
+    "front": "How should a node agent decide if a placement may proceed?",
+    "back": "Check trusted grant scope, exact installed epoch, inventory preconditions and request identity together.",
     "companies": [
       "OpenAI",
+      "Anthropic",
       "Meta",
+      "Google",
       "NVIDIA"
     ]
   },
   {
     "id": "sd-002-fc-023",
     "topicId": "sd-002",
-    "type": "tradeoff",
-    "front": "What if a GPU agent is unreachable?",
-    "back": "Quarantine its resources until safe authority and reservation state are established.",
+    "type": "concept",
+    "front": "How should an isolated node count toward safe capacity?",
+    "back": "Exclude it unless a separate trusted mechanism proves it is safely available.",
     "companies": [
       "OpenAI",
+      "Anthropic",
       "Meta",
+      "Google",
       "NVIDIA"
     ]
   },
   {
     "id": "sd-002-fc-024",
     "topicId": "sd-002",
-    "type": "interview",
-    "front": "What protects checkpoint publication?",
-    "back": "An atomically fenced manifest pointer to immutable checkpoint blobs.",
+    "type": "tradeoff",
+    "front": "What must be fenced when an old training attempt can still upload shards?",
+    "back": "The authoritative publication of the immutable checkpoint manifest.",
     "companies": [
+      "OpenAI",
+      "Anthropic",
       "Meta",
+      "Google",
       "NVIDIA"
     ]
   },
   {
     "id": "sd-002-fc-025",
     "topicId": "sd-002",
-    "type": "concept",
-    "front": "Why not consensus per inference request?",
-    "back": "It adds coordination latency and limits data-plane throughput.",
+    "type": "tradeoff",
+    "front": "What ownership check belongs on the inference control path?",
+    "back": "The check authorizing changes to desired deployment or routing state, scoped to the affected model or pool.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -345,9 +352,9 @@
   {
     "id": "sd-002-fc-026",
     "topicId": "sd-002",
-    "type": "failure",
-    "front": "What is the difference between idempotency and fencing?",
-    "back": "Idempotency deduplicates retries; fencing rejects obsolete owners.",
+    "type": "tradeoff",
+    "front": "What protection does provider deduplication leave missing?",
+    "back": "Distinct legitimate intents from old and new owners can still conflict.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -359,9 +366,9 @@
   {
     "id": "sd-002-fc-027",
     "topicId": "sd-002",
-    "type": "tradeoff",
-    "front": "Can same-epoch commands conflict?",
-    "back": "Yes. Use reservation preconditions and operation sequencing or deduplication.",
+    "type": "interview",
+    "front": "Two concurrent placements share epoch 19. How can one still lose?",
+    "back": "An inventory precondition or expected allocation revision changes after the first wins.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -373,9 +380,9 @@
   {
     "id": "sd-002-fc-028",
     "topicId": "sd-002",
-    "type": "interview",
-    "front": "Why might short leases hurt?",
-    "back": "They increase renewals and false failovers under transient delays.",
+    "type": "concept",
+    "front": "Why can shortening a lease extend time to useful recovery?",
+    "back": "Renewal jitter causes churn and barrier storms that overwhelm the recovery path.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -387,9 +394,9 @@
   {
     "id": "sd-002-fc-029",
     "topicId": "sd-002",
-    "type": "concept",
-    "front": "Why might long leases hurt?",
-    "back": "They delay takeover after genuine owner failure.",
+    "type": "failure",
+    "front": "Why can a long lease delay recovery even with perfect fencing?",
+    "back": "A replacement may still wait for grant eligibility before it can install a newer fence.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -401,9 +408,9 @@
   {
     "id": "sd-002-fc-030",
     "topicId": "sd-002",
-    "type": "failure",
-    "front": "What should ownership metrics include?",
-    "back": "Epoch transitions, renewals, stale rejections, fence latency, and reconciliation backlog.",
+    "type": "tradeoff",
+    "front": "What two intervals separate allocator health from actual readiness?",
+    "back": "Time to acquire a valid grant and time from acquisition to sufficient safely fenced capacity.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -415,9 +422,9 @@
   {
     "id": "sd-002-fc-031",
     "topicId": "sd-002",
-    "type": "tradeoff",
-    "front": "What is a coordinator outage tradeoff?",
-    "back": "New ownership changes may stop to preserve safety.",
+    "type": "failure",
+    "front": "How might an authority outage affect ongoing training?",
+    "back": "Existing jobs can continue under the workload policy while new conflicting placements remain blocked.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -429,115 +436,9 @@
   {
     "id": "sd-002-fc-032",
     "topicId": "sd-002",
-    "type": "interview",
-    "front": "How do you test stale-owner safety?",
-    "back": "Pause an owner, transfer ownership, release its delayed command, assert rejection.",
-    "companies": [
-      "OpenAI",
-      "Anthropic",
-      "Meta",
-      "Google",
-      "NVIDIA"
-    ]
-  },
-  {
-    "id": "sd-002-fc-033",
-    "topicId": "sd-002",
     "type": "concept",
-    "front": "How can token provenance be secured?",
-    "back": "Authenticate issuer and caller; scope token to authorized resource.",
-    "companies": [
-      "OpenAI",
-      "Anthropic",
-      "Meta",
-      "Google",
-      "NVIDIA"
-    ]
-  },
-  {
-    "id": "sd-002-fc-034",
-    "topicId": "sd-002",
-    "type": "failure",
-    "front": "Why shard scheduler ownership?",
-    "back": "Reduce contention and blast radius while allowing horizontal scaling.",
-    "companies": [
-      "OpenAI",
-      "Meta",
-      "NVIDIA"
-    ]
-  },
-  {
-    "id": "sd-002-fc-035",
-    "topicId": "sd-002",
-    "type": "tradeoff",
-    "front": "What is the 50,000/10 renewal rate?",
-    "back": "5,000 renewals per second before batching or retries.",
-    "companies": [
-      "OpenAI",
-      "Anthropic",
-      "Meta",
-      "Google",
-      "NVIDIA"
-    ]
-  },
-  {
-    "id": "sd-002-fc-036",
-    "topicId": "sd-002",
-    "type": "interview",
-    "front": "What is the risk of restoring old epoch counters?",
-    "back": "Reused generations may make stale commands appear valid.",
-    "companies": [
-      "OpenAI",
-      "Anthropic",
-      "Meta",
-      "Google",
-      "NVIDIA"
-    ]
-  },
-  {
-    "id": "sd-002-fc-037",
-    "topicId": "sd-002",
-    "type": "concept",
-    "front": "What is a strong interview invariant?",
-    "back": "No conflicting accepted mutations from obsolete ownership generations.",
-    "companies": [
-      "OpenAI",
-      "Anthropic",
-      "Meta",
-      "Google",
-      "NVIDIA"
-    ]
-  },
-  {
-    "id": "sd-002-fc-038",
-    "topicId": "sd-002",
-    "type": "failure",
-    "front": "What does a new owner reconcile?",
-    "back": "Durable intents, external operation outcomes, and observed resource state.",
-    "companies": [
-      "OpenAI",
-      "Anthropic",
-      "Meta",
-      "Google",
-      "NVIDIA"
-    ]
-  },
-  {
-    "id": "sd-002-fc-039",
-    "topicId": "sd-002",
-    "type": "tradeoff",
-    "front": "Can fencing guarantee exactly-once tool calls?",
-    "back": "No. External idempotency, journals, and reconciliation are also needed.",
-    "companies": [
-      "Anthropic"
-    ]
-  },
-  {
-    "id": "sd-002-fc-040",
-    "topicId": "sd-002",
-    "type": "interview",
-    "front": "How do you explain Staff+ tradeoffs?",
-    "back": "State invariants, assumptions, enforcement points, failure behavior, and alternatives.",
+    "front": "Which two delivery orders expose the installation gap?",
+    "back": "Deliver the delayed old mutation before installation, then test a separate run delivering it after installation.",
     "companies": [
       "OpenAI",
       "Anthropic",

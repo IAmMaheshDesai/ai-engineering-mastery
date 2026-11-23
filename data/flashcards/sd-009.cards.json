@@ -1,0 +1,450 @@
+[
+  {
+    "id": "sd-009-fc-001",
+    "topicId": "sd-009",
+    "type": "interview",
+    "front": "Which state makes an accepted recovery run discoverable after a worker crashes?",
+    "back": "A durable admission record binding tenant, request key, immutable input and workflow identity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-002",
+    "topicId": "sd-009",
+    "type": "failure",
+    "front": "Why can the provider's returned operation ID be insufficient for recovery?",
+    "back": "The worker may crash after the provider accepts but before it saves the returned ID.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-003",
+    "topicId": "sd-009",
+    "type": "failure",
+    "front": "What must persist before submitting an irreversible action?",
+    "back": "The logical intent, authority and stable request identity needed for safe reconciliation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-004",
+    "topicId": "sd-009",
+    "type": "interview",
+    "front": "Which key should remain stable across attempts at one provider action?",
+    "back": "The logical action's idempotency key, bound to its immutable input.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-005",
+    "topicId": "sd-009",
+    "type": "interview",
+    "front": "Which identity should change on activity redelivery?",
+    "back": "The attempt identity used for diagnostics and rejecting stale engine completions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-006",
+    "topicId": "sd-009",
+    "type": "interview",
+    "front": "What does a provider operation ID usually establish in this design?",
+    "back": "The provider accepted an operation; completion and user-visible readiness need separate evidence.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-007",
+    "topicId": "sd-009",
+    "type": "concept",
+    "front": "What if a provider forgets its idempotency key before the workflow resumes?",
+    "back": "Stop blind same-key retries and obtain independent evidence or explicitly reconcile.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-008",
+    "topicId": "sd-009",
+    "type": "concept",
+    "front": "Why commit an outbox row with the execution revision?",
+    "back": "It makes the obligation to dispatch durable exactly when the decision to dispatch becomes authoritative.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-009",
+    "topicId": "sd-009",
+    "type": "interview",
+    "front": "Why can a correct outbox publish twice?",
+    "back": "A relay can crash after broker acceptance but before marking the row delivered.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-010",
+    "topicId": "sd-009",
+    "type": "tradeoff",
+    "front": "What is a decision worker allowed to do speculatively?",
+    "back": "Compute proposed commands; externally visible effects wait for authoritative admission.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-011",
+    "topicId": "sd-009",
+    "type": "concept",
+    "front": "Why check an expected execution revision?",
+    "back": "It prevents stale computations from committing after another durable transition changes the run.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-012",
+    "topicId": "sd-009",
+    "type": "concept",
+    "front": "What does replay provide for an activity that already completed in history?",
+    "back": "Its recorded result at the corresponding historical program point.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-013",
+    "topicId": "sd-009",
+    "type": "failure",
+    "front": "What makes an inserted workflow command a compatibility hazard?",
+    "back": "An old history can contain a different next command at that same point.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-014",
+    "topicId": "sd-009",
+    "type": "failure",
+    "front": "Why can sorting a list fail to make workflow replay deterministic?",
+    "back": "Its membership can change between executions if the list comes from a live external query.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-015",
+    "topicId": "sd-009",
+    "type": "concept",
+    "front": "How can an old input schema corrupt recovery?",
+    "back": "A new decoder may assign different units or turn unknown information into an invented default.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-016",
+    "topicId": "sd-009",
+    "type": "failure",
+    "front": "Which timeout most directly suggests worker-capacity pressure?",
+    "back": "A queue-wait timeout; inspect dispatch evidence before deciding whether any attempt acted.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-017",
+    "topicId": "sd-009",
+    "type": "concept",
+    "front": "How many polls per second on average for 6,000 operations polling every 30 seconds?",
+    "back": "About 200, assuming distributed phases. The instantaneous burst may be much higher.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-018",
+    "topicId": "sd-009",
+    "type": "interview",
+    "front": "Why should the last durable heartbeat cursor trail verified effects?",
+    "back": "Recovery may skip everything at or before that cursor.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-019",
+    "topicId": "sd-009",
+    "type": "concept",
+    "front": "Does rejecting a stale activity completion fence its external side effects?",
+    "back": "No. The provider or protected mutation boundary needs its own enforcement.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-020",
+    "topicId": "sd-009",
+    "type": "failure",
+    "front": "How can a join survive duplicate child notifications?",
+    "back": "Record a stable expected child set and count each valid terminal contribution once.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-021",
+    "topicId": "sd-009",
+    "type": "concept",
+    "front": "What is an adequate business definition of cancellation completion?",
+    "back": "A stated predicate over closed admission and accounted-for in-flight work under the service contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-022",
+    "topicId": "sd-009",
+    "type": "concept",
+    "front": "Why distinguish an approval gateway timestamp from durable receipt?",
+    "back": "A gateway can stall or crash before committing the signal; the contract must choose its authority.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-023",
+    "topicId": "sd-009",
+    "type": "concept",
+    "front": "Why can routing rollback be an unsafe compensation?",
+    "back": "The new target may have accepted writes or current ownership may have changed.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-024",
+    "topicId": "sd-009",
+    "type": "tradeoff",
+    "front": "What is the logical journal payload for 120,000 events at 1.5 KiB each?",
+    "back": "180,000 KiB, approximately 176 MiB before storage overhead and replication.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-025",
+    "topicId": "sd-009",
+    "type": "tradeoff",
+    "front": "How many idealized 45-second waves are needed for 500 calls at concurrency 80?",
+    "back": "Seven waves or 315 seconds when durations are identical and all calls are ready together.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-026",
+    "topicId": "sd-009",
+    "type": "tradeoff",
+    "front": "Why reserve capacity for reconciliation during a recovery surge?",
+    "back": "Unbounded new submissions can otherwise starve the work needed to resolve existing ambiguous effects.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-027",
+    "topicId": "sd-009",
+    "type": "interview",
+    "front": "What does a published training checkpoint require beyond a workflow record?",
+    "back": "A complete verified manifest, durable compatible shard data and an appropriately authorized pointer.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-028",
+    "topicId": "sd-009",
+    "type": "concept",
+    "front": "Why preserve an agent's selected tool arguments?",
+    "back": "Model replay can propose a different action and accidentally replace recovery with a new decision.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-029",
+    "topicId": "sd-009",
+    "type": "failure",
+    "front": "Why can regional failover reissue an already accepted action?",
+    "back": "An asynchronous standby can lack the recent intent even though the provider retained its effect.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-030",
+    "topicId": "sd-009",
+    "type": "tradeoff",
+    "front": "What must cross a workflow history rollover?",
+    "back": "Outstanding commands, waits, identity bindings, signal routing and recovery authority.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-031",
+    "topicId": "sd-009",
+    "type": "failure",
+    "front": "How long does ideal replay of 60,000 events at 10,000 per second take?",
+    "back": "Six seconds before fetch, scheduling and new work.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-009-fc-032",
+    "topicId": "sd-009",
+    "type": "concept",
+    "front": "Which metric links orchestration to customer value?",
+    "back": "Time to verified recovery at the agreed recovery point, including blocked and degraded cases.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

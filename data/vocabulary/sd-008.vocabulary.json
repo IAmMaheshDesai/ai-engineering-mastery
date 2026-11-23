@@ -1,0 +1,87 @@
+[
+  {
+    "word": "Atomic commitment",
+    "meaning": "Agreement that the required participants commit or abort one transaction consistently.",
+    "sentence": "Atomic commitment prevented one ledger from accepting a transfer that the other rejected."
+  },
+  {
+    "word": "Resource manager",
+    "meaning": "A participant responsible for transaction changes to its own durable resources.",
+    "sentence": "The calendar resource manager voted no because the slot was already reserved."
+  },
+  {
+    "word": "Prepare record",
+    "meaning": "Durable participant state supporting a future authorized commit or abort.",
+    "sentence": "The database recovered the prepare record before processing new conflicting work."
+  },
+  {
+    "word": "In-doubt transaction",
+    "meaning": "A prepared transaction whose final decision is unknown to a participant.",
+    "sentence": "The operator located the authoritative decision before resolving the in-doubt transaction."
+  },
+  {
+    "word": "Coordinator",
+    "meaning": "The component organizing votes, recording a decision and communicating the outcome.",
+    "sentence": "The replacement coordinator replayed the previously committed decision."
+  },
+  {
+    "word": "Isolation",
+    "meaning": "A contract constraining concurrent observations and interference between transactions.",
+    "sentence": "The reporting job required snapshot isolation for its multi-read view."
+  },
+  {
+    "word": "Compensating transaction",
+    "meaning": "A new transaction that amends a prior committed business effect.",
+    "sentence": "The compensating transaction released the reservation by its original claim identity."
+  },
+  {
+    "word": "Pivot",
+    "meaning": "A business transition after which earlier backward recovery is no longer acceptable.",
+    "sentence": "The first acknowledged write at the destination was the pivot in this failover plan."
+  },
+  {
+    "word": "Semantic lock",
+    "meaning": "A domain state that prevents particular conflicting business transitions.",
+    "sentence": "The pending payout acted as a semantic lock on the held amount."
+  },
+  {
+    "word": "Reservation",
+    "meaning": "An enforceable claim to resources under stated ownership and validity conditions.",
+    "sentence": "The controller verified the reservation before launching the training ranks."
+  },
+  {
+    "word": "Transactional outbox",
+    "meaning": "A durable publication intent committed together with a local mutation.",
+    "sentence": "The transactional outbox allowed the relay to resume after a process crash."
+  },
+  {
+    "word": "Deduplication horizon",
+    "meaning": "The period through which a system can recognize a repeated request identity.",
+    "sentence": "The provider's deduplication horizon was shorter than our archive replay interval."
+  },
+  {
+    "word": "Reconciliation",
+    "meaning": "Determining authoritative external state and repairing its relationship to desired intent.",
+    "sentence": "Reconciliation found a running job after the launch reply was lost."
+  },
+  {
+    "word": "Forward recovery",
+    "meaning": "Finishing or repairing toward the intended new state after a failure.",
+    "sentence": "Forward recovery kept traffic on the destination that had accepted new writes."
+  },
+  {
+    "word": "Heuristic decision",
+    "meaning": "A unilateral finalization made outside the normal atomic decision protocol.",
+    "sentence": "The incident report documented the heuristic decision and its financial impact."
+  },
+  {
+    "word": "Repair backlog",
+    "meaning": "Outstanding cases requiring automated or manual resolution.",
+    "sentence": "The repair backlog grew because new exception cases arrived faster than operators could resolve them."
+  },
+  {
+    "word": "Lineage",
+    "meaning": "The history identifying the authority or data sequence from which a state derives.",
+    "sentence": "The adapter verified database lineage before deciding whether failback was safe."
+  }
+]

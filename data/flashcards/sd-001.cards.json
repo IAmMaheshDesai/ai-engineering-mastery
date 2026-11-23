@@ -3,8 +3,8 @@
     "id": "sd-001-fc-001",
     "topicId": "sd-001",
     "type": "interview",
-    "front": "What is consensus?",
-    "back": "Agreement on an ordered sequence of decisions despite failures.",
+    "front": "How does a single consensus decision become a service history?",
+    "back": "Choose commands for successive positions and apply the committed prefix deterministically.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -17,8 +17,8 @@
     "id": "sd-001-fc-002",
     "topicId": "sd-001",
     "type": "failure",
-    "front": "What does safety mean?",
-    "back": "Conflicting decisions must never both become committed.",
+    "front": "A client gets two different successful destinations for one generation. Which property failed?",
+    "back": "Safety. The service admitted an execution its one-destination invariant forbids.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -30,9 +30,9 @@
   {
     "id": "sd-001-fc-003",
     "topicId": "sd-001",
-    "type": "tradeoff",
-    "front": "What does liveness mean?",
-    "back": "Progress eventually occurs under suitable conditions.",
+    "type": "failure",
+    "front": "When can a safe protocol still be unavailable?",
+    "back": "If a durable communicating quorum cannot persist long enough, decisions can stall indefinitely.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -44,9 +44,9 @@
   {
     "id": "sd-001-fc-004",
     "topicId": "sd-001",
-    "type": "concept",
-    "front": "In a five-voter Raft group, how many durable follower acknowledgments does a leader need for its current-term entry?",
-    "back": "Two followers plus the leader’s own durable copy form a majority of three.",
+    "type": "interview",
+    "front": "A five-voter leader has persisted a current-term entry. How many durable follower matches establish a majority?",
+    "back": "Two distinct eligible followers in the static configuration give three copies including the leader.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -59,8 +59,8 @@
     "id": "sd-001-fc-005",
     "topicId": "sd-001",
     "type": "interview",
-    "front": "How many failed voters can five tolerate?",
-    "back": "Two, if the remaining three can communicate.",
+    "front": "How many voters can disappear from a static five-member group while leaving a majority?",
+    "back": "Two, assuming the three survivors communicate, retain durable state and can make progress.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -72,9 +72,9 @@
   {
     "id": "sd-001-fc-006",
     "topicId": "sd-001",
-    "type": "failure",
-    "front": "Why do majorities overlap?",
-    "back": "Any two sets larger than half share at least one member.",
+    "type": "interview",
+    "front": "What lower bound applies to the overlap of sets of sizes four and three among five voters?",
+    "back": "At least two because four plus three minus five equals two.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -86,9 +86,9 @@
   {
     "id": "sd-001-fc-007",
     "topicId": "sd-001",
-    "type": "tradeoff",
-    "front": "What are Raft server roles?",
-    "back": "Follower, candidate, and leader.",
+    "type": "concept",
+    "front": "Which Raft role may solicit votes after an election timeout?",
+    "back": "A follower becomes a candidate, advances the term, records its vote and solicits others.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -101,8 +101,8 @@
     "id": "sd-001-fc-008",
     "topicId": "sd-001",
     "type": "concept",
-    "front": "What is a Raft term?",
-    "back": "A monotonically increasing election epoch.",
+    "front": "How does a Raft term differ from a lease deadline?",
+    "back": "It is a logical election number. Its numeric value says nothing about elapsed time or remaining authority.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -115,8 +115,8 @@
     "id": "sd-001-fc-009",
     "topicId": "sd-001",
     "type": "interview",
-    "front": "How does a candidate win?",
-    "back": "It obtains majority votes and meets log freshness rules.",
+    "front": "Can a candidate win because it has the longest log?",
+    "back": "Length breaks a tie on last-entry term. Eligibility and a majority of votes are still required.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -128,9 +128,9 @@
   {
     "id": "sd-001-fc-010",
     "topicId": "sd-001",
-    "type": "failure",
-    "front": "Why randomized election timeouts?",
-    "back": "They reduce repeated split votes.",
+    "type": "tradeoff",
+    "front": "Why jitter election timeouts?",
+    "back": "Different firing times reduce repeated split votes while the voting rules preserve safety.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -142,9 +142,9 @@
   {
     "id": "sd-001-fc-011",
     "topicId": "sd-001",
-    "type": "tradeoff",
-    "front": "What does AppendEntries carry?",
-    "back": "Log entries plus previous index/term consistency information.",
+    "type": "concept",
+    "front": "What evidence does the predecessor pair in AppendEntries test?",
+    "back": "The follower must match the leader at the preceding index and term before accepting the suffix.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -157,8 +157,8 @@
     "id": "sd-001-fc-012",
     "topicId": "sd-001",
     "type": "concept",
-    "front": "What is log matching?",
-    "back": "Equal index and term imply identical preceding log history.",
+    "front": "When do Raft entries imply a matching prefix?",
+    "back": "Under the protocol, entries with the same index and term imply the same history through that index.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -170,9 +170,9 @@
   {
     "id": "sd-001-fc-013",
     "topicId": "sd-001",
-    "type": "interview",
-    "front": "Can a minority partition commit?",
-    "back": "No; it lacks a majority.",
+    "type": "failure",
+    "front": "What can an isolated two-node minority of five offer?",
+    "back": "Historical reads under an explicit stale-read contract or pending intake. It cannot authorize a fresh majority decision.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -185,8 +185,8 @@
     "id": "sd-001-fc-014",
     "topicId": "sd-001",
     "type": "failure",
-    "front": "Can a former leader remain dangerous?",
-    "back": "Yes, for external effects unless the resource rejects stale owners.",
+    "front": "Why is a responsive old leader unsafe for strong reads?",
+    "back": "A new majority may have already completed a write unseen by the old leader.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -198,9 +198,9 @@
   {
     "id": "sd-001-fc-015",
     "topicId": "sd-001",
-    "type": "tradeoff",
-    "front": "What is a fencing token?",
-    "back": "A growing epoch checked by a resource to reject stale actions.",
+    "type": "concept",
+    "front": "Where must a token be checked to fence a stale worker?",
+    "back": "At the protected mutation boundary with atomic authority validation and state change.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -212,9 +212,9 @@
   {
     "id": "sd-001-fc-016",
     "topicId": "sd-001",
-    "type": "concept",
-    "front": "Does a lease replace fencing?",
-    "back": "No; pauses and clock issues can leave stale actions.",
+    "type": "failure",
+    "front": "Can checking a lease immediately before issuing an external call fence that call?",
+    "back": "A pause or delayed packet can separate the check from the effect. The receiver must enforce the relevant authority.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -226,9 +226,9 @@
   {
     "id": "sd-001-fc-017",
     "topicId": "sd-001",
-    "type": "interview",
-    "front": "What is commitIndex?",
-    "back": "Highest log index known committed by the leader.",
+    "type": "concept",
+    "front": "How can a replica be committed through 90 but applied only through 85?",
+    "back": "Agreement has progressed ahead of local state-machine execution.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -240,9 +240,9 @@
   {
     "id": "sd-001-fc-018",
     "topicId": "sd-001",
-    "type": "failure",
-    "front": "Are old-term entries committed by majority alone?",
-    "back": "Not necessarily; Raft current-term commitment rules matter.",
+    "type": "interview",
+    "front": "May a new Raft leader count a majority of an old-term entry as a new direct commitment?",
+    "back": "No. A quorum for its current-term entry establishes commitment of the preceding prefix.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -254,9 +254,9 @@
   {
     "id": "sd-001-fc-019",
     "topicId": "sd-001",
-    "type": "tradeoff",
-    "front": "What is a client request ID for?",
-    "back": "Deduplicate retries after ambiguous acknowledgments.",
+    "type": "concept",
+    "front": "What must accompany an identifier in a durable retry record?",
+    "back": "A binding to the original request and its outcome so changed payloads can be rejected.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -268,20 +268,23 @@
   {
     "id": "sd-001-fc-020",
     "topicId": "sd-001",
-    "type": "concept",
-    "front": "Does Raft ensure exactly-once external calls?",
-    "back": "No; use external idempotency and reconciliation.",
+    "type": "failure",
+    "front": "Why can external effects repeat even with a correct Raft log?",
+    "back": "Dispatch and recording external completion are separate. Recover with provider idempotency or reconciliation.",
     "companies": [
+      "OpenAI",
       "Anthropic",
-      "Google"
+      "Meta",
+      "Google",
+      "NVIDIA"
     ]
   },
   {
     "id": "sd-001-fc-021",
     "topicId": "sd-001",
-    "type": "interview",
-    "front": "Who are Paxos actors?",
-    "back": "Proposers, acceptors, and learners.",
+    "type": "concept",
+    "front": "Which Paxos role chooses the proposal to issue after prepare?",
+    "back": "The proposer selects the permitted value from acceptor responses. Learners discover chosen values.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -293,9 +296,9 @@
   {
     "id": "sd-001-fc-022",
     "topicId": "sd-001",
-    "type": "failure",
-    "front": "What happens in Paxos prepare?",
-    "back": "Acceptors promise and report previously accepted proposals.",
+    "type": "concept",
+    "front": "Which prior value constrains a new Paxos ballot?",
+    "back": "The value of the highest accepted ballot reported by its prepare quorum for that slot.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -307,9 +310,9 @@
   {
     "id": "sd-001-fc-023",
     "topicId": "sd-001",
-    "type": "tradeoff",
-    "front": "What happens in Paxos accept?",
-    "back": "A quorum accepts a safe proposal value.",
+    "type": "concept",
+    "front": "Why persist an accepted pair before acknowledging?",
+    "back": "The quorum proof assumes the pair survives crashes and is reportable during future recovery.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -321,9 +324,9 @@
   {
     "id": "sd-001-fc-024",
     "topicId": "sd-001",
-    "type": "concept",
-    "front": "What is Multi-Paxos?",
-    "back": "A repeated-decision optimization with stable leadership.",
+    "type": "tradeoff",
+    "front": "How does stable leadership amortize Multi-Paxos work?",
+    "back": "A ballot established over a valid slot range lets the leader issue many accept phases within that scope.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -335,9 +338,9 @@
   {
     "id": "sd-001-fc-025",
     "topicId": "sd-001",
-    "type": "interview",
-    "front": "Why avoid global quorum for every request?",
-    "back": "Wide-area latency and coordination bottlenecks.",
+    "type": "tradeoff",
+    "front": "What workload makes a global quorum an expensive ordering boundary?",
+    "back": "Independent tenant operations that do not share invariants pay unnecessary WAN latency and contend together.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -349,24 +352,28 @@
   {
     "id": "sd-001-fc-026",
     "topicId": "sd-001",
-    "type": "failure",
-    "front": "Where should consensus live in LLM serving?",
-    "back": "Control-plane metadata, not per-token inference traffic.",
+    "type": "tradeoff",
+    "front": "Which model-serving action naturally belongs in a consensus group?",
+    "back": "Publishing a shared authoritative rollout generation. Per-token execution stays on the serving path.",
     "companies": [
       "OpenAI",
+      "Anthropic",
       "Meta",
+      "Google",
       "NVIDIA"
     ]
   },
   {
     "id": "sd-001-fc-027",
     "topicId": "sd-001",
-    "type": "tradeoff",
-    "front": "Why does a GPU scheduler need epochs?",
-    "back": "To reject outdated allocation or ownership commands.",
+    "type": "interview",
+    "front": "Why tag a GPU assignment with an ownership epoch?",
+    "back": "A later assignment must prevent stale holders from successfully mutating the same protected capacity.",
     "companies": [
       "OpenAI",
+      "Anthropic",
       "Meta",
+      "Google",
       "NVIDIA"
     ]
   },
@@ -374,8 +381,8 @@
     "id": "sd-001-fc-028",
     "topicId": "sd-001",
     "type": "concept",
-    "front": "Consensus versus durable execution?",
-    "back": "Agreement on decisions versus checkpointed workflow progress.",
+    "front": "How does consensus help a durable workflow?",
+    "back": "It can order decisions about workflow state. Activities still require recovery and side-effect contracts.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -387,9 +394,9 @@
   {
     "id": "sd-001-fc-029",
     "topicId": "sd-001",
-    "type": "interview",
-    "front": "How to recover after an ambiguous API call?",
-    "back": "Reuse a stable operation ID; query status or idempotently retry.",
+    "type": "failure",
+    "front": "What is the first question after a promotion request times out?",
+    "back": "Can an authoritative lookup or same-key retry establish its outcome before we issue conflicting work?",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -401,9 +408,9 @@
   {
     "id": "sd-001-fc-030",
     "topicId": "sd-001",
-    "type": "failure",
-    "front": "What should a Staff+ latency estimate show after zone loss?",
-    "back": "Remove the failed voters and recalculate which remaining durable follower acknowledgment completes the quorum. Include queuing and apply time.",
+    "type": "tradeoff",
+    "front": "Five voters return follower matches at 3, 8, 15 and 40 ms. What changes if the fastest stalls?",
+    "back": "With a 4 ms parallel leader flush, commit moves from 8 to 15 ms, assuming unchanged remaining times.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -415,9 +422,9 @@
   {
     "id": "sd-001-fc-031",
     "topicId": "sd-001",
-    "type": "tradeoff",
-    "front": "What is Raft snapshotting for?",
-    "back": "Compact applied state and catch up lagging replicas.",
+    "type": "failure",
+    "front": "What risk comes from compacting immediately after each small follower outage?",
+    "back": "A returning voter may require a full snapshot instead of incremental log repair.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -430,118 +437,13 @@
     "id": "sd-001-fc-032",
     "topicId": "sd-001",
     "type": "concept",
-    "front": "What happens on a higher Raft term?",
-    "back": "The server steps down and updates its term.",
+    "front": "What result should a receiver of an RPC revealing a higher valid Raft term persist?",
+    "back": "Advance current term, clear the prior-term vote as required and follow the protocol's step-down rule.",
     "companies": [
       "OpenAI",
       "Anthropic",
       "Meta",
       "Google",
-      "NVIDIA"
-    ]
-  },
-  {
-    "id": "sd-001-fc-033",
-    "topicId": "sd-001",
-    "type": "interview",
-    "front": "Why must the GPU worker enforce a fencing epoch?",
-    "back": "A stale scheduler may still send commands; enforcement at the worker rejects lower epochs.",
-    "companies": [
-      "OpenAI",
-      "Meta",
-      "NVIDIA"
-    ]
-  },
-  {
-    "id": "sd-001-fc-034",
-    "topicId": "sd-001",
-    "type": "interview",
-    "front": "Can a Raft term advance without a leader being elected?",
-    "back": "Yes. An unsuccessful candidate starts a new term. Repeated increases can indicate split votes or delayed heartbeats.",
-    "companies": [
-      "OpenAI",
-      "Anthropic",
-      "Meta",
-      "Google",
-      "NVIDIA"
-    ]
-  },
-  {
-    "id": "sd-001-fc-035",
-    "topicId": "sd-001",
-    "type": "interview",
-    "front": "What happens to an uncommitted log suffix after reelection?",
-    "back": "It may be overwritten by the new leader; clients must not treat it as committed.",
-    "companies": [
-      "OpenAI",
-      "Anthropic",
-      "Meta",
-      "Google",
-      "NVIDIA"
-    ]
-  },
-  {
-    "id": "sd-001-fc-036",
-    "topicId": "sd-001",
-    "type": "interview",
-    "front": "What is the purpose of RequestVote log freshness checks?",
-    "back": "Prevent an outdated candidate from replacing a leader and losing committed history.",
-    "companies": [
-      "OpenAI",
-      "Anthropic",
-      "Meta",
-      "Google",
-      "NVIDIA"
-    ]
-  },
-  {
-    "id": "sd-001-fc-037",
-    "topicId": "sd-001",
-    "type": "interview",
-    "front": "Why is an external API timeout ambiguous?",
-    "back": "The side effect may have succeeded even if the caller did not receive a response.",
-    "companies": [
-      "Anthropic",
-      "Google"
-    ]
-  },
-  {
-    "id": "sd-001-fc-038",
-    "topicId": "sd-001",
-    "type": "interview",
-    "front": "Why are joint configurations needed?",
-    "back": "To preserve safe quorum overlap while changing the set of voting replicas.",
-    "companies": [
-      "OpenAI",
-      "Anthropic",
-      "Meta",
-      "Google",
-      "NVIDIA"
-    ]
-  },
-  {
-    "id": "sd-001-fc-039",
-    "topicId": "sd-001",
-    "type": "interview",
-    "front": "What does a Raft snapshot record?",
-    "back": "A consistent applied state at an included log index and term.",
-    "companies": [
-      "OpenAI",
-      "Anthropic",
-      "Meta",
-      "Google",
-      "NVIDIA"
-    ]
-  },
-  {
-    "id": "sd-001-fc-040",
-    "topicId": "sd-001",
-    "type": "interview",
-    "front": "Which model-serving update deserves strong ordering?",
-    "back": "Publishing an authoritative routing revision can require strong ordering. Token generation uses locally applied validated configuration.",
-    "companies": [
-      "OpenAI",
-      "Meta",
       "NVIDIA"
     ]
   }

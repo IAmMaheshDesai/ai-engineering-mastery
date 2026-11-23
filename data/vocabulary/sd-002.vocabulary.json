@@ -1,102 +1,87 @@
 [
   {
-    "word": "authority",
-    "meaning": "Recognized permission to make decisions",
-    "sentence": "The coordinator records which scheduler currently has authority."
+    "word": "Ownership epoch",
+    "meaning": "A generation identifying a grant of authority over a scoped resource.",
+    "sentence": "The returning planner presented an ownership epoch that the node had already retired."
   },
   {
-    "word": "lease",
-    "meaning": "Time-bounded permission subject to renewal",
-    "sentence": "The scheduler renews its lease before the deadline."
+    "word": "Holder session",
+    "meaning": "One identifiable period of participation by an owner.",
+    "sentence": "The release matched the hostname but failed to match the holder session."
   },
   {
-    "word": "fencing",
-    "meaning": "Rejecting operations from obsolete owners",
-    "sentence": "Fencing prevents the paused controller from overwriting new state."
+    "word": "Grant revision",
+    "meaning": "The version of an authority record against which an update is conditioned.",
+    "sentence": "Both candidates proposed updates using the same grant revision."
   },
   {
-    "word": "epoch",
-    "meaning": "A logical generation of ownership",
-    "sentence": "The new scheduler claimed epoch 106."
+    "word": "Lease renewal",
+    "meaning": "An operation extending a specific grant under the authority's rules.",
+    "sentence": "A delayed lease renewal response arrived after the worker abandoned its session."
   },
   {
-    "word": "monotonic",
-    "meaning": "Moving in one direction without decreasing",
-    "sentence": "The fencing counter must remain monotonic across recovery."
+    "word": "Clock drift",
+    "meaning": "A difference in the rates at which clocks measure elapsed time.",
+    "sentence": "Our lease analysis states the maximum clock drift it assumes."
   },
   {
-    "word": "stale",
-    "meaning": "No longer current or authoritative",
-    "sentence": "The worker rejected a stale reservation command."
+    "word": "Clock skew",
+    "meaning": "A difference between clock readings at the same instant.",
+    "sentence": "Comparing wall-clock timestamps required a bound on clock skew."
   },
   {
-    "word": "quorum",
-    "meaning": "The minimum voters required for a decision",
-    "sentence": "Three of five replicas form a majority quorum."
+    "word": "Fencing token",
+    "meaning": "Evidence of scoped authority that a protected service can validate.",
+    "sentence": "The database rejected the mutation carrying the obsolete fencing token."
   },
   {
-    "word": "linearizable",
-    "meaning": "Behaving as though operations occur atomically in real-time order",
-    "sentence": "We use a linearizable claim to transfer ownership."
+    "word": "High-water mark",
+    "meaning": "A durable highest accepted or installed value within a defined scope.",
+    "sentence": "Restoring an old high-water mark could make a retired grant appear valid."
   },
   {
-    "word": "reconciliation",
-    "meaning": "Comparing recorded intent with observed outcomes",
-    "sentence": "Reconciliation resolved the timed-out promotion request."
+    "word": "Cutover point",
+    "meaning": "The event after which the new authority or behavior takes effect.",
+    "sentence": "The routing table's durable installation defines its cutover point."
   },
   {
-    "word": "idempotency",
-    "meaning": "Safe repetition without duplicate intended effects",
-    "sentence": "Idempotency keys protect retries after ambiguous responses."
+    "word": "Provenance",
+    "meaning": "Evidence of the origin and legitimacy of a record or grant.",
+    "sentence": "The agent verified token provenance before advancing its floor."
   },
   {
-    "word": "invariant",
-    "meaning": "A property that must always hold",
-    "sentence": "Our invariant forbids conflicting GPU reservations."
+    "word": "In-flight operation",
+    "meaning": "An operation issued but still awaiting a definitive outcome.",
+    "sentence": "The replacement inspected each in-flight operation before submitting a conflicting one."
   },
   {
-    "word": "contention",
-    "meaning": "Competition for a shared resource",
-    "sentence": "Sharding reduces contention on the ownership table."
+    "word": "Readiness predicate",
+    "meaning": "A precise condition that must hold before reporting readiness.",
+    "sentence": "The readiness predicate required enough fenced GPUs for the requested gang."
   },
   {
-    "word": "propagation",
-    "meaning": "The spread of a change through a system",
-    "sentence": "We measured fencing propagation to every worker."
+    "word": "Quarantine",
+    "meaning": "An isolated state that excludes a resource from ordinary service.",
+    "sentence": "The reimaged node remained in quarantine until its inventory was verified."
   },
   {
-    "word": "revocation",
-    "meaning": "Withdrawal of previously granted permission",
-    "sentence": "Lease expiry is not instantaneous process revocation."
+    "word": "Incarnation",
+    "meaning": "A distinct lifetime of a process, service or resource identity.",
+    "sentence": "The old release could not clear the replacement incarnation's grant."
   },
   {
-    "word": "handoff",
-    "meaning": "Transfer of responsibility from one owner to another",
-    "sentence": "The handoff establishes the new epoch before dispatch."
+    "word": "Reconciliation",
+    "meaning": "Recovering a reliable view by comparing authoritative intent and observed state.",
+    "sentence": "Reconciliation found the old training process still occupying the device."
   },
   {
-    "word": "durability",
-    "meaning": "Survival of committed state across failures",
-    "sentence": "Durability of the fencing floor is essential."
+    "word": "Mutation boundary",
+    "meaning": "The point at which the authoritative protected state actually changes.",
+    "sentence": "The agent checks the epoch at the mutation boundary."
   },
   {
-    "word": "incarnation",
-    "meaning": "A distinct lifetime or restart generation of an entity",
-    "sentence": "An incarnation identifier can help prevent token reuse."
-  },
-  {
-    "word": "quarantine",
-    "meaning": "Temporary isolation to avoid unsafe use",
-    "sentence": "We quarantine an unreachable GPU until state is verified."
-  },
-  {
-    "word": "tail latency",
-    "meaning": "Slow response time near the high end of a distribution",
-    "sentence": "Tail latency determines safe renewal margins."
-  },
-  {
-    "word": "blast radius",
-    "meaning": "Scope of damage caused by one failure",
-    "sentence": "Sharded ownership reduces the blast radius of an election storm."
+    "word": "Lineage",
+    "meaning": "The authority history under which a grant or resource state is interpreted.",
+    "sentence": "The recovered authority established a distinct lineage before issuing placements."
   }
 ]

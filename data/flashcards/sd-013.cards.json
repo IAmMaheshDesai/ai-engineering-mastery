@@ -1,0 +1,492 @@
+[
+  {
+    "id": "sd-013-fc-001",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "How do job, task, and attempt identities differ?",
+    "back": "A job is the durable logical request; a task is its schedulable unit; an attempt is one execution incarnation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-002",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "What does a queue not establish?",
+    "back": "Admission, resource feasibility, committed allocation, dependency correctness, or accepted business completion.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-003",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "Why persist an outbox with job acceptance?",
+    "back": "It makes discovery intent durable with the accepted job so publication can repeat after crashes.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-004",
+    "topicId": "sd-013",
+    "type": "failure",
+    "front": "The queue publication succeeded but the dispatcher crashed before recording it. What next?",
+    "back": "Publish again under a repeat-safe protocol; consumers conditionally reserve authoritative task state instead of trusting notification uniqueness.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-005",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "What makes duplicate submission safe?",
+    "back": "A tenant-scoped stable request key returning the original job for matching canonical parameters and rejecting incompatible reuse.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-006",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "When is a dependency satisfied?",
+    "back": "When its accepted output is durably published and accessible under the next task’s contract, not merely when a process exits.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-007",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "What is the difference between placement and reservation?",
+    "back": "Placement proposes an assignment from observations; reservation commits resource ownership against current authoritative state.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-008",
+    "topicId": "sd-013",
+    "type": "failure",
+    "front": "Why can two schedulers with local locks still double-allocate?",
+    "back": "Their locks do not serialize each other; a shared supported atomic commitment boundary must check task and resource state.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-009",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "What must a reservation transaction check?",
+    "back": "Current task readiness/revision, resource availability/revision, ownership/policy predicates, and the allocation scope’s invariant.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-010",
+    "topicId": "sd-013",
+    "type": "failure",
+    "front": "A scheduler crashes after reservation but before dispatch. How does work resume?",
+    "back": "A successor discovers durable committed intent and dispatches the same attempt identity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-011",
+    "topicId": "sd-013",
+    "type": "failure",
+    "front": "Why is a dispatch timeout uncertain?",
+    "back": "The worker may have started despite the lost acknowledgment; query or repeat the same identity under its runtime contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-012",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "What is allocatable capacity?",
+    "back": "Physical capacity minus system and policy reserves, distinct from observed utilization and committed reservations.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-013",
+    "topicId": "sd-013",
+    "type": "failure",
+    "front": "Why does low utilization not make a reserved GPU free?",
+    "back": "Its owner may be temporarily idle while retaining authority; sharing or reclaim requires an explicit isolation and eviction contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-014",
+    "topicId": "sd-013",
+    "type": "interview",
+    "front": "Why does the 4 CPU / 20 GB / 1 GPU task fit A but not B?",
+    "back": "A has 8 CPU/24 GB/1 GPU; B has 16 CPU/12 GB/1 GPU and fails per-node memory despite adequate cluster totals.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-015",
+    "topicId": "sd-013",
+    "type": "tradeoff",
+    "front": "What do filter and score stages do?",
+    "back": "Filters enforce hard constraints; scoring ranks feasible choices. A high score cannot override a failed safety predicate.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-016",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "What is the general complexity limitation of resource packing?",
+    "back": "Multidimensional constrained placement is difficult; bounded heuristics trade search cost against placement quality.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-017",
+    "topicId": "sd-013",
+    "type": "failure",
+    "front": "Why can a heartbeat timeout not prove a worker stopped?",
+    "back": "A partitioned or paused process may still execute and consume resources or call external services.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-018",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "What does generation-checked output publication guarantee?",
+    "back": "Only a current authorized attempt can promote the logical result under the atomic publication contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-019",
+    "topicId": "sd-013",
+    "type": "tradeoff",
+    "front": "What does one accepted result not imply?",
+    "back": "Not one physical computation, no duplicated spend, or exactly-once arbitrary external effects.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-020",
+    "topicId": "sd-013",
+    "type": "failure",
+    "front": "Old attempt A7 returns after A8 published. What happens?",
+    "back": "A7’s generation-7 publication is rejected; its immutable orphan output may be cleaned later.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-021",
+    "topicId": "sd-013",
+    "type": "failure",
+    "front": "Why does output fencing not make GPU reassignment safe?",
+    "back": "The stale process may still use the device. Runtime exclusion or verified termination is a separate requirement.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-022",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "How should retries be bounded?",
+    "back": "By failure class, attempt count, total elapsed time, and resource spend, with jitter and terminal evidence.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-023",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "What is gang scheduling’s useful reservation unit?",
+    "back": "The complete cooperating resource group needed for useful progress, not isolated partial allocations.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-024",
+    "topicId": "sd-013",
+    "type": "interview",
+    "front": "Why are two four-GPU holds bad for two six-GPU jobs on eight GPUs?",
+    "back": "Neither can start, despite full allocation. Reserve one complete six-GPU group and leave the other pending.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-025",
+    "topicId": "sd-013",
+    "type": "tradeoff",
+    "front": "Does atomic gang reservation mean simultaneous process execution?",
+    "back": "No. Startup still needs membership, connectivity, readiness barriers, timeout policy, and cleanup.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-026",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "How do packing and spreading differ?",
+    "back": "Packing favors locality or fewer affected jobs per failure; spreading can reduce correlated failure for independent replicas. Workload semantics decide.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-027",
+    "topicId": "sd-013",
+    "type": "tradeoff",
+    "front": "What can make backfill starve large jobs?",
+    "back": "Small jobs consume future capacity longer than estimated or lack safe preemption, continually delaying the reserved group.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-028",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "How do quota, priority, and fairness differ?",
+    "back": "Quota defines entitlement/bounds; priority defines urgency; fairness defines how eligible contested demand shares resources.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-029",
+    "topicId": "sd-013",
+    "type": "interview",
+    "front": "Compute dominant shares for A using 20/100 CPU and 4/10 GPU, B using 30/100 CPU and 1/10 GPU.",
+    "back": "A’s dominant share is 0.4; B’s is 0.3. Feasible next demand and other policy still matter.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-030",
+    "topicId": "sd-013",
+    "type": "interview",
+    "front": "What work can be exposed by killing 64 GPUs ten minutes after checkpoint?",
+    "back": "Up to 640 GPU-minutes before cleanup/restart; a two-minute blocking checkpoint occupies 128 GPU-minutes.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-031",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "What does Little’s Law require?",
+    "back": "Consistent system boundaries and stable average behavior: L = arrival rate × average time in system. It does not predict p99.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-032",
+    "topicId": "sd-013",
+    "type": "interview",
+    "front": "At 10 jobs/s and 30 s average time in system, what is average population?",
+    "back": "300 jobs, under stable conditions and matching boundaries.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-033",
+    "topicId": "sd-013",
+    "type": "failure",
+    "front": "What happens with 10 arrivals/s and 150 workers executing 20-second jobs?",
+    "back": "Simplified capacity is 7.5 jobs/s; backlog grows 2.5 jobs/s, or 9,000 per hour.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-034",
+    "topicId": "sd-013",
+    "type": "concept",
+    "front": "Why separate allocation state from telemetry?",
+    "back": "Allocation needs authoritative ordering; high-frequency observations can be sampled or asynchronous without saturating the correctness path.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-013-fc-035",
+    "topicId": "sd-013",
+    "type": "failure",
+    "front": "What must cancellation report honestly?",
+    "back": "Requested stop versus observed stop and uncertain external effects; it cannot promise rollback of an already-accepted operation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

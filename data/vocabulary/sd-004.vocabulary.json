@@ -1,0 +1,92 @@
+[
+  {
+    "word": "History",
+    "meaning": "The recorded logical operations and their invocation and completion events.",
+    "sentence": "The history showed that the stale read began after publication succeeded."
+  },
+  {
+    "word": "Linearizability",
+    "meaning": "A safety property requiring a legal sequential explanation that preserves real-time precedence.",
+    "sentence": "Linearizability lets an operator reason about a current deployment pointer as one register."
+  },
+  {
+    "word": "Linearization point",
+    "meaning": "A conceptual instant during an operation when its effect can be placed in a valid explanation.",
+    "sentence": "The team identified the conditional commit as the linearization point for a successful publish."
+  },
+  {
+    "word": "Program order",
+    "meaning": "The order of operations issued by one modeled participant.",
+    "sentence": "The candidate preserved program order while testing whether the trace was sequentially consistent."
+  },
+  {
+    "word": "Reads-from",
+    "meaning": "The relationship linking a read to the write whose value it observed.",
+    "sentence": "The approval's reads-from edge explained why the evaluation had to be visible."
+  },
+  {
+    "word": "Causal dependency",
+    "meaning": "A prior action whose information influences a later operation.",
+    "sentence": "The reviewer carried the causal dependency into the release decision."
+  },
+  {
+    "word": "Causal frontier",
+    "meaning": "A summary of the causally relevant progress observed so far.",
+    "sentence": "East compared its causal frontier with the dependencies attached to the approval."
+  },
+  {
+    "word": "Monotonic reads",
+    "meaning": "A session guarantee that later observations do not regress behind earlier ones.",
+    "sentence": "Monotonic reads prevented the console from moving backward after regional failover."
+  },
+  {
+    "word": "Read-your-writes",
+    "meaning": "A session guarantee requiring a later read to reflect the session's earlier writes or permissible later state.",
+    "sentence": "The publish response included a token supporting read-your-writes."
+  },
+  {
+    "word": "Convergence",
+    "meaning": "Agreement of replicas under the specified delivery, repair and update conditions.",
+    "sentence": "The repair job restored convergence after a regional connection recovered."
+  },
+  {
+    "word": "Version floor",
+    "meaning": "A minimum admissible version for serving or installation.",
+    "sentence": "The cache rejected the delayed fill below its version floor."
+  },
+  {
+    "word": "Safe timestamp",
+    "meaning": "A time through which a replica can prove the required snapshot is available.",
+    "sentence": "The slower shard had to advance its safe timestamp before serving the report."
+  },
+  {
+    "word": "Fractured read",
+    "meaning": "An observation combining values incompatible with the promised atomic view.",
+    "sentence": "The report produced a fractured read by independently selecting two latest values."
+  },
+  {
+    "word": "Write skew",
+    "meaning": "An anomaly in which disjoint writes based on a shared predicate break an invariant.",
+    "sentence": "Write skew let both regions disable their promotion role."
+  },
+  {
+    "word": "Lineage",
+    "meaning": "The identity of the history to which a version or progress token belongs.",
+    "sentence": "Restoration created a distinct lineage for newly issued tokens."
+  },
+  {
+    "word": "Watermark",
+    "meaning": "A boundary through which a specified process has made progress.",
+    "sentence": "The dashboard displayed its projection watermark beside rollout coverage."
+  },
+  {
+    "word": "Quiescence",
+    "meaning": "A period in which relevant updates have ceased.",
+    "sentence": "The reconciliation test checked convergence after quiescence."
+  },
+  {
+    "word": "Indeterminate outcome",
+    "meaning": "A request result whose effect cannot yet be established by its caller.",
+    "sentence": "The lost publish reply left an indeterminate outcome that the request ledger resolved."
+  }
+]

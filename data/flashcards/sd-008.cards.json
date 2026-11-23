@@ -1,0 +1,450 @@
+[
+  {
+    "id": "sd-008-fc-001",
+    "topicId": "sd-008",
+    "type": "interview",
+    "front": "What does a durable yes vote commit a participant to?",
+    "back": "It must preserve the ability to commit and learn the authorized global outcome before discarding the prepared state.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-002",
+    "topicId": "sd-008",
+    "type": "failure",
+    "front": "A participant has prepared and its client connection closes. What follows?",
+    "back": "The client disconnect supplies no global decision. Recover the prepared identity through the transaction protocol.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-003",
+    "topicId": "sd-008",
+    "type": "failure",
+    "front": "Which event makes commit irrevocable in the illustrated coordinator protocol?",
+    "back": "Durably recording the commit decision after every mandatory participant prepared.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-004",
+    "topicId": "sd-008",
+    "type": "interview",
+    "front": "Why must the participant list be fixed for the decision?",
+    "back": "Dropping an absent mandatory participant changes the set of effects the atomic transaction promised.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-005",
+    "topicId": "sd-008",
+    "type": "interview",
+    "front": "A coordinator has three healthy replicas. Can that override an application participant's veto?",
+    "back": "No. Replicas preserve coordinator state while the resource manager controls its own affirmative vote.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-006",
+    "topicId": "sd-008",
+    "type": "interview",
+    "front": "What is the classic blocking case for ordinary two-phase commit?",
+    "back": "A prepared participant cannot obtain enough evidence to distinguish a committed history from an aborted one.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-007",
+    "topicId": "sd-008",
+    "type": "concept",
+    "front": "Can a finalization message safely be sent twice?",
+    "back": "The participant must recognize the same transaction and preserve the recorded matching terminal outcome.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-008",
+    "topicId": "sd-008",
+    "type": "concept",
+    "front": "Why bind transaction IDs to deployment lineage?",
+    "back": "A stale decision from another cluster or restored history must never finalize an unrelated transaction.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-009",
+    "topicId": "sd-008",
+    "type": "interview",
+    "front": "How can an old prepared transaction harm healthy traffic?",
+    "back": "Its retained locks can block conflicting transactions and create a growing wait queue.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-010",
+    "topicId": "sd-008",
+    "type": "tradeoff",
+    "front": "What could an independent report see around an atomic commit?",
+    "back": "Separate reads can straddle the commit unless they share a suitable snapshot or stronger read contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-011",
+    "topicId": "sd-008",
+    "type": "concept",
+    "front": "When does colocation simplify admission?",
+    "back": "When the budget and reservation invariants can be enforced together inside one transactional authority.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-012",
+    "topicId": "sd-008",
+    "type": "concept",
+    "front": "What distinguishes a saga step from a prepared change?",
+    "back": "A saga step commits locally and may be observed by other transactions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-013",
+    "topicId": "sd-008",
+    "type": "failure",
+    "front": "What must a compensation preserve?",
+    "back": "The original business obligation and legitimate concurrent changes made by other work.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-014",
+    "topicId": "sd-008",
+    "type": "failure",
+    "front": "Why is restoring the before-image unsafe for shared capacity?",
+    "back": "It can erase reservations created after the original step committed.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-015",
+    "topicId": "sd-008",
+    "type": "concept",
+    "front": "A reserved six GPUs, B reserved three of ten. How many are free after releasing A?",
+    "back": "Seven, assuming no other reservations and confirmed release of A.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-016",
+    "topicId": "sd-008",
+    "type": "failure",
+    "front": "What does a pivot represent in a failover workflow?",
+    "back": "A business boundary after which backward recovery may discard acknowledged new history.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-017",
+    "topicId": "sd-008",
+    "type": "concept",
+    "front": "Does reversing API call order prove compensation safety?",
+    "back": "No. Check resource dependencies, in-flight external effects and current ownership.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-018",
+    "topicId": "sd-008",
+    "type": "interview",
+    "front": "Which compensators may run concurrently?",
+    "back": "Actions whose effects commute and whose required resources and authorizations do not depend on one another.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-019",
+    "topicId": "sd-008",
+    "type": "concept",
+    "front": "What is a semantic lock?",
+    "back": "A business state such as pending that every relevant operation checks before allowing conflicting transitions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-020",
+    "topicId": "sd-008",
+    "type": "failure",
+    "front": "What does a transactional outbox guarantee locally?",
+    "back": "The business mutation and intent to publish are committed or discarded together.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-021",
+    "topicId": "sd-008",
+    "type": "concept",
+    "front": "Which failure produces duplicate outbox delivery?",
+    "back": "A relay successfully sends and crashes before recording that publication completed.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-022",
+    "topicId": "sd-008",
+    "type": "concept",
+    "front": "Where should an inbox record be committed?",
+    "back": "In the same local transaction as its deduplicated business effect and recoverable outcome.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-023",
+    "topicId": "sd-008",
+    "type": "concept",
+    "front": "Should a refund use its original charge's idempotency key?",
+    "back": "Give the refund a separate key bound to its distinct intent and reference the original charge.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-024",
+    "topicId": "sd-008",
+    "type": "tradeoff",
+    "front": "What does a timeout after external promotion prove?",
+    "back": "Only that a timely response was unavailable. Promotion may already have taken effect.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-025",
+    "topicId": "sd-008",
+    "type": "tradeoff",
+    "front": "Can a seven-day retry horizon rely on one-day external key retention?",
+    "back": "Only with another durable identity or reconciliation guarantee. Blind replay after expiry can duplicate effects.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-026",
+    "topicId": "sd-008",
+    "type": "tradeoff",
+    "front": "What should happen on a late launch success after cancellation?",
+    "back": "Reconcile the actual running attempt against the canceled desired state and stop it safely if required.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-027",
+    "topicId": "sd-008",
+    "type": "interview",
+    "front": "Which resources remain held while a device launch outcome is unknown?",
+    "back": "Keep the safety-critical claims needed to prevent a potentially live workload from conflicting with another.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-028",
+    "topicId": "sd-008",
+    "type": "concept",
+    "front": "Why record plan version?",
+    "back": "Active workflows and their repair actions must retain the semantics of already-issued effects across upgrades.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-029",
+    "topicId": "sd-008",
+    "type": "failure",
+    "front": "How long do 600 promotions take at a shared 20/minute limit?",
+    "back": "At least 30 minutes before queueing or additional failures.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-030",
+    "topicId": "sd-008",
+    "type": "tradeoff",
+    "front": "What does an oldest-case metric reveal that median repair age may hide?",
+    "back": "One unresolved high-impact claim or lock can block a tenant for hours.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-031",
+    "topicId": "sd-008",
+    "type": "failure",
+    "front": "How does a credit reversal differ from deleting a charge?",
+    "back": "A counter-entry preserves the original audit history and can follow a separate business policy.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-008-fc-032",
+    "topicId": "sd-008",
+    "type": "concept",
+    "front": "Why is safe failback a separate design problem after destination writes?",
+    "back": "It requires preserving acknowledged writes and transfer of authority over the resulting data lineage.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

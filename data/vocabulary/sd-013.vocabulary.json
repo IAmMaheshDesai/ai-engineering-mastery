@@ -1,0 +1,92 @@
+[
+  {
+    "word": "admission",
+    "meaning": "Deciding whether the platform accepts work under policy and feasibility constraints.",
+    "sentence": "Admission checks tenant quota before acknowledging the job."
+  },
+  {
+    "word": "eligibility",
+    "meaning": "Readiness to compete for execution after dependencies and timing rules hold.",
+    "sentence": "The task becomes eligible after its input is published."
+  },
+  {
+    "word": "placement",
+    "meaning": "A proposed assignment of work to resources.",
+    "sentence": "Placement scoring favors a nearby data replica."
+  },
+  {
+    "word": "reservation",
+    "meaning": "A committed claim on resources under an authoritative contract.",
+    "sentence": "A proposal cannot dispatch until its reservation succeeds."
+  },
+  {
+    "word": "attempt incarnation",
+    "meaning": "A unique execution generation of a logical task.",
+    "sentence": "The returned worker belongs to an old attempt incarnation."
+  },
+  {
+    "word": "allocatable capacity",
+    "meaning": "Resources available to workload allocation after required reserves.",
+    "sentence": "Allocatable capacity is lower than the host’s physical memory."
+  },
+  {
+    "word": "resource vector",
+    "meaning": "A multidimensional statement of resource requirements or capacity.",
+    "sentence": "The resource vector includes host memory and GPU type."
+  },
+  {
+    "word": "fragmentation",
+    "meaning": "Free capacity split in a way that cannot satisfy a useful placement.",
+    "sentence": "Memory fragmentation across nodes prevents the GPU task from fitting."
+  },
+  {
+    "word": "gang scheduling",
+    "meaning": "Reserving a cooperating group as a useful all-or-nothing placement unit.",
+    "sentence": "Gang scheduling avoids two blocked half-jobs."
+  },
+  {
+    "word": "startup barrier",
+    "meaning": "A condition holding execution until required members are ready.",
+    "sentence": "The coordinator opens the startup barrier after all ranks connect."
+  },
+  {
+    "word": "backfill",
+    "meaning": "Scheduling other work in capacity gaps without violating a declared future reservation policy.",
+    "sentence": "Short preemptible tasks backfill the training queue."
+  },
+  {
+    "word": "preemption",
+    "meaning": "Policy-governed reclaim of resources from running work.",
+    "sentence": "Preemption includes checkpoint and restart costs."
+  },
+  {
+    "word": "dominant share",
+    "meaning": "The largest normalized fraction of any resource allocated to a tenant.",
+    "sentence": "The GPU allocation determines this tenant’s dominant share."
+  },
+  {
+    "word": "orphan process",
+    "meaning": "A runtime process lacking a valid corresponding ownership record.",
+    "sentence": "The reconciler quarantines the orphan process before reuse."
+  },
+  {
+    "word": "conditional publication",
+    "meaning": "Accepting an output only when authoritative state predicates still hold.",
+    "sentence": "Conditional publication rejects the stale attempt’s result."
+  },
+  {
+    "word": "retry budget",
+    "meaning": "A bound on repeated attempts by count, time, or cost.",
+    "sentence": "The retry budget prevents a failure storm from consuming the fleet."
+  },
+  {
+    "word": "queue stability",
+    "meaning": "A sustainable regime where admitted work does not create unbounded backlog under the model.",
+    "sentence": "Queue stability requires enough useful completion capacity."
+  },
+  {
+    "word": "useful progress",
+    "meaning": "Accepted work that advances the business objective rather than merely consuming resources.",
+    "sentence": "We measure useful progress instead of allocated GPU percentage alone."
+  }
+]

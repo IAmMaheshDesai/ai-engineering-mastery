@@ -1,0 +1,478 @@
+[
+  {
+    "id": "sd-007-fc-001",
+    "topicId": "sd-007",
+    "type": "interview",
+    "front": "Why can a timeout require the same recovery decision in two different histories?",
+    "back": "Both never-sent and accepted-with-lost-response can leave identical local state. Use a durable intent key and provider-supported recovery.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-002",
+    "topicId": "sd-007",
+    "type": "failure",
+    "front": "Which identifier must exist before the first promotion call?",
+    "back": "A stable business request key bound to the intended resource and arguments.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-003",
+    "topicId": "sd-007",
+    "type": "failure",
+    "front": "Does an idempotent submission promise successful completion?",
+    "back": "It can promise one accepted operation even when that operation later fails.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-004",
+    "topicId": "sd-007",
+    "type": "interview",
+    "front": "What can distinguish two independent requests for four GPUs?",
+    "back": "Different caller intent keys even when every resource parameter matches.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-005",
+    "topicId": "sd-007",
+    "type": "interview",
+    "front": "Why version a request fingerprint?",
+    "back": "Normalization rules and defaults can change across deployments while older requests remain replayable.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-006",
+    "topicId": "sd-007",
+    "type": "interview",
+    "front": "Which metadata should remain outside a semantic fingerprint?",
+    "back": "Attempt-specific tracing, timestamps and transport choices that do not define the requested outcome.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-007",
+    "topicId": "sd-007",
+    "type": "concept",
+    "front": "Can a workflow run ID alone uniquely identify each child effect?",
+    "back": "A run can contain several legitimate children. Include durable step and target identity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-008",
+    "topicId": "sd-007",
+    "type": "concept",
+    "front": "What goes wrong with a child key derived only from loop index?",
+    "back": "A changed inventory ordering can bind the same index to a different resource.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-009",
+    "topicId": "sd-007",
+    "type": "interview",
+    "front": "Why reauthorize a replay?",
+    "back": "Access may have changed, and a stored result may contain private operation data.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-010",
+    "topicId": "sd-007",
+    "type": "tradeoff",
+    "front": "What should happen when one key is reused for changed material arguments?",
+    "back": "Return a defined mismatch conflict and preserve the existing binding.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-011",
+    "topicId": "sd-007",
+    "type": "concept",
+    "front": "Why is key insertion before a separate debit unsafe?",
+    "back": "A crash before debit can suppress work that never happened.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-012",
+    "topicId": "sd-007",
+    "type": "concept",
+    "front": "Why is key insertion after a separate debit unsafe?",
+    "back": "A crash before the key is recorded permits a second debit.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-013",
+    "topicId": "sd-007",
+    "type": "failure",
+    "front": "What does an authoritative accepted state require for an asynchronous API?",
+    "back": "Durable work ownership and sufficient data to recover execution.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-014",
+    "topicId": "sd-007",
+    "type": "failure",
+    "front": "Why compare resource generation in addition to checking request identity?",
+    "back": "A unique request from an obsolete plan can still violate the current resource invariant.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-015",
+    "topicId": "sd-007",
+    "type": "concept",
+    "front": "Can an operation ID solve a lost first response?",
+    "back": "Only if it was persisted or can be recovered through another surviving identity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-016",
+    "topicId": "sd-007",
+    "type": "failure",
+    "front": "What can an empty eventually consistent list prove immediately after a timeout?",
+    "back": "It does not establish that the provider never accepted the action.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-017",
+    "topicId": "sd-007",
+    "type": "concept",
+    "front": "How can a route return to its initial state after a successful action?",
+    "back": "A later independent operation can reverse it. Current state alone is weak historical evidence.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-018",
+    "topicId": "sd-007",
+    "type": "interview",
+    "front": "What does a failed compare-and-set on replay establish?",
+    "back": "The expected revision no longer matches. It does not identify which actor advanced it.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-019",
+    "topicId": "sd-007",
+    "type": "concept",
+    "front": "What does the outbox transaction commit?",
+    "back": "The original business change and a durable obligation to publish a stable event.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-020",
+    "topicId": "sd-007",
+    "type": "failure",
+    "front": "Why may the same outbox event appear at two broker offsets?",
+    "back": "The relay can publish successfully and crash before recording broker confirmation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-021",
+    "topicId": "sd-007",
+    "type": "concept",
+    "front": "What destination records must be committed together for a billing consumer?",
+    "back": "The durable identity of the charge and the billing mutation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-022",
+    "topicId": "sd-007",
+    "type": "concept",
+    "front": "Why scope an inbox by consumer effect?",
+    "back": "One event may legitimately trigger separate billing, search and archival actions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-023",
+    "topicId": "sd-007",
+    "type": "concept",
+    "front": "When can a sink-owned offset safely summarize processed inputs?",
+    "back": "When progress and output commit together and the offset denotes a contiguous processed prefix.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-024",
+    "topicId": "sd-007",
+    "type": "tradeoff",
+    "front": "What extra condition applies to Kafka transactional outputs?",
+    "back": "Readers that need committed-only visibility must use the corresponding isolation mode.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-025",
+    "topicId": "sd-007",
+    "type": "tradeoff",
+    "front": "Can a Kafka abort retract an external tool call?",
+    "back": "The tool acts outside Kafka's transaction and needs its own recovery contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-026",
+    "topicId": "sd-007",
+    "type": "tradeoff",
+    "front": "Three retrying layers each permit three total attempts. What is the maximum leaf fan-out?",
+    "back": "Twenty-seven calls under sustained failure if no deadline or budget cuts it off.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-027",
+    "topicId": "sd-007",
+    "type": "interview",
+    "front": "Why add jitter to capped exponential backoff?",
+    "back": "Spread retries across time instead of synchronizing a recovering population.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-028",
+    "topicId": "sd-007",
+    "type": "concept",
+    "front": "What does a deadline tell us about the remote outcome?",
+    "back": "It bounds the caller's waiting budget and may leave the remote effect unresolved.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-029",
+    "topicId": "sd-007",
+    "type": "failure",
+    "front": "How long does a backlog of 60,000 take to drain at 800 completions and 600 new intents per second?",
+    "back": "At 200 net completions per second it takes 300 seconds in the simplified steady-state model.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-030",
+    "topicId": "sd-007",
+    "type": "tradeoff",
+    "front": "What must deduplication retention include besides online retries?",
+    "back": "Delayed delivery, downstream recovery, operator redrive, backup restore and region handoff.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-031",
+    "topicId": "sd-007",
+    "type": "failure",
+    "front": "What can an expired tombstone still protect while retained?",
+    "back": "It can prevent reexecution without keeping the complete original response body.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-032",
+    "topicId": "sd-007",
+    "type": "concept",
+    "front": "Why can asynchronous replicas each admit the same logical request?",
+    "back": "Both may see local absence during a partition without a common uniqueness authority.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-033",
+    "topicId": "sd-007",
+    "type": "concept",
+    "front": "What does a model tool-use identifier typically correlate?",
+    "back": "One tool invocation and its result in the dialogue. The business intent needs a durable workflow-level mapping.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-007-fc-034",
+    "topicId": "sd-007",
+    "type": "concept",
+    "front": "What test catches a hidden duplicate followed by cleanup?",
+    "back": "Inspect the history of committed effects and receipts instead of only final state.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]
