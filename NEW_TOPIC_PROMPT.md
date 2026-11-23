@@ -1,6 +1,6 @@
 # AI ENGINEERING MASTERY
 
-## FINAL MASTER TOPIC GENERATOR — VERSION 6.0
+## FINAL MASTER TOPIC GENERATOR — VERSION 7.0
 
 ### Senior Staff AI Infrastructure | Distributed Systems | Architecture | Interview & Communication Mastery
 
@@ -18,7 +18,7 @@
 **Target Companies:** OpenAI, Anthropic, Meta, Google, NVIDIA\
 **Target Level:** Senior Staff / Staff+ Software Engineer and AI Infrastructure Architect\
 **Learning Duration:** 75–90 minutes of substantive read-aloud instruction\
-**Primary Output:** Five content files plus one ZIP package (four original files plus optional-renderer HTML, required for this run)
+**Primary Output:** Four content files plus one ZIP package (HTML lesson, flashcards, vocabulary, research)
 
 
 
@@ -215,7 +215,7 @@ The content must render beautifully inside my existing AI Engineering Mastery fu
 
 **Do not modify the application shell, CSS, JavaScript, navigation, presentation controls, or visual theme.** Generate a separate per-topic HTML fragment for rich chapter bodies; it is not a replacement for the application HTML.
 
-Use the existing JSON renderer's supported content blocks for the optional structured authoring copy. Also create the matching rich HTML chapter fragment using the exact contract below.
+Author the entire lesson directly in HTML. No lesson JSON is permitted.
 
 Each chapter should contain:
 
@@ -421,17 +421,7 @@ This Markdown must render correctly in the application's fullscreen **Research &
 
 ## 13. EXACT OUTPUT FILES — DO NOT CHANGE
 
-Generate these five files (the first four remain unchanged):
-
-**1. Complete lesson**
-
-```
-data/lessons/[TOPIC_ID].json
-```
-
-Must contain `id`, `title`, `durationMinutes`, `sections`, and `slides`.
-
-Every slide must contain `id`, `section`, `title`, `lead`, and `blocks`.
+Generate exactly four content files. No lesson JSON.
 
 **2. Technical flashcards**
 
@@ -457,11 +447,11 @@ data/research/[TOPIC_ID].research.md
 
 Must contain the research, company evidence, citations, and further reading.
 
-**5. Rich per-topic HTML presentation**
+**1. Complete HTML lesson**
 
 `data/lesson-html/[TOPIC_ID].html`
 
-This is a **fragment**, not a standalone HTML page. It must contain **exactly one** `<article data-aem-chapter="1">...</article>` for **each** slide in `data/lessons/[TOPIC_ID].json`, in exactly the same order. The HTML articles are authoritative for slide titles, bodies and chapter navigation. Keep the companion JSON in sync for authoring and export.
+Author one `<article data-aem-chapter="1">` per chapter, in reading order, with an h1 title. HTML alone determines chapter count, titles and content. A standalone document is also accepted; the application extracts only marked articles.
 
 Use semantic HTML for substantial explanatory paragraphs, nested headings, comparison tables, worked calculations, callouts, architecture diagrams, failure timelines, sequence diagrams, and clearly labeled pseudocode. Make diagrams readable with HTML/CSS structure and accessible textual descriptions; do not substitute decorative diagrams for technical explanation. Favor responsive, horizontally scrollable wrappers around wide tables and diagrams when the existing stylesheet supports them.
 
@@ -482,7 +472,7 @@ HTML-escape all code (`&` → `&amp;`, `<` → `&lt;`, `>` → `&gt;`). Label Py
 
 **Safety and compatibility:** Do not include `<html>`, `<head>`, `<body>`, `<script>`, `<iframe>`, inline event handlers (such as `onclick`), `javascript:` URLs, embedded scripts, or external runtime dependencies. Do not introduce standalone CSS in the fragment; shared styles belong in `app.css`, which this generation must not change. Use existing classes and safe semantic HTML. Avoid IDs that collide with application controls. The HTML must be fully self-contained for offline use after `python3 build.py`.
 
-**Content parity:** The HTML must faithfully render the full substantive teaching content in the lesson JSON, not a shortened summary. Every major worked example, formula, interview answer, and failure case must be present in both the canonical JSON and the matching HTML chapter. HTML may improve layout and add visual structure, but must not silently contradict the JSON. Do not inflate word counts by counting duplicated JSON and HTML text twice.
+**Content completeness:** Include the entire teaching narrative in HTML. Do not generate or maintain duplicate lesson JSON. Use compact chapter headings without large banners and full-width text, tables and diagrams.
 
 **Fallback:** If the lesson HTML is absent, the topic is unpublished. The reader loads chapter content exclusively from HTML. Do not modify other topics.
 
@@ -490,7 +480,7 @@ HTML-escape all code (`&` → `&amp;`, `<` → `&lt;`, `>` → `&gt;`). Label Py
 
 Inspect the latest uploaded AI Engineering Mastery project ZIP before generating files.
 
-Treat the project's actual JSON structure, renderer-supported block types, and build script as authoritative.
+Treat the project’s HTML chapter contract, resource JSON schemas, and build script as authoritative.
 
 Do not invent unsupported fields or block types.
 
@@ -528,13 +518,13 @@ Before delivering, verify:
 16. Exact compatibility with the existing renderer.
 17. Correct directory paths.
 18. Successful execution of `python3 build.py` when the project is available for testing.
-19. Exactly one `<article data-aem-chapter="1">` per JSON slide, with matching order.
-20. HTML contains all substantive JSON teaching content and no truncated chapters.
+19. One marked article per chapter, in reading order.
+20. HTML contains the complete teaching content and no truncated chapters.
 21. No forbidden scripts, event handlers, iframes, or external dependencies in the HTML fragment.
 22. Tables, diagrams, code panels, and copy buttons follow existing application conventions.
 23. AIBL Dark syntax highlighting and Copy behavior are tested in a browser when browser testing is available; otherwise disclose that only static checks were run.
 24. Existing navigation, zoom, fullscreen, dictionary, flashcards, research, and progress are unchanged.
-25. Spoken word count is measured once from canonical teaching text, not by adding duplicated JSON and HTML.
+25. Spoken word count is measured once from canonical teaching text, from HTML only.
 
 Do not claim validation passed unless it was actually performed.
 
@@ -548,13 +538,7 @@ If the content is incomplete, report exactly what remains unfinished.
 
 ## 15. FINAL DELIVERABLES
 
-Deliver **five individual downloadable files plus one ZIP**:
-
-1.
-
-```
-[TOPIC_ID].json
-```
+Deliver **four individual downloadable files plus one ZIP**:
 
 1.
 
@@ -580,9 +564,9 @@ Deliver **five individual downloadable files plus one ZIP**:
 AI_Engineering_Mastery_[TOPIC_ID]_Content.zip
 ```
 
-6. `data/lesson-html/[TOPIC_ID].html` — rich chapter presentation fragment
+4. `data/lesson-html/[TOPIC_ID].html` — rich chapter presentation fragment
 
-The ZIP must contain all five files in their correct directory structure.
+The ZIP must contain all four files in their correct directory structure.
 
 It must be ready to extract into the existing AI Engineering Mastery project.
 
@@ -627,4 +611,4 @@ After studying this lesson, I must be able to:
 
 **Prepare me to operate at Senior Staff engineering level—not merely to pass an interview.**
 
-**END OF AI ENGINEERING MASTERY MASTER TOPIC GENERATOR — VERSION 6.0**
+**END OF AI ENGINEERING MASTERY MASTER TOPIC GENERATOR — VERSION 7.0**

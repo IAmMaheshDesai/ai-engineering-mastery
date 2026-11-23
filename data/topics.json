@@ -14,7 +14,7 @@
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
     "status": "available",
-    "lesson": "data/lessons/sd-001.json",
+    "lesson": "data/lesson-html/sd-001.html",
     "description": "Explore distributed consensus: raft, paxos, quorum through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -31,8 +31,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "available",
+    "lesson": "data/lesson-html/sd-002.html",
     "description": "Explore leader election, leases, fencing tokens, ownership epochs through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -49,8 +49,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-003.html",
     "description": "Explore distributed locks and coordination through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -67,8 +67,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-004.html",
     "description": "Explore consistency models: strong, eventual, causal, linearizability through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -85,8 +85,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-005.html",
     "description": "Explore replication, sharding, partitioning and rebalancing through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -103,8 +103,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-006.html",
     "description": "Explore cap theorem, pacelc and network partitions through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -121,8 +121,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-007.html",
     "description": "Explore idempotency, retries, deduplication and exactly-once effects through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -139,8 +139,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-008.html",
     "description": "Explore distributed transactions, sagas and compensation through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -157,8 +157,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-009.html",
     "description": "Explore durable execution, workflow engines and crash recovery through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -175,8 +175,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-010.html",
     "description": "Explore event sourcing, cqrs and state machines through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -193,8 +193,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-011.html",
     "description": "Explore high availability, disaster recovery, rpo and rto through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -211,8 +211,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-012.html",
     "description": "Explore multi-region active-active and active-passive architecture through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -229,8 +229,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-013.html",
     "description": "Explore distributed job scheduling and worker orchestration through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -247,8 +247,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-014.html",
     "description": "Explore queues, kafka-style logs, ordering and backpressure through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -265,8 +265,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-015.html",
     "description": "Explore distributed caching, cache invalidation and hot keys through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -283,8 +283,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-016.html",
     "description": "Explore rate limiting, admission control and load shedding through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -301,8 +301,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-017.html",
     "description": "Explore observability: metrics, logs, traces and slos through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -319,8 +319,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-018.html",
     "description": "Explore control plane vs. data plane design through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -337,8 +337,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-019.html",
     "description": "Explore object storage, metadata services and distributed file systems through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -355,8 +355,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-020.html",
     "description": "Explore zero-downtime deployments, rollbacks and migrations through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -372,8 +372,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-021.html",
     "description": "Explore end-to-end llm inference serving architecture through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -389,8 +389,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-022.html",
     "description": "Explore continuous batching and dynamic request scheduling through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -406,8 +406,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-023.html",
     "description": "Explore kv-cache management, paging and prefix caching through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -423,8 +423,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-024.html",
     "description": "Explore prefill vs. decode and disaggregated serving through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -440,8 +440,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-025.html",
     "description": "Explore gpu scheduling, placement and utilization through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -457,8 +457,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-026.html",
     "description": "Explore tensor, pipeline, data and expert parallelism through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -474,8 +474,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-027.html",
     "description": "Explore mixture-of-experts model serving through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -491,8 +491,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-028.html",
     "description": "Explore distributed model loading and checkpoint distribution through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -508,8 +508,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-029.html",
     "description": "Explore llm inference autoscaling and capacity planning through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -525,8 +525,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-030.html",
     "description": "Explore latency, throughput, ttft, tpot and cost optimization through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -542,8 +542,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-031.html",
     "description": "Explore production ai agent execution platform through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -559,8 +559,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-032.html",
     "description": "Explore durable agent workflows, checkpoints and resumability through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -576,8 +576,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-033.html",
     "description": "Explore agent tool execution, permissions and sandbox isolation through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -593,8 +593,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-034.html",
     "description": "Explore agent memory architecture: short-term and long-term through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -610,8 +610,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-035.html",
     "description": "Explore multi-agent orchestration and coordination through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -627,8 +627,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-036.html",
     "description": "Explore human-in-the-loop approvals and interrupt/resume through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -644,8 +644,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-037.html",
     "description": "Explore exactly-once business effects for agent actions through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -661,8 +661,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-038.html",
     "description": "Explore agent observability, tracing, replay and debugging through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -678,8 +678,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-039.html",
     "description": "Explore agent evaluation, safety and policy enforcement through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -695,8 +695,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-040.html",
     "description": "Explore multi-tenant agent platform with quotas and cost controls through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -712,8 +712,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-041.html",
     "description": "Explore vector databases and approximate nearest-neighbor search through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -729,8 +729,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-042.html",
     "description": "Explore production rag systems and retrieval pipelines through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -746,8 +746,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-043.html",
     "description": "Explore embedding generation, indexing and freshness through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -763,8 +763,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-044.html",
     "description": "Explore distributed data ingestion and streaming etl through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -780,8 +780,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-045.html",
     "description": "Explore feature stores and online/offline consistency through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -797,8 +797,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-046.html",
     "description": "Explore training data pipelines and dataset versioning through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -814,8 +814,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-047.html",
     "description": "Explore distributed training architecture and orchestration through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -831,8 +831,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-048.html",
     "description": "Explore model registry, deployment and rollout platforms through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -848,8 +848,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-049.html",
     "description": "Explore online experimentation, a/b testing and canary releases through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -865,8 +865,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-050.html",
     "description": "Explore data governance, access control and isolation through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -883,8 +883,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-051.html",
     "description": "Explore design a globally distributed api gateway through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -901,8 +901,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-052.html",
     "description": "Explore design a kubernetes-like container orchestration system through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -919,8 +919,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-053.html",
     "description": "Explore design a multi-tenant gpu compute cloud through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -937,8 +937,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-054.html",
     "description": "Explore design a trillion-token-scale inference platform through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -955,8 +955,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-055.html",
     "description": "Explore design a distributed checkpoint and recovery service through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -973,8 +973,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-056.html",
     "description": "Explore design a global ai agent execution service through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -991,8 +991,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-057.html",
     "description": "Explore design a cloud disaster recovery control plane through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -1009,8 +1009,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-058.html",
     "description": "Explore design a fault-tolerant model training platform through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -1027,8 +1027,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-059.html",
     "description": "Explore design a real-time ai observability platform through production architecture, tradeoffs, failures and interview explanations."
   },
   {
@@ -1045,8 +1045,8 @@
     ],
     "difficulty": "Senior Staff",
     "durationMinutes": 90,
-    "status": "planned",
-    "lesson": null,
+    "status": "coming-soon",
+    "lesson": "data/lesson-html/sd-060.html",
     "description": "Explore design an end-to-end enterprise ai platform through production architecture, tradeoffs, failures and interview explanations."
   }
 ]

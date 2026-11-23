@@ -46,6 +46,7 @@ data = root / 'data'
 topics = json.loads((data / 'topics.json').read_text('utf-8'))
 registry = dict(topics=topics, cards={}, research={}, vocabularySuggestions={})
 sources = []
+# HTML is the sole lesson source; no lesson JSON is read.
 chapter_count = 0
 if len({t['id'] for t in topics}) != len(topics) or len({t['number'] for t in topics}) != len(topics):
     raise ValueError('Duplicate catalog ID or number')
