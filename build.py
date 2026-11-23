@@ -1,50 +1,91 @@
-"""Build a self-contained HTML app from editable JSON; requires Python 3 only."""
-import json,pathlib,sys,re
-p=pathlib.Path(__file__).resolve().parent
-registry={'topics':json.loads((p/'data/topics.json').read_text(encoding='utf-8')),'lessons':{},'cards':{},'vocabularySuggestions':{},'research':{},'htmlLessons':{}}
-ids=set();numbers=set()
-for topic in registry['topics']:
-    key=topic['id']
-    if key in ids or topic['number'] in numbers:raise ValueError(f'Duplicate ID or number: {key}')
-    ids.add(key);numbers.add(topic['number'])
-    lesson=p/'data/lessons'/f'{key}.json';cards=p/'data/flashcards'/f'{key}.cards.json'
+"""Build the offline reader and the hosted catalog from the HTML lesson sources."""
+from html import escape
+from html.parser import HTMLParser
+import json
+from pathlib import Path
+import re
+
+
+class Chapters(HTMLParser):
+    """Extract original chapter markup, omitting the standalone reader around it."""
+    def __init__(self, source):
+        super().__init__(convert_charrefs=False)
+        self.source = source
+        self.offsets = [0] + [m.end() for m in re.finditer('\n', source)]
+        self.start = None
+        self.depth = 0
+        self.items = []
+        self.feed(source)
+        self.close()
+        if self.depth or not self.items:
+            raise ValueError('Expected complete <article data-aem-chapter> elements')
+
+    def source_offset(self):
+        line, col = self.getpos()
+        return self.offsets[line - 1] + col
+
+    def handle_starttag(self, tag, attrs):
+        if tag != 'article':
+            return
+        if self.depth:
+            self.depth += 1
+        elif 'data-aem-chapter' in dict(attrs):
+            self.start = self.source_offset()
+            self.depth = 1
+
+    def handle_endtag(self, tag):
+        if tag == 'article' and self.depth:
+            self.depth -= 1
+            if not self.depth:
+                end = self.source.index('>', self.source_offset()) + 1
+                self.items.append(self.source[self.start:end])
+
+
+root = Path(__file__).resolve().parent
+data = root / 'data'
+topics = json.loads((data / 'topics.json').read_text('utf-8'))
+registry = dict(topics=topics, cards={}, research={}, vocabularySuggestions={})
+sources = []
+chapter_count = 0
+if len({t['id'] for t in topics}) != len(topics) or len({t['number'] for t in topics}) != len(topics):
+    raise ValueError('Duplicate catalog ID or number')
+
+for topic in topics:
+    key = topic['id']
+    lesson = data / 'lesson-html' / (key + '.html')
+    topic['status'] = 'available' if lesson.exists() else 'coming-soon'
+    topic['lesson'] = 'data/lesson-html/' + key + '.html'
     if lesson.exists():
-        item=json.loads(lesson.read_text(encoding='utf-8'))
-        if item.get('id')!=key or not isinstance(item.get('slides'),list) or not item['slides']:raise ValueError(f'Invalid lesson: {lesson}')
-        for slide in item['slides']:
-            if not all(k in slide for k in ('id','title')):raise ValueError(f'Missing slide id/title: {lesson}')
-        registry['lessons'][key]=item
-        topic['status']='available'
-    else:topic['status']='coming-soon'
-    suggestions=p/'data/vocabulary'/f'{key}.vocabulary.json'
-    research=p/'data/research'/f'{key}.research.md'
-    if suggestions.exists():
-        words=json.loads(suggestions.read_text(encoding='utf-8'))
-        if not isinstance(words,list) or any(not isinstance(w,dict) or not all(isinstance(w.get(k),str) and w[k].strip() for k in ('word','meaning','sentence')) for w in words):
-            raise ValueError(f'Invalid vocabulary suggestions: {suggestions}')
-        registry['vocabularySuggestions'][key]=words
+        try:
+            chapters = Chapters(lesson.read_text('utf-8')).items
+        except ValueError as err:
+            raise ValueError(f'{lesson}: {err}') from err
+        markup = '\n'.join(chapters)
+        if re.search(r'<\s*/?\s*(script|iframe|object|embed|base|template|style|link)\b|\son[a-z]+\s*=|javascript\s*:', markup, re.I):
+            raise ValueError(f'{lesson}: chapter content must be declarative HTML')
+        sources.append(f'<template data-lesson-id="{escape(key, quote=True)}">{markup}</template>')
+        chapter_count += len(chapters)
+    for folder, suffix, store, fields in [
+        ('flashcards', '.cards.json', 'cards', ('id', 'front', 'back')),
+        ('vocabulary', '.vocabulary.json', 'vocabularySuggestions', ('word', 'meaning', 'sentence'))
+    ]:
+        path = data / folder / (key + suffix)
+        if path.exists():
+            records = json.loads(path.read_text('utf-8'))
+            if not isinstance(records, list) or any(not isinstance(r, dict) or not all(r.get(f) for f in fields) for r in records):
+                raise ValueError(f'Invalid resource: {path}')
+            registry[store][key] = records
+    research = data / 'research' / (key + '.research.md')
     if research.exists():
-        registry['research'][key]=research.read_text(encoding='utf-8')
-    custom_html=p/'data/lesson-html'/f'{key}.html'
-    if custom_html.exists():
-        markup=custom_html.read_text(encoding='utf-8')
-        if re.search(r'<\s*(script|iframe|object|embed|base)\b|\son[a-z]+\s*=|javascript\s*:',markup,re.I):
-            raise ValueError(f'Unsafe HTML in {custom_html}; use declarative markup only')
-        if key not in registry['lessons']:raise ValueError(f'HTML requires a corresponding JSON lesson: {key}')
-        expected=len(registry['lessons'][key]['slides'])
-        actual=len(re.findall(r'<article\s+[^>]*data-aem-chapter\s*=',markup,re.I))
-        if actual!=expected:raise ValueError(f'Expected {expected} HTML chapters, found {actual}: {custom_html}')
-        registry['htmlLessons'][key]=markup
-    if cards.exists():
-        item=json.loads(cards.read_text(encoding='utf-8'))
-        if not isinstance(item,list):raise ValueError(f'Cards must be an array: {cards}')
-        for card in item:
-            if not all(card.get(k) for k in ('id','front','back')):raise ValueError(f'Invalid flashcard: {cards}')
-        registry['cards'][key]=item
-html=(p/'index.html').read_text(encoding='utf-8');css=(p/'app.css').read_text(encoding='utf-8');js=(p/'app.js').read_text(encoding='utf-8')
-assert '<link rel="stylesheet" href="app.css">' in html and '<script src="app.js"></script>' in html
-html=html.replace('<link rel="stylesheet" href="app.css">','<style>'+css+'</style>')
-data=json.dumps(registry,ensure_ascii=False).replace('</','<\\/')
-html=html.replace('<script src="app.js"></script>','<script>window.AEM_DATA='+data+';</script><script>'+js+'</script>')
-(p/'AI_Engineering_Mastery_OFFLINE.html').write_text(html,encoding='utf-8')
-print(f'Built offline HTML: {len(registry["topics"])} topics, {sum(len(x["slides"]) for x in registry["lessons"].values())} slides, {sum(len(x) for x in registry["cards"].values())} cards, {sum(len(x) for x in registry["vocabularySuggestions"].values())} vocabulary suggestions, {len(registry["research"])} research documents')
+        registry['research'][key] = research.read_text('utf-8')
+
+catalog = 'window.AEM_DATA=' + json.dumps(registry, ensure_ascii=False).replace('<', r'\u003c') + ';'
+shell = (root / 'index.html').read_text('utf-8')
+css = (root / 'app.css').read_text('utf-8')
+js = (root / 'app.js').read_text('utf-8')
+offline = shell.replace('<link rel="stylesheet" href="app.css">', '<style>' + css + '</style>')
+offline = offline.replace('<script src="catalog.js"></script>', '\n'.join(sources) + '<script>' + catalog + '</script>')
+offline = offline.replace('<script src="app.js"></script>', '<script>' + js + '</script>')
+(root / 'catalog.js').write_text(catalog, 'utf-8')
+(root / 'AI_Engineering_Mastery_OFFLINE.html').write_text(offline, 'utf-8')
+print(f'Built {len(sources)} HTML lessons with {chapter_count} chapters.')

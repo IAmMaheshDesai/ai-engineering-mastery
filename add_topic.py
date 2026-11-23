@@ -14,7 +14,7 @@ if not companies:raise SystemExit('No recognized company tags')
 number=max(t['number'] for t in topics)+1
 id=f'sd-{number:03d}'
 if any(t['title'].lower()==title.lower() for t in topics):raise SystemExit('Topic title already exists')
-entry={'id':id,'number':number,'title':title,'category':category,'companies':companies,'difficulty':'Senior Staff','durationMinutes':90,'status':'coming-soon','lesson':f'data/lessons/{id}.json','description':f'Senior Staff architecture lesson on {title}.'}
+entry={'id':id,'number':number,'title':title,'category':category,'companies':companies,'difficulty':'Senior Staff','durationMinutes':90,'status':'coming-soon','lesson':f'data/lesson-html/{id}.html','description':f'Senior Staff architecture lesson on {title}.'}
 topics.append(entry)
 path.write_text(json.dumps(topics,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
-print(f'Added {id}. Create data/lessons/{id}.json and data/flashcards/{id}.cards.json, then run python3 build.py.')
+print(f'Added {id}. Create data/lesson-html/{id}.html and data/flashcards/{id}.cards.json, then run python3 build.py.')

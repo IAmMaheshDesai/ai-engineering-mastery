@@ -67,7 +67,44 @@ function home(){screen='home';$('app').innerHTML=header()+`<div class="hero"><di
 function catalog(type='architecture'){screen=type;let all=registry.topics.filter(t=>company==='All'||t.companies.includes(company)).filter(t=>[t.title,t.description,t.category].join(' ').toLowerCase().includes(search.toLowerCase()));let categories=[...new Set(all.map(t=>t.category))];$('app').innerHTML=header()+`<button class="btn secondary back" data-action="home">← Home</button><div class="hero"><div class="eyebrow">${type==='coding'?'Coding & Algorithms':'Architecture & System Design'}</div><h1>${type==='coding'?'Coding & Algorithms':'System Design Mastery'}</h1><p>${type==='coding'?'A structured coding track ready for future JSON lessons.':'60 essential Senior Staff topics, organized into six learning categories.'}</p></div>${type==='coding'?'<div class="empty">Coding topics will appear here when you add their JSON entries.</div>':`<div class="toolbar"><input id="search" placeholder="Search topics, concepts, categories…" value="${esc(search)}" aria-label="Search topics"><button class="btn secondary" data-action="review">Review Flashcards</button><button class="btn secondary" data-action="vocabulary">My Dictionary (${vocabulary.length})</button></div><div class="toolbar">${['All',...companies].map(c=>`<button class="tag ${company===c?'active':''}" data-company="${esc(c)}">${esc(c)}</button>`).join('')}</div><div id="topicResults">${renderTopics(all,categories)}</div>`}`;clock();if(type==='architecture')$('search').addEventListener('input',e=>{search=e.target.value;let arr=registry.topics.filter(t=>(company==='All'||t.companies.includes(company))&&[t.title,t.description,t.category].join(' ').toLowerCase().includes(search.toLowerCase()));$('topicResults').innerHTML=renderTopics(arr,[...new Set(arr.map(t=>t.category))])})}
 function renderTopics(all,categories){return categories.map(cat=>`<h2 class="group-title">${esc(cat)}</h2>${all.filter(t=>t.category===cat).map(t=>`<button class="topic" data-topic="${esc(t.id)}"><span class="num">${String(t.number).padStart(2,'0')}</span><span class="desc"><strong>${esc(t.title)}</strong><small>${esc(t.companies.join(' · '))} · ${t.status==='available'?'Full lesson available':'Coming soon'}</small></span><span class="go">${t.status==='available'?'Start Lesson →':'Preview →'}</span></button>`).join('')}`).join('')||'<div class="empty">No matching topics.</div>'}
 function getTopic(id){return registry.topics.find(t=>t.id===id)}
-function openTopic(id){topic=getTopic(id);lesson=registry.lessons[id];if(!lesson){alert('This topic is listed in the catalog. Add data/lessons/'+id+'.json to publish its presentation.');return}slideIndex=storage('lastSlide:'+id,0);slideIndex=Math.min(Math.max(0,slideIndex),lesson.slides.length-1);zoom=100;wide=false;timerStart=Date.now();$('presentation').classList.remove('hidden');document.body.classList.add('presentation-open');enterBrowserFullscreen();$('lessonLabel').textContent=`${String(topic.number).padStart(2,'0')} · ${lesson.title}`;renderSlide();clock()}
+let openVersion=0;
+const offlineLessons=new Map(Array.from(document.querySelectorAll('template[data-lesson-id]'), t=>[t.dataset.lessonId,t]));
+if(location.protocol==='file:' && document.querySelector('script[src="catalog.js"]')){
+ location.replace(new URL('AI_Engineering_Mastery_OFFLINE.html',location.href));
+}
+async function openTopic(id){
+ const selected=getTopic(id);
+ if(!selected || selected.status!=='available'){alert('This lesson has not been published yet.');return}
+ const version=++openVersion;
+ enterBrowserFullscreen();
+ try{
+  let source=offlineLessons.get(id)?.content;
+  if(!source){
+   const response=await fetch('data/lesson-html/'+encodeURIComponent(id)+'.html',{cache:'no-cache'});
+   if(!response.ok)throw Error('HTTP '+response.status);
+   source=new DOMParser().parseFromString(await response.text(),'text/html');
+  }
+  if(version!==openVersion)return;
+  const slides=Array.from(source.querySelectorAll('article[data-aem-chapter]'));
+  if(!slides.length)throw Error('No chapter articles were found.');
+  if(slides.some(ch=>ch.querySelector('script,iframe,object,embed,template,base,link,style') ||
+    Array.from(ch.querySelectorAll('*')).some(el=>Array.from(el.attributes).some(attr=>attr.name.startsWith('on')||/^\s*javascript:/i.test(attr.value))))){
+   throw Error('The chapter contains unsupported active content.');
+  }
+  topic=selected;lesson={title:selected.title,slides};
+  const saved=storage('lastSlide:'+id,0);
+  slideIndex=Math.min(Math.max(0,Number.isInteger(saved)?saved:0),slides.length-1);
+  zoom=100;wide=false;timerStart=Date.now();
+  $('slideSection').replaceChildren(...slides.map((ch,i)=>new Option((i+1)+' · '+(ch.querySelector('h1,h2')?.textContent||'Chapter'),String(i))));
+  $('presentation').classList.remove('hidden');document.body.classList.add('presentation-open');
+  $('lessonLabel').textContent=String(selected.number).padStart(2,'0')+' · '+selected.title;
+  renderSlide();clock();
+ }catch(error){
+  if(version!==openVersion)return;
+  if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});
+  alert('Could not load the HTML lesson '+id+'. '+error.message);
+ }
+}
 function enterBrowserFullscreen(){
   // Must be invoked synchronously during the user's Start Lesson click.
   // Browser fullscreen hides Chrome tabs and address bar, unlike a CSS overlay.
@@ -80,39 +117,24 @@ function enterBrowserFullscreen(){
 function showFullscreenHint(){const el=$('fullscreenHint');if(el)el.hidden=false}
 function renderSlide(){
  if(!lesson)return;
- const s=lesson.slides[slideIndex];
- const para=p=>`<p>${esc(p)}</p>`;
- const list=bs=>bs?.length?`<ul class="teaching-list">${bs.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:'';
- const renderBlock=b=>{
-   if(b.type==='section')return `<section class="teaching-section"><h2>${esc(b.title)}</h2>${(b.paragraphs||[]).map(para).join('')}${list(b.bullets)}${b.code?`<pre><code>${esc(typeof b.code==='string'?b.code:JSON.stringify(b.code,null,2))}</code></pre>`:''}${b.diagram?`<div class="diagram">${esc(typeof b.diagram==='string'?b.diagram:JSON.stringify(b.diagram,null,2))}</div>`:''}</section>`;
-   return '';
- };
- let html=`<div class="breadcrumbs">${esc(s.section||'Architecture')} / ${esc(lesson.title)}</div><h1>${esc(s.title)}</h1>`;
- const custom=registry.htmlLessons?.[topic?.id];
- if(custom){
-   const holder=document.createElement('template');holder.innerHTML=custom;
-   const chapters=holder.content.querySelectorAll('article[data-aem-chapter]');
-   const chapter=chapters[slideIndex];
-   if(chapter){html=chapter.innerHTML;}
-   else{html='<p>HTML chapter missing. Check the custom lesson file.</p>';}
-   $('slide').innerHTML=html;
-   $('slide').style.setProperty('--slide-font',zoom*0.19+'px');$('slide').classList.toggle('wide',wide);
-   $('zoom').textContent=zoom+'%';$('pageCount').textContent=(slideIndex+1)+' / '+lesson.slides.length;
-   $('slideSection').textContent=s.section||'';$('prev').disabled=slideIndex===0;$('next').disabled=slideIndex===lesson.slides.length-1;
-   $('widen').textContent=wide?'Normal Width':'Widen Slide';$('slideScroll').scrollTop=0;save('lastSlide:'+topic.id,slideIndex);
-   return;
+ const chapter=lesson.slides[slideIndex];
+ if($('slide')._chapter!==chapter){
+  $('slide').replaceChildren(...Array.from(chapter.childNodes,n=>n.cloneNode(true)));
+  $('slide')._chapter=chapter;$('slideScroll').scrollTop=0;
  }
-
- if(s.lead)html+=`<div class="intro"><p>${esc(s.lead)}</p></div>`;
- if(s.blocks)html+=s.blocks.map(renderBlock).join('');
- else{html+=(s.paragraphs||[]).map(para).join('')+list(s.bullets)}
- html+=`<div class="takeaway"><strong>Practice aloud</strong><br>Summarize this chapter in your own words. State the invariant, describe a failure, and explain the tradeoff before advancing.</div>`;
- $('slide').innerHTML=html;$('slide').style.setProperty('--slide-font',zoom*0.19+'px');$('slide').classList.toggle('wide',wide);
+ $('slide').style.setProperty('--slide-font',zoom*0.19+'px');
+ $('slide').classList.toggle('wide',wide);
  $('zoom').textContent=zoom+'%';$('pageCount').textContent=(slideIndex+1)+' / '+lesson.slides.length;
- $('slideSection').textContent=s.section||'';$('prev').disabled=slideIndex===0;$('next').disabled=slideIndex===lesson.slides.length-1;
- $('widen').textContent=wide?'Normal Width':'Widen Slide';$('slideScroll').scrollTop=0;save('lastSlide:'+topic.id,slideIndex);
+ $('slideSection').value=String(slideIndex);$('prev').disabled=slideIndex===0;$('next').disabled=slideIndex===lesson.slides.length-1;
+ $('widen').textContent=wide?'Normal Width':'Widen Slide';save('lastSlide:'+topic.id,slideIndex);
 }
-
+$('slideSection').onchange=e=>{slideIndex=Number(e.target.value);renderSlide()};
+$('slide').addEventListener('click',event=>{
+ const link=event.target.closest('.jump a[href^="#"]');
+ if(!link)return;
+ const section=$('slide').querySelector('#'+CSS.escape(link.hash.slice(1)));
+ if(section){event.preventDefault();section.setAttribute('tabindex','-1');section.focus({preventScroll:true});section.scrollIntoView({block:'start'})}
+});
 function changeSlide(d){if(lesson){slideIndex=Math.max(0,Math.min(lesson.slides.length-1,slideIndex+d));renderSlide()}}
 function closePresentation(){$('presentation').classList.add('hidden');document.body.classList.remove('presentation-open');if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});pointer=false;$('slideScroll').style.cursor='auto'}
 function startReview(id){
@@ -242,7 +264,7 @@ $('flashFullscreen').onclick=()=>{if(document.fullscreenElement)document.exitFul
 $('flashExport').onclick=exportProgress;
 $('app').addEventListener('click',e=>{let b=e.target.closest('button');if(!b)return;if(b.dataset.topic){openTopic(b.dataset.topic);return}if(b.dataset.company){company=b.dataset.company;catalog();return}if(b.dataset.rating){rate(b.dataset.rating);return}switch(b.dataset.action){case'home':home();break;case'coding':catalog('coding');break;case'architecture':catalog();break;case'review':startReview('sd-001');break;case'vocabulary':openVocabulary(true);break;case'flip':revealed=!revealed;renderReview();break;case'cardprev':cardIndex=Math.max(0,cardIndex-1);revealed=false;renderReview();break;case'cardnext':cardIndex=Math.min(review.length-1,cardIndex+1);revealed=false;renderReview();break;case'export':exportProgress();break;case'import':importProgress();break;}});
 $('prev').onclick=()=>changeSlide(-1);$('next').onclick=()=>changeSlide(1);$('close').onclick=closePresentation;$('closeTop').onclick=closePresentation;$('larger').onclick=()=>{zoom=Math.min(160,zoom+10);renderSlide()};$('smaller').onclick=()=>{zoom=Math.max(70,zoom-10);renderSlide()};$('widen').onclick=()=>{wide=!wide;renderSlide()};$('full').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen?.()};$('pointer').onclick=()=>{pointer=!pointer;$('slideScroll').style.cursor=pointer?'crosshair':'auto'};$('flashFromSlide').onclick=()=>startReview(topic.id);$('addWordFromSlide').onclick=()=>openWordEditor(selectedWord||getSelectedLessonWord());
-document.addEventListener('keydown',e=>{if($('vocabDialog').open)return;if(!$('resourceOverlay').classList.contains('hidden')){if(e.key==='Escape'&&!document.fullscreenElement)closeTopicResources();return;}if(!$('vocabOverlay').classList.contains('hidden')){if(vocabListMode)return;if(e.key==='ArrowRight'){$('vocabNext').click();e.preventDefault()}else if(e.key==='ArrowLeft'){$('vocabPrev').click();e.preventDefault()}else if(e.key===' '){vocabRevealed=!vocabRevealed;renderVocabulary();e.preventDefault()}else if(e.key==='Escape'&&!document.fullscreenElement)closeVocabulary();return;}if(!$('flashOverlay').classList.contains('hidden')){if(e.key==='ArrowRight'){e.preventDefault();$('flashNext').click()}else if(e.key==='ArrowLeft'){e.preventDefault();$('flashPrev').click()}else if(e.key===' '){e.preventDefault();revealed=!revealed;renderReview()}else if(e.key==='Escape'&&!document.fullscreenElement){closeReview()}return;}if($('presentation').classList.contains('hidden'))return;if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;if(e.key==='Escape'){if(!document.fullscreenElement)closePresentation()}else if(e.key==='ArrowRight'){e.preventDefault();changeSlide(1)}else if(e.key==='ArrowLeft'){e.preventDefault();changeSlide(-1)}else if(e.key==='Home'){slideIndex=0;renderSlide()}else if(e.key==='End'){slideIndex=lesson.slides.length-1;renderSlide()}else if(e.key.toLowerCase()==='f'){$('full').click()}else if(e.key==='+'){$('larger').click()}else if(e.key==='-'){$('smaller').click()}});
+document.addEventListener('keydown',e=>{if($('vocabDialog').open)return;if(!$('resourceOverlay').classList.contains('hidden')){if(e.key==='Escape'&&!document.fullscreenElement)closeTopicResources();return;}if(!$('vocabOverlay').classList.contains('hidden')){if(vocabListMode)return;if(e.key==='ArrowRight'){$('vocabNext').click();e.preventDefault()}else if(e.key==='ArrowLeft'){$('vocabPrev').click();e.preventDefault()}else if(e.key===' '){vocabRevealed=!vocabRevealed;renderVocabulary();e.preventDefault()}else if(e.key==='Escape'&&!document.fullscreenElement)closeVocabulary();return;}if(!$('flashOverlay').classList.contains('hidden')){if(e.key==='ArrowRight'){e.preventDefault();$('flashNext').click()}else if(e.key==='ArrowLeft'){e.preventDefault();$('flashPrev').click()}else if(e.key===' '){e.preventDefault();revealed=!revealed;renderReview()}else if(e.key==='Escape'&&!document.fullscreenElement){closeReview()}return;}if($('presentation').classList.contains('hidden'))return;if(['INPUT','TEXTAREA','SELECT','SUMMARY'].includes(document.activeElement.tagName))return;if(e.key==='Escape'){if(!document.fullscreenElement)closePresentation()}else if(e.key==='ArrowRight'){e.preventDefault();changeSlide(1)}else if(e.key==='ArrowLeft'){e.preventDefault();changeSlide(-1)}else if(e.key==='Home'){slideIndex=0;renderSlide()}else if(e.key==='End'){slideIndex=lesson.slides.length-1;renderSlide()}else if(e.key.toLowerCase()==='f'){$('full').click()}else if(e.key==='+'){$('larger').click()}else if(e.key==='-'){$('smaller').click()}});
 home();})();
 
 // Delegated code-copy support works in fullscreen and after slide navigation.

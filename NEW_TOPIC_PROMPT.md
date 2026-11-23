@@ -215,7 +215,7 @@ The content must render beautifully inside my existing AI Engineering Mastery fu
 
 **Do not modify the application shell, CSS, JavaScript, navigation, presentation controls, or visual theme.** Generate a separate per-topic HTML fragment for rich chapter bodies; it is not a replacement for the application HTML.
 
-Use the existing JSON renderer's supported content blocks for the canonical JSON fallback. Also create the matching rich HTML chapter fragment using the exact contract below.
+Use the existing JSON renderer's supported content blocks for the optional structured authoring copy. Also create the matching rich HTML chapter fragment using the exact contract below.
 
 Each chapter should contain:
 
@@ -461,7 +461,7 @@ Must contain the research, company evidence, citations, and further reading.
 
 `data/lesson-html/[TOPIC_ID].html`
 
-This is a **fragment**, not a standalone HTML page. It must contain **exactly one** `<article data-aem-chapter="1">...</article>` for **each** slide in `data/lessons/[TOPIC_ID].json`, in exactly the same order. The JSON remains authoritative for topic ID, slide titles, sections, chapter navigation, flashcards, saved position, and fallback. The HTML controls only the chapter body.
+This is a **fragment**, not a standalone HTML page. It must contain **exactly one** `<article data-aem-chapter="1">...</article>` for **each** slide in `data/lessons/[TOPIC_ID].json`, in exactly the same order. The HTML articles are authoritative for slide titles, bodies and chapter navigation. Keep the companion JSON in sync for authoring and export.
 
 Use semantic HTML for substantial explanatory paragraphs, nested headings, comparison tables, worked calculations, callouts, architecture diagrams, failure timelines, sequence diagrams, and clearly labeled pseudocode. Make diagrams readable with HTML/CSS structure and accessible textual descriptions; do not substitute decorative diagrams for technical explanation. Favor responsive, horizontally scrollable wrappers around wide tables and diagrams when the existing stylesheet supports them.
 
@@ -484,7 +484,7 @@ HTML-escape all code (`&` → `&amp;`, `<` → `&lt;`, `>` → `&gt;`). Label Py
 
 **Content parity:** The HTML must faithfully render the full substantive teaching content in the lesson JSON, not a shortened summary. Every major worked example, formula, interview answer, and failure case must be present in both the canonical JSON and the matching HTML chapter. HTML may improve layout and add visual structure, but must not silently contradict the JSON. Do not inflate word counts by counting duplicated JSON and HTML text twice.
 
-**Fallback:** If the HTML fragment is absent, the application must continue to display the JSON lesson unchanged. Do not modify other topics.
+**Fallback:** If the lesson HTML is absent, the topic is unpublished. The reader loads chapter content exclusively from HTML. Do not modify other topics.
 
 ### Schema Requirements
 
