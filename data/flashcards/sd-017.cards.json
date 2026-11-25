@@ -1,0 +1,492 @@
+[
+  {
+    "id": "sd-017-fc-001",
+    "topicId": "sd-017",
+    "type": "concept",
+    "front": "What is an SLI?",
+    "back": "A defined measurement with population, eligibility, good behavior, observer, and window semantics.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-002",
+    "topicId": "sd-017",
+    "type": "concept",
+    "front": "How does an SLO differ?",
+    "back": "It sets a target for an SLI over a declared window; it is not automatically a contractual agreement.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-003",
+    "topicId": "sd-017",
+    "type": "failure",
+    "front": "Why can healthy hosts hide a failing service?",
+    "back": "They may not measure useful customer completion, freshness, or safe effects.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-004",
+    "topicId": "sd-017",
+    "type": "concept",
+    "front": "Why define exclusions before incidents?",
+    "back": "Changing the denominator afterward can hide service-caused rejection or failure.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-005",
+    "topicId": "sd-017",
+    "type": "interview",
+    "front": "Compute good ratio for 970k good of 980k eligible.",
+    "back": "About 98.9796%.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-006",
+    "topicId": "sd-017",
+    "type": "failure",
+    "front": "Why avoid double-counting overlapping bad categories?",
+    "back": "One logical operation may be both slow and erroneous; a combined good-event SLI should use the intended set semantics.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-007",
+    "topicId": "sd-017",
+    "type": "concept",
+    "front": "Define burn rate.",
+    "back": "Observed bad fraction divided by allowed bad fraction under compatible definitions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-008",
+    "topicId": "sd-017",
+    "type": "interview",
+    "front": "What is burn for 2% errors against 99.9% good?",
+    "back": "Twenty.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-009",
+    "topicId": "sd-017",
+    "type": "interview",
+    "front": "How much full thirty-day budget is one hour at burn twenty?",
+    "back": "About 2.7778% under constant compatible traffic.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-010",
+    "topicId": "sd-017",
+    "type": "tradeoff",
+    "front": "What do multiple alert windows help?",
+    "back": "Balance fast detection against persistent evidence, noise, and actionable budget spend.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-011",
+    "topicId": "sd-017",
+    "type": "failure",
+    "front": "Can absent samples be treated as zero errors?",
+    "back": "Not without distinguishing no traffic from telemetry loss.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-012",
+    "topicId": "sd-017",
+    "type": "concept",
+    "front": "What does a counter rate need to handle?",
+    "back": "Process resets and the backend’s actual counter semantics.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-013",
+    "topicId": "sd-017",
+    "type": "concept",
+    "front": "What is a gauge useful for?",
+    "back": "A current quantity such as queue depth or active sequences.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-014",
+    "topicId": "sd-017",
+    "type": "tradeoff",
+    "front": "Why use histogram boundaries near an SLO threshold?",
+    "back": "They can support threshold compliance with less ambiguity than coarse quantile interpolation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-015",
+    "topicId": "sd-017",
+    "type": "failure",
+    "front": "Can host p99 values be averaged into global p99?",
+    "back": "No general valid aggregation rule does that.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-016",
+    "topicId": "sd-017",
+    "type": "interview",
+    "front": "What is nearest-rank p99 for 9900 observations at 10ms and 100 at 1s?",
+    "back": "10ms; p99.9 is 1s. State the convention and population.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-017",
+    "topicId": "sd-017",
+    "type": "concept",
+    "front": "What creates metric cardinality?",
+    "back": "Distinct combinations of metric name and label values.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-018",
+    "topicId": "sd-017",
+    "type": "failure",
+    "front": "Why are request IDs dangerous labels?",
+    "back": "They create unbounded series growth and can expose identifiers.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-019",
+    "topicId": "sd-017",
+    "type": "concept",
+    "front": "What does trace context identify?",
+    "back": "Causally related work; it is not an authorization or business-idempotency credential.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-020",
+    "topicId": "sd-017",
+    "type": "tradeoff",
+    "front": "Why use links for some asynchronous work?",
+    "back": "A batch can have several causal inputs that one parent tree misrepresents.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-021",
+    "topicId": "sd-017",
+    "type": "interview",
+    "front": "Compute 20 + parallel 80/30 + 200 + 10 ms.",
+    "back": "310ms; summing all branches double-counts overlap.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-022",
+    "topicId": "sd-017",
+    "type": "failure",
+    "front": "Does a timeout trace prove a provider action failed?",
+    "back": "No. Reconcile authoritative effect state using business identity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-023",
+    "topicId": "sd-017",
+    "type": "failure",
+    "front": "Why can clock skew confuse traces?",
+    "back": "Cross-host timestamps may appear out of causal order; local durations and context carry different evidence.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-024",
+    "topicId": "sd-017",
+    "type": "concept",
+    "front": "How do diagnostic logs and audit differ?",
+    "back": "They may have different loss, durability, retention, access, and failure contracts.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-025",
+    "topicId": "sd-017",
+    "type": "interview",
+    "front": "Retain all 1000 errors and 1% of 999k successes. What is naive sample error ratio?",
+    "back": "About 9.099%, despite a true 0.1% population ratio.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-026",
+    "topicId": "sd-017",
+    "type": "failure",
+    "front": "Why monitor drops before tail sampling?",
+    "back": "Loss before the decision can bias retained evidence and hide failures.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-027",
+    "topicId": "sd-017",
+    "type": "tradeoff",
+    "front": "What can weighted sampling estimates require?",
+    "back": "Known inclusion probabilities, valid selection assumptions, and uncertainty handling.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-028",
+    "topicId": "sd-017",
+    "type": "concept",
+    "front": "Why protect baggage?",
+    "back": "It can cross service boundaries and carry secrets or attacker-controlled size/identity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-029",
+    "topicId": "sd-017",
+    "type": "interview",
+    "front": "Compute 200×10×4×50 series.",
+    "back": "400,000 before other labels.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-030",
+    "topicId": "sd-017",
+    "type": "interview",
+    "front": "What is 50k spans/s ×600 bytes for one day?",
+    "back": "2.592TB decimal before replication/indexing/compression/reserve.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-031",
+    "topicId": "sd-017",
+    "type": "failure",
+    "front": "Why isolate query from ingest?",
+    "back": "An expensive investigation must not destroy incoming incident evidence.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-032",
+    "topicId": "sd-017",
+    "type": "concept",
+    "front": "What does independent coverage monitoring provide?",
+    "back": "Evidence of telemetry failure not relying exclusively on the same failed path.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-033",
+    "topicId": "sd-017",
+    "type": "failure",
+    "front": "Does GPU utilization prove useful training progress?",
+    "back": "No. Join accepted steps, checkpoint validity, attempts, stragglers, and lost work.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-034",
+    "topicId": "sd-017",
+    "type": "concept",
+    "front": "What should recovery telemetry separate?",
+    "back": "Impact, detection, authority/fencing, restore, validation, and useful service return.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-017-fc-035",
+    "topicId": "sd-017",
+    "type": "tradeoff",
+    "front": "What is the operational goal of observability?",
+    "back": "Shorter safe diagnosis and recovery under explicit completeness, privacy, and cost constraints.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

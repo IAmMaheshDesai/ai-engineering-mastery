@@ -1,0 +1,492 @@
+[
+  {
+    "id": "sd-016-fc-001",
+    "topicId": "sd-016",
+    "type": "concept",
+    "front": "How do rate and concurrency limits differ?",
+    "back": "Rate bounds admitted work over time; concurrency bounds simultaneously occupied resources.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-002",
+    "topicId": "sd-016",
+    "type": "concept",
+    "front": "What does admission control decide?",
+    "back": "Whether work may enter under policy, capacity, deadline, and authority constraints.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-003",
+    "topicId": "sd-016",
+    "type": "concept",
+    "front": "What is load shedding for?",
+    "back": "Rejecting or removing work to preserve useful service when demand exceeds a protected envelope.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-004",
+    "topicId": "sd-016",
+    "type": "tradeoff",
+    "front": "Why is a request count insufficient for AI cost?",
+    "back": "Prompt/output lengths, model, memory, duration, caching, and tool fan-out vary; use relevant weighted and hard resource controls.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-005",
+    "topicId": "sd-016",
+    "type": "concept",
+    "front": "What do token-bucket B and r represent?",
+    "back": "B is accumulated burst capacity; r is sustained credit refill per unit time.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-006",
+    "topicId": "sd-016",
+    "type": "concept",
+    "front": "What is the bucket interval envelope?",
+    "back": "Under the standard model, admitted cost over Δ is bounded by B + rΔ, with stated initial state and endpoint conventions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-007",
+    "topicId": "sd-016",
+    "type": "failure",
+    "front": "Why must refill-check-decrement be atomic?",
+    "back": "Concurrent callers can both observe the same balance and overspend if checks and updates are unprotected.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-008",
+    "topicId": "sd-016",
+    "type": "interview",
+    "front": "Trace costs 8, 7, 6 from a full 20-credit bucket at time zero.",
+    "back": "Accept 8 →12, accept 7 →5, reject 6 →5. At 0.4 s with 5/s refill, balance 7 permits cost 6 →1.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-009",
+    "topicId": "sd-016",
+    "type": "failure",
+    "front": "What happens to a request cost greater than bucket capacity?",
+    "back": "It cannot pass that bucket without a different route or policy; waiting alone cannot accumulate above capacity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-010",
+    "topicId": "sd-016",
+    "type": "concept",
+    "front": "Why reject backward time in the teaching model?",
+    "back": "It avoids undefined or incorrect credit creation/removal; production needs a trusted monotonic or defined shared-time contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-011",
+    "topicId": "sd-016",
+    "type": "tradeoff",
+    "front": "Why separate estimated resource reservations from a spend ledger?",
+    "back": "They may have different accuracy, durability, reconciliation, and business correctness requirements.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-012",
+    "topicId": "sd-016",
+    "type": "failure",
+    "front": "Why can duplicate refunds be dangerous?",
+    "back": "They mint rights or release permits twice; bind completion to a stable reservation and make reconciliation repeat-safe.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-013",
+    "topicId": "sd-016",
+    "type": "interview",
+    "front": "How can 100 per aligned minute allow 200 in 0.2 seconds?",
+    "back": "Send 100 at 12:00:59.9 and 100 at 12:01:00.1. Each aligned window obeys the rule.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-014",
+    "topicId": "sd-016",
+    "type": "tradeoff",
+    "front": "What does an exact sliding log cost?",
+    "back": "State and cleanup proportional to recent events, versus more compact but approximate counters.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-015",
+    "topicId": "sd-016",
+    "type": "concept",
+    "front": "Why is idempotency separate from request counting?",
+    "back": "A repeated logical operation may still consume parsing/lookup resources; choose what each budget counts.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-016",
+    "topicId": "sd-016",
+    "type": "failure",
+    "front": "How can limiter descriptors become an attack surface?",
+    "back": "Unbounded unique identities or values create excessive state; authenticate, cap cardinality, expire safely, and keep aggregate guards.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-017",
+    "topicId": "sd-016",
+    "type": "failure",
+    "front": "Do ten independent full 100-unit local limits enforce global 100?",
+    "back": "No. They can multiply admission unless shares, authority, or an explicit approximation contract coordinates them.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-018",
+    "topicId": "sd-016",
+    "type": "tradeoff",
+    "front": "What does exclusive grant delegation buy and cost?",
+    "back": "Bounded local autonomy under a safe grant lifecycle, at the cost of stranded rights and reclaim complexity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-019",
+    "topicId": "sd-016",
+    "type": "interview",
+    "front": "Bound unseen admissions for ten gateways at 100/s with two-second reports.",
+    "back": "Up to 2,000 under the fixed-rate assumptions, plus bursts, in-flight work, and other exposures.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-020",
+    "topicId": "sd-016",
+    "type": "interview",
+    "front": "What additional unseen burst comes from fifty local credits on each gateway?",
+    "back": "Up to 500 across ten gateways under the stated separate-burst model.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-021",
+    "topicId": "sd-016",
+    "type": "failure",
+    "front": "Why is reclaiming an expired grant potentially unsafe?",
+    "back": "The old holder may still spend unless publication/execution authority or another exclusion protocol prevents it.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-022",
+    "topicId": "sd-016",
+    "type": "tradeoff",
+    "front": "How should global-limiter outage behavior be chosen?",
+    "back": "Per operation: spend valid bounded grants, use a documented limited fallback, or reject; do not renew unlimited disconnected authority.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-023",
+    "topicId": "sd-016",
+    "type": "interview",
+    "front": "At 200/s, how does duration growing 0.1→1 s change average active demand?",
+    "back": "From twenty to 200 under compatible stable averages; rate can remain constant while occupancy grows tenfold.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-024",
+    "topicId": "sd-016",
+    "type": "concept",
+    "front": "When should an active permit be released?",
+    "back": "When the protected work actually frees its resource or a safe equivalent accounting boundary applies, not merely client timeout.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-025",
+    "topicId": "sd-016",
+    "type": "failure",
+    "front": "Why can cancellation requested not mean capacity available?",
+    "back": "Remote or noncancelable execution may continue; observe termination/release or reconcile conservatively.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-026",
+    "topicId": "sd-016",
+    "type": "concept",
+    "front": "What is a bulkhead?",
+    "back": "A separated capacity pool preventing one slow tenant, route, or dependency from consuming every critical slot.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-027",
+    "topicId": "sd-016",
+    "type": "interview",
+    "front": "With 100 ahead at 500/s and 80 ms execution, can 250 ms remaining be met by the simple model?",
+    "back": "No. Nominal 200 ms wait plus 80 ms execution is 280 ms, before uncertainty.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-028",
+    "topicId": "sd-016",
+    "type": "tradeoff",
+    "front": "Why is early rejection sometimes better than queueing?",
+    "back": "It avoids spending scarce resources on work that cannot remain useful, preserving other completions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-029",
+    "topicId": "sd-016",
+    "type": "failure",
+    "front": "How can proxy and application retries amplify load?",
+    "back": "Independent retry budgets multiply attempts; coordinate budgets, deadlines, safe identity, and jitter.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-030",
+    "topicId": "sd-016",
+    "type": "concept",
+    "front": "What distinguishes quota, priority, and fairness?",
+    "back": "Entitlement/bound, urgency, and sharing contested eligible capacity; none inherently bypasses safety or authorization.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-031",
+    "topicId": "sd-016",
+    "type": "failure",
+    "front": "When does borrowing recovery reserve break its promise?",
+    "back": "When borrowed work cannot release resources within the emergency reclaim objective or shared dependencies remain saturated.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-032",
+    "topicId": "sd-016",
+    "type": "tradeoff",
+    "front": "Why can adaptive concurrency and autoscaling oscillate?",
+    "back": "They respond to delayed noisy signals and can amplify occupancy before ready capacity arrives; bound changes and test the closed loop.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-033",
+    "topicId": "sd-016",
+    "type": "concept",
+    "front": "Why are requested replicas not admission capacity?",
+    "back": "Only verified ready resources provide tested usable service under the actual workload and constraints.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-034",
+    "topicId": "sd-016",
+    "type": "failure",
+    "front": "How can an agent bypass budgets after resume if designed poorly?",
+    "back": "If child calls or retries reset transient counters; preserve durable run/reservation identity and hierarchical accounting.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-016-fc-035",
+    "topicId": "sd-016",
+    "type": "concept",
+    "front": "What should admission observability emphasize?",
+    "back": "Useful completion, rejection reason, active resources, queue age/expiry, retry waste, grants/uncertain refunds, fallback mode, and reserve reclaim.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

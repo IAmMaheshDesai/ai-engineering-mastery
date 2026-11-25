@@ -1,0 +1,92 @@
+[
+  {
+    "word": "coexistence",
+    "meaning": "The interval in which multiple versions interact with shared state.",
+    "sentence": "Coexistence lasts beyond the visible rollout."
+  },
+  {
+    "word": "readiness",
+    "meaning": "Evidence that an instance can serve the intended capability.",
+    "sentence": "Readiness waits for model loading."
+  },
+  {
+    "word": "surge",
+    "meaning": "Temporary additional rollout capacity.",
+    "sentence": "Surge requires memory and connection reserve."
+  },
+  {
+    "word": "drain",
+    "meaning": "Stopping new admission while handling existing work under a bound.",
+    "sentence": "Drain preserves a long stream until its deadline."
+  },
+  {
+    "word": "canary",
+    "meaning": "Bounded exposure used to evaluate a proposed release.",
+    "sentence": "The canary exercises the changed feature."
+  },
+  {
+    "word": "cohort",
+    "meaning": "A defined population used for routing or comparison.",
+    "sentence": "The cohort is balanced by tenant workload."
+  },
+  {
+    "word": "guardrail",
+    "meaning": "A declared condition limiting release progression.",
+    "sentence": "The guardrail stops on a duplicate effect."
+  },
+  {
+    "word": "promotion",
+    "meaning": "Advancing a release after its required evidence passes.",
+    "sentence": "Promotion moves to another region."
+  },
+  {
+    "word": "expansion",
+    "meaning": "Adding a compatible representation before use.",
+    "sentence": "Expansion creates optional new columns."
+  },
+  {
+    "word": "backfill",
+    "meaning": "Transforming historical data under a controlled protocol.",
+    "sentence": "The backfill checks source versions."
+  },
+  {
+    "word": "contraction",
+    "meaning": "Removing obsolete compatibility after its horizon ends.",
+    "sentence": "Contraction excludes unsupported writers."
+  },
+  {
+    "word": "high-water mark",
+    "meaning": "A defined progress boundary through which changes are applied.",
+    "sentence": "The high-water mark supports cutover validation."
+  },
+  {
+    "word": "schema epoch",
+    "meaning": "A version boundary enforced for supported state operations.",
+    "sentence": "The schema epoch rejects the old writer."
+  },
+  {
+    "word": "rollback boundary",
+    "meaning": "The last transition where a specific reversal remains safe.",
+    "sentence": "New-format writes cross the rollback boundary."
+  },
+  {
+    "word": "compensation",
+    "meaning": "A new action intended to counter an earlier business effect.",
+    "sentence": "Compensation is not erasure of history."
+  },
+  {
+    "word": "forward repair",
+    "meaning": "Restoring correct meaning through compatible new changes.",
+    "sentence": "Forward repair preserves the precise ledger value."
+  },
+  {
+    "word": "release identity",
+    "meaning": "An immutable reference to the actual behavior and compatibility bundle.",
+    "sentence": "Release identity joins traces to deployment evidence."
+  },
+  {
+    "word": "observation window",
+    "meaning": "The interval needed to collect relevant release evidence.",
+    "sentence": "The observation window includes cache expiry."
+  }
+]

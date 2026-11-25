@@ -2,9 +2,9 @@
   {
     "id": "sd-001-fc-001",
     "topicId": "sd-001",
-    "type": "interview",
-    "front": "How does a single consensus decision become a service history?",
-    "back": "Choose commands for successive positions and apply the committed prefix deterministically.",
+    "type": "concept",
+    "front": "What decision do the two Payments operators need the service to make?",
+    "back": "They both want Payments to run in Phoenix. The decision is whether to start one failover execution for the current recovery record.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -16,9 +16,9 @@
   {
     "id": "sd-001-fc-002",
     "topicId": "sd-001",
-    "type": "failure",
-    "front": "A client gets two different successful destinations for one generation. Which property failed?",
-    "back": "Safety. The service admitted an execution its one-destination invariant forbids.",
+    "type": "concept",
+    "front": "In our example, what does version 17 mean?",
+    "back": "It identifies the recovery record the operators saw before clicking Execute. Their requests say to proceed only if that version is still current.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -30,9 +30,9 @@
   {
     "id": "sd-001-fc-003",
     "topicId": "sd-001",
-    "type": "failure",
-    "front": "When can a safe protocol still be unavailable?",
-    "back": "If a durable communicating quorum cannot persist long enough, decisions can stall indefinitely.",
+    "type": "interview",
+    "front": "Requests A and B each expect version 17. A goes first. What happens?",
+    "back": "A starts execution DR-42 and advances the record to version 18. When B is checked, version 17 has already passed, so B cannot start a second execution.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -44,9 +44,9 @@
   {
     "id": "sd-001-fc-004",
     "topicId": "sd-001",
-    "type": "interview",
-    "front": "A five-voter leader has persisted a current-term entry. How many durable follower matches establish a majority?",
-    "back": "Two distinct eligible followers in the static configuration give three copies including the leader.",
+    "type": "failure",
+    "front": "What could go wrong if two coordinators each approve a request using a local copy of version 17?",
+    "back": "Both could send a worker to perform the same recovery. Even if the coordinators later agree which record to keep, the workers may already have changed real resources.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -58,9 +58,9 @@
   {
     "id": "sd-001-fc-005",
     "topicId": "sd-001",
-    "type": "interview",
-    "front": "How many voters can disappear from a static five-member group while leaving a majority?",
-    "back": "Two, assuming the three survivors communicate, retain durable state and can make progress.",
+    "type": "concept",
+    "front": "What is a quorum in our three-voter example?",
+    "back": "R1, R2, and R3 each get a vote. A majority quorum is any two of them. The operators and the recovered databases do not cast these votes.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -72,9 +72,9 @@
   {
     "id": "sd-001-fc-006",
     "topicId": "sd-001",
-    "type": "interview",
-    "front": "What lower bound applies to the overlap of sets of sizes four and three among five voters?",
-    "back": "At least two because four plus three minus five equals two.",
+    "type": "concept",
+    "front": "Why does it help that any two majorities share a voter?",
+    "back": "If R1 and R2 recorded the decision, a later majority of R2 and R3 includes R2. Its saved record and the protocol’s rules help the new majority preserve that decision.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -86,9 +86,9 @@
   {
     "id": "sd-001-fc-007",
     "topicId": "sd-001",
-    "type": "concept",
-    "front": "Which Raft role may solicit votes after an election timeout?",
-    "back": "A follower becomes a candidate, advances the term, records its vote and solicits others.",
+    "type": "failure",
+    "front": "R1 is cut off from R2 and R3. Which side can make a new decision?",
+    "back": "R2 and R3 can form a majority if they can communicate and follow the election rules. R1 alone must wait. Otherwise both sides might authorize conflicting work.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -100,9 +100,9 @@
   {
     "id": "sd-001-fc-008",
     "topicId": "sd-001",
-    "type": "concept",
-    "front": "How does a Raft term differ from a lease deadline?",
-    "back": "It is a logical election number. Its numeric value says nothing about elapsed time or remaining authority.",
+    "type": "failure",
+    "front": "Only R3 is reachable. What can the recovery coordinator safely promise?",
+    "back": "It can report that a new decision must wait for another voter. It cannot approve a fresh failover on the strength of R3’s vote alone.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -114,9 +114,9 @@
   {
     "id": "sd-001-fc-009",
     "topicId": "sd-001",
-    "type": "interview",
-    "front": "Can a candidate win because it has the longest log?",
-    "back": "Length breaks a tie on last-entry term. Eligibility and a majority of votes are still required.",
+    "type": "tradeoff",
+    "front": "Would adding a fourth voter let this group lose two voters?",
+    "back": "Four voters need three for a majority, so losing two still stops new decisions. Five voters need three and can continue after two losses, provided those three can communicate.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -128,9 +128,9 @@
   {
     "id": "sd-001-fc-010",
     "topicId": "sd-001",
-    "type": "tradeoff",
-    "front": "Why jitter election timeouts?",
-    "back": "Different firing times reduce repeated split votes while the voting rules preserve safety.",
+    "type": "concept",
+    "front": "What does a Raft leader do with request A?",
+    "back": "It puts A in its ordered list of commands and sends the entry to followers. After the commitment rule is met, the replicas apply the command to the recovery record.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -143,8 +143,8 @@
     "id": "sd-001-fc-011",
     "topicId": "sd-001",
     "type": "concept",
-    "front": "What evidence does the predecessor pair in AppendEntries test?",
-    "back": "The follower must match the leader at the preceding index and term before accepting the suffix.",
+    "front": "Can a slow voter join the recovery history later?",
+    "back": "Yes. A lagging voter can catch up from the leader’s log or a saved snapshot. It must follow the committed order when applying commands.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -156,9 +156,9 @@
   {
     "id": "sd-001-fc-012",
     "topicId": "sd-001",
-    "type": "concept",
-    "front": "When do Raft entries imply a matching prefix?",
-    "back": "Under the protocol, entries with the same index and term imply the same history through that index.",
+    "type": "failure",
+    "front": "Why must a Raft voter remember its vote after a restart?",
+    "back": "It can vote for only one candidate in a given term. Saving the vote before replying keeps a reboot from letting it vote twice in the same election.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -170,9 +170,9 @@
   {
     "id": "sd-001-fc-013",
     "topicId": "sd-001",
-    "type": "failure",
-    "front": "What can an isolated two-node minority of five offer?",
-    "back": "Historical reads under an explicit stale-read contract or pending intake. It cannot authorize a fresh majority decision.",
+    "type": "concept",
+    "front": "Can a Raft candidate win just by asking for votes first?",
+    "back": "Each voter checks whether the candidate’s log is up to date enough. This prevents an election from discarding commands that were already committed.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -185,8 +185,8 @@
     "id": "sd-001-fc-014",
     "topicId": "sd-001",
     "type": "failure",
-    "front": "Why is a responsive old leader unsafe for strong reads?",
-    "back": "A new majority may have already completed a write unseen by the old leader.",
+    "front": "R1 saves A locally and crashes before anyone else receives it. Is DR-42 guaranteed?",
+    "back": "A local entry alone is insufficient. A later leader may replace that entry. The operator should look up the outcome before assuming that an execution exists.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -198,9 +198,9 @@
   {
     "id": "sd-001-fc-015",
     "topicId": "sd-001",
-    "type": "concept",
-    "front": "Where must a token be checked to fence a stale worker?",
-    "back": "At the protected mutation boundary with atomic authority validation and state change.",
+    "type": "interview",
+    "front": "R1 and R2 saved A from the current Raft leader’s term. Must the leader wait for R3 to commit it?",
+    "back": "In this fixed group of three, two durable copies are enough for that current-term entry. The coordinator can apply A and record the result before replying.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -212,9 +212,9 @@
   {
     "id": "sd-001-fc-016",
     "topicId": "sd-001",
-    "type": "failure",
-    "front": "Can checking a lease immediately before issuing an external call fence that call?",
-    "back": "A pause or delayed packet can separate the check from the effect. The receiver must enforce the relevant authority.",
+    "type": "concept",
+    "front": "How can a Raft leader safely commit entries left over from an earlier term?",
+    "back": "It first commits an entry from its own term using a majority. Earlier entries in the same log then become committed too.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -226,9 +226,9 @@
   {
     "id": "sd-001-fc-017",
     "topicId": "sd-001",
-    "type": "concept",
-    "front": "How can a replica be committed through 90 but applied only through 85?",
-    "back": "Agreement has progressed ahead of local state-machine execution.",
+    "type": "failure",
+    "front": "A was committed, but the leader crashed before replying. What is the operator’s next move?",
+    "back": "Look up the original request or execution. A timeout leaves the outcome unknown. A replacement leader must preserve the committed command.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -240,9 +240,9 @@
   {
     "id": "sd-001-fc-018",
     "topicId": "sd-001",
-    "type": "interview",
-    "front": "May a new Raft leader count a majority of an old-term entry as a new direct commitment?",
-    "back": "No. A quorum for its current-term entry establishes commitment of the preceding prefix.",
+    "type": "concept",
+    "front": "What is the difference between committing A and applying A?",
+    "back": "Commitment fixes A’s place in the shared history. Applying A means checking version 17 and writing the result, including DR-42, into the recovery record.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -255,8 +255,8 @@
     "id": "sd-001-fc-019",
     "topicId": "sd-001",
     "type": "concept",
-    "front": "What must accompany an identifier in a durable retry record?",
-    "back": "A binding to the original request and its outcome so changed payloads can be rejected.",
+    "front": "What is a Paxos ballot?",
+    "back": "It is an ordered number for a round of proposals. A later coordinator uses a higher ballot when it asks voters what they have already accepted.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -268,9 +268,9 @@
   {
     "id": "sd-001-fc-020",
     "topicId": "sd-001",
-    "type": "failure",
-    "front": "Why can external effects repeat even with a correct Raft log?",
-    "back": "Dispatch and recording external completion are separate. Recover with provider idempotency or reconciliation.",
+    "type": "concept",
+    "front": "What does a Paxos voter promise during the first round of messages?",
+    "back": "It saves the new ballot and promises to refuse older ballots. It also reports the most recent proposal it has already accepted for that decision.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -282,9 +282,9 @@
   {
     "id": "sd-001-fc-021",
     "topicId": "sd-001",
-    "type": "concept",
-    "front": "Which Paxos role chooses the proposal to issue after prepare?",
-    "back": "The proposer selects the permitted value from acceptor responses. Learners discover chosen values.",
+    "type": "interview",
+    "front": "What if the responding Paxos voters report earlier accepted proposals for the same decision?",
+    "back": "The new proposer uses the value with the highest accepted ballot among the replies from its quorum. This keeps a previous choice safe.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -296,9 +296,9 @@
   {
     "id": "sd-001-fc-022",
     "topicId": "sd-001",
-    "type": "concept",
-    "front": "Which prior value constrains a new Paxos ballot?",
-    "back": "The value of the highest accepted ballot reported by its prepare quorum for that slot.",
+    "type": "failure",
+    "front": "Two of three Paxos voters accept the same proposal, but the coordinator loses both replies. Was a value chosen?",
+    "back": "Yes. The two matching acceptances choose it. The lost replies mean the coordinator may still need to discover what happened.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -310,9 +310,9 @@
   {
     "id": "sd-001-fc-023",
     "topicId": "sd-001",
-    "type": "concept",
-    "front": "Why persist an accepted pair before acknowledging?",
-    "back": "The quorum proof assumes the pair survives crashes and is reportable during future recovery.",
+    "type": "tradeoff",
+    "front": "How do Raft and Paxos tell the same Payments story differently?",
+    "back": "Raft explains how a leader keeps an ordered log across replicas. Basic Paxos explains how voters choose one value. Repeating Paxos for successive positions can build an ordered log.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -324,9 +324,9 @@
   {
     "id": "sd-001-fc-024",
     "topicId": "sd-001",
-    "type": "tradeoff",
-    "front": "How does stable leadership amortize Multi-Paxos work?",
-    "back": "A ballot established over a valid slot range lets the leader issue many accept phases within that scope.",
+    "type": "failure",
+    "front": "After A succeeds, R3 still displays version 17. Is that screen enough reason to start the plan again?",
+    "back": "No. R3 may be behind. Use a read that checks current authority and has applied the relevant committed entries before treating the result as current.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -338,9 +338,9 @@
   {
     "id": "sd-001-fc-025",
     "topicId": "sd-001",
-    "type": "tradeoff",
-    "front": "What workload makes a global quorum an expensive ordering boundary?",
-    "back": "Independent tenant operations that do not share invariants pay unnecessary WAN latency and contend together.",
+    "type": "concept",
+    "front": "What should a snapshot preserve when the recovery record is already at version 18?",
+    "back": "It should preserve the state needed to resume, including DR-42 and any request results still needed for safe retries, together with the log position the snapshot covers.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -352,9 +352,9 @@
   {
     "id": "sd-001-fc-026",
     "topicId": "sd-001",
-    "type": "tradeoff",
-    "front": "Which model-serving action naturally belongs in a consensus group?",
-    "back": "Publishing a shared authoritative rollout generation. Per-token execution stays on the serving path.",
+    "type": "interview",
+    "front": "Why should a coordinator keep the original request ID alongside DR-42?",
+    "back": "If the reply disappears, the caller can repeat the same request ID. A coordinator that saves the outcome can return the existing result without starting new work.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -366,9 +366,9 @@
   {
     "id": "sd-001-fc-027",
     "topicId": "sd-001",
-    "type": "interview",
-    "front": "Why tag a GPU assignment with an ownership epoch?",
-    "back": "A later assignment must prevent stale holders from successfully mutating the same protected capacity.",
+    "type": "concept",
+    "front": "Why do request A and execution DR-42 have different identifiers?",
+    "back": "A identifies an operator’s attempt to start recovery. DR-42 identifies the recovery work the operator can track after that request succeeds.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -380,9 +380,9 @@
   {
     "id": "sd-001-fc-028",
     "topicId": "sd-001",
-    "type": "concept",
-    "front": "How does consensus help a durable workflow?",
-    "back": "It can order decisions about workflow state. Activities still require recovery and side-effect contracts.",
+    "type": "failure",
+    "front": "A worker crashes just after asking another service to perform a step. Can it safely assume the step failed?",
+    "back": "The other service may already have acted. Look up the step using its saved ID, or retry with the same key if that service supports safe retries.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -394,9 +394,9 @@
   {
     "id": "sd-001-fc-029",
     "topicId": "sd-001",
-    "type": "failure",
-    "front": "What is the first question after a promotion request times out?",
-    "back": "Can an authoritative lookup or same-key retry establish its outcome before we issue conflicting work?",
+    "type": "interview",
+    "front": "What does an accepted failover tell a Payments customer?",
+    "back": "The coordinator has recorded a recovery execution. To know Payments is available in Phoenix, the operator still needs evidence that recovery finished and the application can serve customers.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -408,9 +408,9 @@
   {
     "id": "sd-001-fc-030",
     "topicId": "sd-001",
-    "type": "tradeoff",
-    "front": "Five voters return follower matches at 3, 8, 15 and 40 ms. What changes if the fastest stalls?",
-    "back": "With a 4 ms parallel leader flush, commit moves from 8 to 15 ms, assuming unchanged remaining times.",
+    "type": "failure",
+    "front": "Ashburn starts answering again while Phoenix is taking writes. What must the design enforce?",
+    "back": "Only the authorized site may accept writes. The database or another component on the write path must enforce that rule even if an old worker resumes.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -422,9 +422,9 @@
   {
     "id": "sd-001-fc-031",
     "topicId": "sd-001",
-    "type": "failure",
-    "front": "What risk comes from compacting immediately after each small follower outage?",
-    "back": "A returning voter may require a full snapshot instead of incremental log repair.",
+    "type": "tradeoff",
+    "front": "What do we gain by waiting for a durable majority when recording A?",
+    "back": "A later leader can preserve a decision the operator was promised. The cost is waiting for enough voters to save the entry, and pausing when a majority is unavailable.",
     "companies": [
       "OpenAI",
       "Anthropic",
@@ -436,9 +436,9 @@
   {
     "id": "sd-001-fc-032",
     "topicId": "sd-001",
-    "type": "concept",
-    "front": "What result should a receiver of an RPC revealing a higher valid Raft term persist?",
-    "back": "Advance current term, clear the prior-term vote as required and follow the protocol's step-down rule.",
+    "type": "interview",
+    "front": "What would you check at the end of the Payments exercise?",
+    "back": "Find one authorized execution for the original version. Trace DR-42 through its steps, confirm the active write site, and test a representative Payments request in Phoenix.",
     "companies": [
       "OpenAI",
       "Anthropic",

@@ -1,0 +1,92 @@
+[
+  {
+    "word": "admission control",
+    "meaning": "Deciding whether work may enter under policy and capacity constraints.",
+    "sentence": "Admission control rejects requests that cannot remain useful."
+  },
+  {
+    "word": "load shedding",
+    "meaning": "Rejecting or removing work to protect useful service during overload.",
+    "sentence": "Load shedding protects the metadata authority."
+  },
+  {
+    "word": "burst allowance",
+    "meaning": "Accumulated permission for short-term traffic above sustained rate.",
+    "sentence": "The bucket capacity sets the burst allowance."
+  },
+  {
+    "word": "refill rate",
+    "meaning": "The rate at which limiter credits become available.",
+    "sentence": "The refill rate is five credits per second."
+  },
+  {
+    "word": "atomic debit",
+    "meaning": "A single protected check and accounting subtraction.",
+    "sentence": "The atomic debit prevents two gateways from spending the same balance."
+  },
+  {
+    "word": "rolling window",
+    "meaning": "An interval that moves with the observation time.",
+    "sentence": "A rolling window differs from an aligned minute."
+  },
+  {
+    "word": "delegated grant",
+    "meaning": "A bounded exclusive share of authority issued to a local enforcer.",
+    "sentence": "The gateway spends its delegated grant while disconnected."
+  },
+  {
+    "word": "stranded rights",
+    "meaning": "Unused delegated capacity unavailable to another holder.",
+    "sentence": "Stranded rights can reduce availability for a hot gateway."
+  },
+  {
+    "word": "accounting exposure",
+    "meaning": "Work admitted but not yet represented in shared enforcement state.",
+    "sentence": "Reporting delay increases accounting exposure."
+  },
+  {
+    "word": "active permit",
+    "meaning": "Permission to occupy a protected execution resource.",
+    "sentence": "The active permit remains held after the client times out."
+  },
+  {
+    "word": "bulkhead",
+    "meaning": "A capacity boundary isolating failure or demand classes.",
+    "sentence": "A bulkhead prevents optional calls from consuming recovery connections."
+  },
+  {
+    "word": "deadline budget",
+    "meaning": "Remaining time in which completion is useful.",
+    "sentence": "The downstream service preserves the remaining deadline budget."
+  },
+  {
+    "word": "reclaim latency",
+    "meaning": "Time required to make borrowed capacity actually available.",
+    "sentence": "Reclaim latency must fit the emergency objective."
+  },
+  {
+    "word": "protected reserve",
+    "meaning": "Capacity kept available for an authorized critical class.",
+    "sentence": "The protected reserve includes database connections."
+  },
+  {
+    "word": "shadow evaluation",
+    "meaning": "Computing a proposed policy decision without enforcing or consuming real rights.",
+    "sentence": "Shadow evaluation reveals tenant impact before rollout."
+  },
+  {
+    "word": "policy epoch",
+    "meaning": "A version identifying the rules under which authority is interpreted.",
+    "sentence": "A grant is bound to its policy epoch."
+  },
+  {
+    "word": "closed-loop stability",
+    "meaning": "Controlled behavior of feedback mechanisms with delayed observations.",
+    "sentence": "We test closed-loop stability during autoscaling delay."
+  },
+  {
+    "word": "useful completion",
+    "meaning": "A successful outcome delivered while it still meets the business purpose.",
+    "sentence": "Useful completion matters more than maximum acceptance."
+  }
+]

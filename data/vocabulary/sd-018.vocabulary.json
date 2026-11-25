@@ -1,0 +1,92 @@
+[
+  {
+    "word": "incarnation",
+    "meaning": "A unique execution lifetime of a worker.",
+    "sentence": "Readiness is bound to incarnation boot-B."
+  },
+  {
+    "word": "control plane",
+    "meaning": "Operations managing desired behavior.",
+    "sentence": "The control plane publishes a validated bundle."
+  },
+  {
+    "word": "data plane",
+    "meaning": "Operations executing the serving capability.",
+    "sentence": "The data plane uses a valid local route."
+  },
+  {
+    "word": "static stability",
+    "meaning": "Continuation using existing valid resources during management failure.",
+    "sentence": "Static stability protects warm inference."
+  },
+  {
+    "word": "desired state",
+    "meaning": "The authoritative intended configuration.",
+    "sentence": "Desired state requests three replicas."
+  },
+  {
+    "word": "reconciliation",
+    "meaning": "Comparing observations to intent and safely reducing differences.",
+    "sentence": "Reconciliation adopts the discovered resource."
+  },
+  {
+    "word": "fencing epoch",
+    "meaning": "An ordered authority value enforced at an effect boundary.",
+    "sentence": "The endpoint rejects the older fencing epoch."
+  },
+  {
+    "word": "delegation",
+    "meaning": "A bounded grant of scoped authority.",
+    "sentence": "Delegation expires before disconnected privileged work continues."
+  },
+  {
+    "word": "snapshot",
+    "meaning": "A coherent state image under a defined store contract.",
+    "sentence": "The worker requests a snapshot after a gap."
+  },
+  {
+    "word": "watch",
+    "meaning": "A change-notification stream with explicit delivery semantics.",
+    "sentence": "The watch accelerates configuration updates."
+  },
+  {
+    "word": "activation",
+    "meaning": "Making validated state effective at a defined boundary.",
+    "sentence": "Activation occurs before new request admission."
+  },
+  {
+    "word": "fan-out",
+    "meaning": "Distribution of one change to many recipients.",
+    "sentence": "Fan-out consumes downstream bandwidth."
+  },
+  {
+    "word": "bootstrap",
+    "meaning": "The process of obtaining prerequisites for service startup.",
+    "sentence": "Bootstrap requires identity and artifacts."
+  },
+  {
+    "word": "convergence",
+    "meaning": "Movement toward the current valid desired state.",
+    "sentence": "Convergence is measured by cohort."
+  },
+  {
+    "word": "unknown effect",
+    "meaning": "An external operation whose outcome is not yet known.",
+    "sentence": "The create timeout leaves an unknown effect."
+  },
+  {
+    "word": "warm capacity",
+    "meaning": "Already provisioned usable execution resources.",
+    "sentence": "Warm capacity survives one zone loss."
+  },
+  {
+    "word": "revocation",
+    "meaning": "Withdrawal of a previously permitted capability.",
+    "sentence": "Revocation has its own freshness objective."
+  },
+  {
+    "word": "compatibility bundle",
+    "meaning": "A complete versioned set of mutually usable execution inputs.",
+    "sentence": "The compatibility bundle includes tokenizer and model."
+  }
+]

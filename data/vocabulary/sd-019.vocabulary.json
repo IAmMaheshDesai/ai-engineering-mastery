@@ -1,0 +1,92 @@
+[
+  {
+    "word": "manifest",
+    "meaning": "A complete versioned description of immutable data members.",
+    "sentence": "The manifest lists four checkpoint shards."
+  },
+  {
+    "word": "publication",
+    "meaning": "An authoritative transition making a version available under the application contract.",
+    "sentence": "Publication follows completeness verification."
+  },
+  {
+    "word": "namespace",
+    "meaning": "The mapping from logical names to identified objects or files.",
+    "sentence": "The namespace has tenant-scoped authority."
+  },
+  {
+    "word": "content addressing",
+    "meaning": "Identifying content using a digest of its bytes.",
+    "sentence": "Content addressing supports verified cache reuse."
+  },
+  {
+    "word": "reader pin",
+    "meaning": "A retained reference protecting an in-flight version.",
+    "sentence": "The reader pin prevents premature collection."
+  },
+  {
+    "word": "upload intent",
+    "meaning": "Authority state protecting an eligible in-progress publication.",
+    "sentence": "The upload intent covers staged shard X."
+  },
+  {
+    "word": "erasure coding",
+    "meaning": "Redundancy allowing reconstruction from a sufficient set of fragments.",
+    "sentence": "Erasure coding reduces payload expansion."
+  },
+  {
+    "word": "repair exposure",
+    "meaning": "The period and state in which lost redundancy increases risk.",
+    "sentence": "Repair exposure grows when rebuilding stalls."
+  },
+  {
+    "word": "failure domain",
+    "meaning": "Resources subject to a correlated failure.",
+    "sentence": "A rack is a placement failure domain."
+  },
+  {
+    "word": "read amplification",
+    "meaning": "Transferred or processed work relative to useful requested data.",
+    "sentence": "Whole-shard reads increase read amplification."
+  },
+  {
+    "word": "metadata hot spot",
+    "meaning": "A concentrated namespace or catalog workload.",
+    "sentence": "The latest pointer is a metadata hot spot."
+  },
+  {
+    "word": "conditional commit",
+    "meaning": "A state change applied only if an expected condition still holds.",
+    "sentence": "The conditional commit rejects generation seven."
+  },
+  {
+    "word": "tombstone",
+    "meaning": "A logical deletion marker with defined lifecycle semantics.",
+    "sentence": "The tombstone hides the deleted version."
+  },
+  {
+    "word": "scrubbing",
+    "meaning": "Periodic integrity verification of stored data.",
+    "sentence": "Scrubbing detects a corrupt fragment."
+  },
+  {
+    "word": "restorable version",
+    "meaning": "A compatible complete state whose bytes and keys can be recovered.",
+    "sentence": "Generation ninety-eight is the restorable version."
+  },
+  {
+    "word": "range read",
+    "meaning": "Retrieval of a selected byte interval.",
+    "sentence": "A range read fetches the indexed sample block."
+  },
+  {
+    "word": "immutable identity",
+    "meaning": "An identifier bound to unchanging versioned content.",
+    "sentence": "The immutable identity survives placement migration."
+  },
+  {
+    "word": "garbage collection",
+    "meaning": "Reclaiming data no longer needed under the reachability protocol.",
+    "sentence": "Garbage collection respects active readers."
+  }
+]

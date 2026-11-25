@@ -1,0 +1,492 @@
+[
+  {
+    "id": "sd-019-fc-001",
+    "topicId": "sd-019",
+    "type": "concept",
+    "front": "Why separate bytes from publication?",
+    "back": "Durable individual objects do not imply a complete application snapshot.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-002",
+    "topicId": "sd-019",
+    "type": "failure",
+    "front": "What does a manifest describe?",
+    "back": "Exact immutable objects and interpretation metadata for one complete version.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-003",
+    "topicId": "sd-019",
+    "type": "tradeoff",
+    "front": "What is the publication boundary?",
+    "back": "An authoritative conditional pointer transition after validation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-004",
+    "topicId": "sd-019",
+    "type": "interview",
+    "front": "Why pin a manifest?",
+    "back": "Prevent one read from mixing generations.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-005",
+    "topicId": "sd-019",
+    "type": "concept",
+    "front": "What happens after a partial checkpoint upload?",
+    "back": "Keep the old published version; reconcile or collect staged bytes.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-006",
+    "topicId": "sd-019",
+    "type": "failure",
+    "front": "How do concurrent publishers avoid lost updates?",
+    "back": "Use a conditional generation or equivalent transaction.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-007",
+    "topicId": "sd-019",
+    "type": "tradeoff",
+    "front": "How is a timed-out commit resolved?",
+    "back": "Inspect authoritative publication state using stable identity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-008",
+    "topicId": "sd-019",
+    "type": "interview",
+    "front": "Does strong object consistency imply a multi-object transaction?",
+    "back": "No. Its scope must match the application invariant.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-009",
+    "topicId": "sd-019",
+    "type": "concept",
+    "front": "Does a path-shaped key supply POSIX semantics?",
+    "back": "No. Verify the actual file operation contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-010",
+    "topicId": "sd-019",
+    "type": "failure",
+    "front": "What is 100M ×4KB decimal?",
+    "back": "400 GB payload.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-011",
+    "topicId": "sd-019",
+    "type": "tradeoff",
+    "front": "What is 100M ×500B assumed metadata?",
+    "back": "50 GB before other overhead.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-012",
+    "topicId": "sd-019",
+    "type": "interview",
+    "front": "Packing 1000 samples gives how many objects?",
+    "back": "100000 shards plus the required application index.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-013",
+    "topicId": "sd-019",
+    "type": "concept",
+    "front": "What amplification can one random sample cause in a whole 1000-sample shard?",
+    "back": "Up to 1000× useful payload with no reuse.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-014",
+    "topicId": "sd-019",
+    "type": "failure",
+    "front": "What must an offset index identify?",
+    "back": "The exact immutable shard version and valid offsets.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-015",
+    "topicId": "sd-019",
+    "type": "tradeoff",
+    "front": "What is three-replica expansion?",
+    "back": "Three payload units for each logical unit before other costs.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-016",
+    "topicId": "sd-019",
+    "type": "interview",
+    "front": "What is eight-plus-three expansion?",
+    "back": "11/8 =1.375 before overhead.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-017",
+    "topicId": "sd-019",
+    "type": "concept",
+    "front": "Does coding ratio imply loss probability?",
+    "back": "No. Need placement, correlated failures, repair, and integrity assumptions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-018",
+    "topicId": "sd-019",
+    "type": "failure",
+    "front": "Why distribute fragments by failure domain?",
+    "back": "A correlated loss must not remove more than the code can tolerate.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-019",
+    "topicId": "sd-019",
+    "type": "tradeoff",
+    "front": "What competes with repair?",
+    "back": "Serving reads, network, disks, CPU, and free placement capacity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-020",
+    "topicId": "sd-019",
+    "type": "interview",
+    "front": "What is a 1.2TB restore at 30GB/s shared bandwidth?",
+    "back": "40 seconds ideal transfer floor.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-021",
+    "topicId": "sd-019",
+    "type": "concept",
+    "front": "What else determines restore time?",
+    "back": "Worker rates, metadata calls, decode, overlap, topology remapping, and skew.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-022",
+    "topicId": "sd-019",
+    "type": "failure",
+    "front": "Why does a digest not authorize access?",
+    "back": "It verifies identity of bytes, not tenant permission or signer trust.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-023",
+    "topicId": "sd-019",
+    "type": "tradeoff",
+    "front": "How can a cache leak data?",
+    "back": "By serving a valid object without the required scoped access check.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-024",
+    "topicId": "sd-019",
+    "type": "interview",
+    "front": "Why are collector roots more than latest?",
+    "back": "Retained versions, readers, and in-progress writers can still need objects.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-025",
+    "topicId": "sd-019",
+    "type": "concept",
+    "front": "What is the writer/collector race?",
+    "back": "A stale collector deletes an object just as a valid manifest begins referencing it.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-026",
+    "topicId": "sd-019",
+    "type": "failure",
+    "front": "What protects a paused writer?",
+    "back": "An intent protocol serialized with publication and collection eligibility.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-027",
+    "topicId": "sd-019",
+    "type": "tradeoff",
+    "front": "Can an expired writer publish blindly?",
+    "back": "No. Revalidate and reacquire eligibility under the protocol.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-028",
+    "topicId": "sd-019",
+    "type": "interview",
+    "front": "What protects an old reader?",
+    "back": "A pin, retention rule, or documented bounded reader lifetime.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-029",
+    "topicId": "sd-019",
+    "type": "concept",
+    "front": "Does deleting a pointer erase all physical data?",
+    "back": "No. Replicas, caches, versions, backups, and keys have separate lifecycles.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-030",
+    "topicId": "sd-019",
+    "type": "failure",
+    "front": "What makes regional recovery complete?",
+    "back": "Compatible catalog, referenced bytes, keys, schema, and write authority.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-031",
+    "topicId": "sd-019",
+    "type": "tradeoff",
+    "front": "Why not choose the highest recovered generation?",
+    "back": "Its referenced object set may be incomplete.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-032",
+    "topicId": "sd-019",
+    "type": "interview",
+    "front": "How do replication and backup differ?",
+    "back": "Replication can copy logical mistakes; protected retained backups address another failure class.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-033",
+    "topicId": "sd-019",
+    "type": "concept",
+    "front": "Is weights-only enough for training continuation?",
+    "back": "Not necessarily; optimizer, random state, data position, and topology can be required.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-034",
+    "topicId": "sd-019",
+    "type": "failure",
+    "front": "What must a retrieval snapshot align?",
+    "back": "Index, document versions, embedding model, and access-control semantics.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-019-fc-035",
+    "topicId": "sd-019",
+    "type": "tradeoff",
+    "front": "What is a Staff-level storage defense?",
+    "back": "Tie workload, consistency unit, publication, durability, deletion, and restore to explicit failure behavior.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "word": "cache authority",
+    "meaning": "The source defining which represented state is valid.",
+    "sentence": "The database remains the cache authority for tenant metadata."
+  },
+  {
+    "word": "validity key",
+    "meaning": "The complete input identity required for correct reuse.",
+    "sentence": "The validity key includes model and representation versions."
+  },
+  {
+    "word": "invalidation",
+    "meaning": "Removing permission to use a representation that no longer meets its contract.",
+    "sentence": "Invalidation advances the source-revision barrier."
+  },
+  {
+    "word": "eviction",
+    "meaning": "Removing resident payload to reclaim capacity.",
+    "sentence": "Eviction does not erase our fill-generation evidence."
+  },
+  {
+    "word": "fill generation",
+    "meaning": "A publication-authority generation checked when a loader submits data.",
+    "sentence": "The delayed loader carries a stale fill generation."
+  },
+  {
+    "word": "cache incarnation",
+    "meaning": "An identity separating cache process or metadata lifetimes.",
+    "sentence": "Restart creates a new cache incarnation."
+  },
+  {
+    "word": "revision floor",
+    "meaning": "The oldest authoritative version eligible for publication or use.",
+    "sentence": "The revision floor rejects the old snapshot."
+  },
+  {
+    "word": "single-flight",
+    "meaning": "Coalescing concurrent equivalent loads within a defined scope.",
+    "sentence": "Local single-flight permits one loader per process."
+  },
+  {
+    "word": "stampede",
+    "meaning": "A surge of duplicate work after a shared cache miss.",
+    "sentence": "Expiry of the hot key triggered a stampede."
+  },
+  {
+    "word": "source admission",
+    "meaning": "Limiting which miss or refresh work may reach the authority.",
+    "sentence": "Source admission protects database recovery capacity."
+  },
+  {
+    "word": "negative caching",
+    "meaning": "Temporarily reusing a valid absence result.",
+    "sentence": "Negative caching must be invalidated when an object is created."
+  },
+  {
+    "word": "hard freshness deadline",
+    "meaning": "The point beyond which stale data may no longer be served.",
+    "sentence": "We reject the value after its hard freshness deadline."
+  },
+  {
+    "word": "hot key",
+    "meaning": "A key whose traffic dominates one placement path.",
+    "sentence": "The hot key needs read replication rather than more ordinary shards."
+  },
+  {
+    "word": "working set",
+    "meaning": "The reusable data population needed by the current workload.",
+    "sentence": "A one-time scan displaced the working set."
+  },
+  {
+    "word": "cache admission",
+    "meaning": "Deciding whether a loaded object should become resident.",
+    "sentence": "Cache admission rejects low-value scan pollution."
+  },
+  {
+    "word": "prefix reuse",
+    "meaning": "Reusing compatible computation for an exact prior token context.",
+    "sentence": "Prefix reuse saves prefill without returning an old answer."
+  },
+  {
+    "word": "response reuse",
+    "meaning": "Returning a prior output under its full validity and policy contract.",
+    "sentence": "Response reuse checks the retrieval and authorization context."
+  },
+  {
+    "word": "work-weighted benefit",
+    "meaning": "Saved resource cost rather than a raw count of hits.",
+    "sentence": "Work-weighted benefit reflects avoided GPU prefill and expensive queries."
+  }
+]

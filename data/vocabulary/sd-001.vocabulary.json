@@ -1,92 +1,102 @@
 [
   {
-    "word": "Decision instance",
-    "meaning": "One position at which participants must select a compatible value.",
-    "sentence": "We assigned each placement command a decision instance in the scheduler log."
+    "word": "Consensus",
+    "meaning": "A way for several computers to agree on one decision even when some computers or messages fail.",
+    "sentence": "The three voters use consensus to agree on the order of the Payments requests."
   },
   {
-    "word": "Durable acknowledgment",
-    "meaning": "A reply sent after the promised state can survive the specified crash.",
-    "sentence": "Our test interrupted power immediately after the durable acknowledgment."
+    "word": "Quorum",
+    "meaning": "A group large enough to take a step under the protocol’s rules. This example uses a majority.",
+    "sentence": "R1 and R2 form a quorum in the group of three voters."
+  },
+  {
+    "word": "Replica",
+    "meaning": "A computer that keeps a copy of the coordinator’s decisions and recovery records.",
+    "sentence": "R3 is a replica that can catch up after a brief outage."
   },
   {
     "word": "Quorum intersection",
-    "meaning": "A shared member between two sets required for protocol progress.",
-    "sentence": "Quorum intersection preserves evidence only if the common voter follows the recovery rules."
+    "meaning": "The overlap between two groups that each have enough votes.",
+    "sentence": "R1 and R2 share voter R2 with the next group, R2 and R3."
   },
   {
-    "word": "Ballot",
-    "meaning": "An ordered proposal identifier used to distinguish competing Paxos rounds.",
-    "sentence": "The successor obtained promises for a higher ballot before proposing a value."
-  },
-  {
-    "word": "Promise",
-    "meaning": "An acceptor's commitment to exclude lower ballots.",
-    "sentence": "The acceptor persisted its promise before it replied to the proposer."
-  },
-  {
-    "word": "Chosen value",
-    "meaning": "A Paxos value accepted under the protocol by a deciding quorum for that slot.",
-    "sentence": "The chosen value survived even though no learner received the replies."
-  },
-  {
-    "word": "Committed prefix",
-    "meaning": "The contiguous history that future legal leaders must preserve.",
-    "sentence": "The checkpoint pointer belongs to the committed prefix."
-  },
-  {
-    "word": "Applied index",
-    "meaning": "The highest contiguous committed position executed by a state machine.",
-    "sentence": "The read waited until the applied index reached the read barrier."
-  },
-  {
-    "word": "Read barrier",
-    "meaning": "Evidence establishing a safe ordering point for a read.",
-    "sentence": "The coordinator established a read barrier before returning the current owner."
+    "word": "Generation",
+    "meaning": "A version number that changes when the recovery record moves to a new state.",
+    "sentence": "Request A changes the Payments record from generation 17 to generation 18."
   },
   {
     "word": "Precondition",
-    "meaning": "A requirement evaluated before a state transition may succeed.",
-    "sentence": "The stale promotion failed its generation precondition."
+    "meaning": "Something that must still be true before a request can change anything.",
+    "sentence": "Request B has a precondition that Payments must still be at version 17."
+  },
+  {
+    "word": "Execution ID",
+    "meaning": "A name the operator can use to track one run of a recovery plan.",
+    "sentence": "The operator opens DR-42 to follow the Payments failover."
+  },
+  {
+    "word": "Raft",
+    "meaning": "A protocol that uses an elected leader to keep several copies of an ordered log in agreement.",
+    "sentence": "In the Raft example, R1 sends request A to the other voters."
+  },
+  {
+    "word": "Term",
+    "meaning": "A numbered period in Raft that begins with an election attempt.",
+    "sentence": "If R1 steps down, a later election can choose a leader in a higher term."
+  },
+  {
+    "word": "Log entry",
+    "meaning": "One item in the ordered list of commands that the replicas follow.",
+    "sentence": "A log entry can tell each replica to check request A against version 17."
+  },
+  {
+    "word": "Commit",
+    "meaning": "To make a decision final under the protocol’s rules.",
+    "sentence": "Once the voters commit A, a replacement leader must preserve its place in the history."
+  },
+  {
+    "word": "Apply",
+    "meaning": "To carry out a committed command on the coordinator’s saved state.",
+    "sentence": "When voters apply A, they record DR-42 and advance Payments to version 18."
+  },
+  {
+    "word": "Paxos",
+    "meaning": "A protocol that lets voters choose one value for a decision even if the proposer changes.",
+    "sentence": "Our Paxos example asks which request goes in the next place in the history."
+  },
+  {
+    "word": "Ballot",
+    "meaning": "An ordered number that identifies one Paxos proposal round.",
+    "sentence": "A replacement proposer starts a higher ballot to learn what the voters already accepted."
+  },
+  {
+    "word": "Promise",
+    "meaning": "A Paxos voter’s saved agreement to refuse older ballots.",
+    "sentence": "R2 records its promise before it replies to the new proposer."
+  },
+  {
+    "word": "Chosen value",
+    "meaning": "The value a quorum has accepted for the same Paxos proposal.",
+    "sentence": "Even if a reply gets lost, the chosen value for that position stays fixed."
+  },
+  {
+    "word": "Snapshot",
+    "meaning": "A saved copy of the coordinator’s state through a known point in the log.",
+    "sentence": "A snapshot taken after A includes version 18 and a reference to DR-42."
+  },
+  {
+    "word": "Idempotency key",
+    "meaning": "A caller-supplied identifier that a service can use to recognize another attempt at the same request.",
+    "sentence": "The caller reuses A’s idempotency key after losing the reply."
   },
   {
     "word": "Fencing",
-    "meaning": "Rejecting obsolete authority at the point where a protected action takes effect.",
-    "sentence": "Fencing prevented the previous attempt from publishing a manifest."
+    "meaning": "A check at the resource that blocks a former owner from making changes.",
+    "sentence": "Fencing prevents an old Payments writer in Ashburn from accepting new writes after authority moves to Phoenix."
   },
   {
-    "word": "Learner replica",
-    "meaning": "A nonvoting participant that can receive replicated state during preparation for membership.",
-    "sentence": "The learner replica installed a snapshot before the team considered promotion."
-  },
-  {
-    "word": "Joint configuration",
-    "meaning": "A Raft membership transition requiring quorums of both configurations.",
-    "sentence": "A majority of the union did not satisfy the joint configuration."
-  },
-  {
-    "word": "Failure domain",
-    "meaning": "A set of components exposed to a common cause of failure.",
-    "sentence": "Those two voters share a failure domain through their storage controller."
-  },
-  {
-    "word": "Critical path",
-    "meaning": "The chain of dependent work that determines completion time.",
-    "sentence": "After the zone loss a slower disk entered the commit critical path."
-  },
-  {
-    "word": "Lineage",
-    "meaning": "The history from which a recovered or replacement system derives its state.",
-    "sentence": "We labeled the restored cluster with a distinct lineage."
-  },
-  {
-    "word": "Reconciliation",
-    "meaning": "Comparing observed and desired state and resolving incomplete or conflicting work.",
-    "sentence": "Reconciliation identified a successful provider operation whose reply had been lost."
-  },
-  {
-    "word": "Watermark",
-    "meaning": "A recorded boundary indicating how far a defined process has advanced.",
-    "sentence": "The geographically protected watermark lagged the regional publication pointer."
+    "word": "Linearizable read",
+    "meaning": "A read that returns a value consistent with one instant between its start and finish, respecting completed changes.",
+    "sentence": "A linearizable read started after A succeeds sees version 18 or a newer version."
   }
 ]

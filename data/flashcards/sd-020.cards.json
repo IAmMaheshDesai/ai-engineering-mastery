@@ -1,0 +1,492 @@
+[
+  {
+    "id": "sd-020-fc-001",
+    "topicId": "sd-020",
+    "type": "concept",
+    "front": "Define zero downtime.",
+    "back": "Continuity of a defined correct customer capability under declared load and failures.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-002",
+    "topicId": "sd-020",
+    "type": "failure",
+    "front": "How do deployment and release differ?",
+    "back": "Deployment places components; release exposes behavior.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-003",
+    "topicId": "sd-020",
+    "type": "tradeoff",
+    "front": "What is migration?",
+    "back": "A change to durable state, schema, format, or ownership.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-004",
+    "topicId": "sd-020",
+    "type": "interview",
+    "front": "Why define the coexistence window?",
+    "back": "Old processes, clients, jobs, and messages can persist beyond rollout completion.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-005",
+    "topicId": "sd-020",
+    "type": "concept",
+    "front": "What makes readiness meaningful?",
+    "back": "It verifies the actual serving capability, including required artifacts and dependencies.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-006",
+    "topicId": "sd-020",
+    "type": "failure",
+    "front": "What does liveness not prove?",
+    "back": "That a process can serve useful correct requests.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-007",
+    "topicId": "sd-020",
+    "type": "tradeoff",
+    "front": "Compute 20 replicas ×100 rps.",
+    "back": "2000 rps nominal capacity under the stated benchmark.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-008",
+    "topicId": "sd-020",
+    "type": "interview",
+    "front": "What does an 18-replica floor provide?",
+    "back": "1800 rps under the exercise assumptions, before additional failures.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-009",
+    "topicId": "sd-020",
+    "type": "concept",
+    "front": "Does two unavailable guarantee a concurrent zone-loss objective?",
+    "back": "No. Recompute remaining useful capacity and zone distribution.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-010",
+    "topicId": "sd-020",
+    "type": "failure",
+    "front": "Why can surge hurt capacity?",
+    "back": "Warmup competes for shared memory, CPU/GPU, network, cache, and connections.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-011",
+    "topicId": "sd-020",
+    "type": "tradeoff",
+    "front": "When can blue-green fail as rollback?",
+    "back": "Old capacity or compatibility may be missing, and shared data may already have changed.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-012",
+    "topicId": "sd-020",
+    "type": "interview",
+    "front": "What makes a canary meaningful?",
+    "back": "Representative bounded exposure, comparable evidence, declared decisions, and relevant observation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-013",
+    "topicId": "sd-020",
+    "type": "concept",
+    "front": "Compute baseline 100/100000.",
+    "back": "0.1% observed errors.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-014",
+    "topicId": "sd-020",
+    "type": "failure",
+    "front": "Compute canary 20/5000.",
+    "back": "0.4% observed errors; fourfold descriptive ratio.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-015",
+    "topicId": "sd-020",
+    "type": "tradeoff",
+    "front": "What is the observed difference?",
+    "back": "0.3 percentage points, requiring uncertainty and cohort interpretation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-016",
+    "topicId": "sd-020",
+    "type": "interview",
+    "front": "What should missing telemetry do?",
+    "back": "Hold or stop under policy, never silently count as no errors.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-017",
+    "topicId": "sd-020",
+    "type": "concept",
+    "front": "Does a small p-value prove causality?",
+    "back": "No. Cohort imbalance, correlation, and repeated checking can invalidate interpretation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-018",
+    "topicId": "sd-020",
+    "type": "failure",
+    "front": "What stops on a known invariant violation?",
+    "back": "The declared release policy, regardless of a low aggregate failure rate.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-019",
+    "topicId": "sd-020",
+    "type": "tradeoff",
+    "front": "What is expand-migrate-contract?",
+    "back": "Create compatible state, move and validate data, then retire obsolete representation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-020",
+    "topicId": "sd-020",
+    "type": "interview",
+    "front": "Why not split every human name mechanically?",
+    "back": "The transformation may be semantically invalid or irreversible.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-021",
+    "topicId": "sd-020",
+    "type": "concept",
+    "front": "How do stale backfills avoid overwrites?",
+    "back": "Condition commit on the source version and retry or defer conflicts.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-022",
+    "topicId": "sd-020",
+    "type": "failure",
+    "front": "Are two independent writes atomic?",
+    "back": "No. Use a shared transaction or durable ordered change protocol with reconciliation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-023",
+    "topicId": "sd-020",
+    "type": "tradeoff",
+    "front": "What does a 120M-row scan at 10k/s take?",
+    "back": "12000 seconds, or 3h20m, ignoring pauses and retries.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-024",
+    "topicId": "sd-020",
+    "type": "interview",
+    "front": "What is catch-up net rate at 800 applied and 500 incoming per second?",
+    "back": "300 events/s.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-025",
+    "topicId": "sd-020",
+    "type": "concept",
+    "front": "How long for 9M backlog at that net rate?",
+    "back": "30000 seconds, or 8h20m under steady assumptions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-026",
+    "topicId": "sd-020",
+    "type": "failure",
+    "front": "Why are equal row counts insufficient?",
+    "back": "Missing, duplicate, stale, or semantically incorrect rows can cancel in counts.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-027",
+    "topicId": "sd-020",
+    "type": "tradeoff",
+    "front": "What must delete migration preserve?",
+    "back": "Version or tombstone ordering so delayed work does not resurrect deleted data.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-028",
+    "topicId": "sd-020",
+    "type": "interview",
+    "front": "What does drain accomplish?",
+    "back": "Stops new admission and allows bounded completion of existing work.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-029",
+    "topicId": "sd-020",
+    "type": "concept",
+    "front": "Does drain replace idempotency?",
+    "back": "No. A process can still stop after effect commitment but before acknowledgment.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-030",
+    "topicId": "sd-020",
+    "type": "failure",
+    "front": "Which identity survives queue redelivery?",
+    "back": "Stable logical business operation identity; attempt identity changes.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-031",
+    "topicId": "sd-020",
+    "type": "tradeoff",
+    "front": "What is the rollback boundary?",
+    "back": "The transition after which old code or state cannot safely represent current durable meaning.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-032",
+    "topicId": "sd-020",
+    "type": "interview",
+    "front": "What if new precision cannot fit the old format?",
+    "back": "Keep compatible readers, disable new behavior, and use auditable forward repair if needed.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-033",
+    "topicId": "sd-020",
+    "type": "concept",
+    "front": "How do you exclude old paused writers?",
+    "back": "Enforce compatibility at the authoritative commit boundary.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-034",
+    "topicId": "sd-020",
+    "type": "failure",
+    "front": "What belongs in a model compatibility bundle?",
+    "back": "Weights, tokenizer, prompts, retrieval, tools, policy, runtime, and relevant schemas.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-020-fc-035",
+    "topicId": "sd-020",
+    "type": "tradeoff",
+    "front": "What is the central release defense?",
+    "back": "A sequence of legal states with capacity, compatibility, evidence, authority, and honest recovery limits.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

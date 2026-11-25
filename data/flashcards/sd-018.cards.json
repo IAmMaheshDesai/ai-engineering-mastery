@@ -1,0 +1,492 @@
+[
+  {
+    "id": "sd-018-fc-001",
+    "topicId": "sd-018",
+    "type": "concept",
+    "front": "What defines a control plane?",
+    "back": "Operations establishing and changing desired behavior for a named capability.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-002",
+    "topicId": "sd-018",
+    "type": "failure",
+    "front": "What defines a data plane?",
+    "back": "Operations executing the behavior under its valid configuration and authority.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-003",
+    "topicId": "sd-018",
+    "type": "tradeoff",
+    "front": "Does process separation prove isolation?",
+    "back": "No. Shared resources and synchronous dependencies can preserve coupling.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-004",
+    "topicId": "sd-018",
+    "type": "interview",
+    "front": "What is static stability?",
+    "back": "Continuing a defined useful capability with existing capacity despite management unavailability.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-005",
+    "topicId": "sd-018",
+    "type": "concept",
+    "front": "Can cached bytes prove authorization?",
+    "back": "No. Scope, expiry, revocation, and trust remain separate.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-006",
+    "topicId": "sd-018",
+    "type": "failure",
+    "front": "What is a bootstrap dependency?",
+    "back": "A prerequisite needed to bring a replacement or cold system into service.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-007",
+    "topicId": "sd-018",
+    "type": "tradeoff",
+    "front": "Why use desired state?",
+    "back": "Controllers can reconcile current observations toward intent despite partial failure.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-008",
+    "topicId": "sd-018",
+    "type": "interview",
+    "front": "What follows a timed-out provider create?",
+    "back": "Unknown result; discover by stable operation identity before replacement.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-009",
+    "topicId": "sd-018",
+    "type": "concept",
+    "front": "Why separate revision and operation ID?",
+    "back": "Revision expresses intent order; operation ID relates effect retries.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-010",
+    "topicId": "sd-018",
+    "type": "failure",
+    "front": "What does a watch gap require?",
+    "back": "A fresh consistent snapshot under the store contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-011",
+    "topicId": "sd-018",
+    "type": "tradeoff",
+    "front": "Why reject late revision 21 after 22?",
+    "back": "Monotonic activation prevents obsolete state replacing newer state.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-012",
+    "topicId": "sd-018",
+    "type": "interview",
+    "front": "Does a revision validate semantics?",
+    "back": "No. Check tenant, artifacts, schema, and compatibility.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-013",
+    "topicId": "sd-018",
+    "type": "concept",
+    "front": "What identifies readiness after restart?",
+    "back": "Worker incarnation plus configuration identity and lifecycle stage.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-014",
+    "topicId": "sd-018",
+    "type": "failure",
+    "front": "What does fencing enforce?",
+    "back": "Obsolete authority is rejected at the protected effect boundary.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-015",
+    "topicId": "sd-018",
+    "type": "tradeoff",
+    "front": "Does fencing erase prior effects?",
+    "back": "No. Reconcile committed or unknown earlier operations.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-016",
+    "topicId": "sd-018",
+    "type": "interview",
+    "front": "Why is a lease check before a pause insufficient?",
+    "back": "The caller may resume after its authority has expired.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-017",
+    "topicId": "sd-018",
+    "type": "concept",
+    "front": "What if an endpoint cannot fence?",
+    "back": "Use supported conditional/idempotent mechanisms or state a weaker reconciled guarantee.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-018",
+    "topicId": "sd-018",
+    "type": "failure",
+    "front": "What limits disconnected operation?",
+    "back": "Capacity, credential validity, policy freshness, dependencies, and delegated scope.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-019",
+    "topicId": "sd-018",
+    "type": "tradeoff",
+    "front": "Can immediate revocation coexist with unlimited partitions?",
+    "back": "Protected operations need fresh authority or must stop under that contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-020",
+    "topicId": "sd-018",
+    "type": "interview",
+    "front": "Compute 10000 two-MB bundles.",
+    "back": "20 GB decimal downstream payload.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-021",
+    "topicId": "sd-018",
+    "type": "concept",
+    "front": "At 200 MB/s, what is its ideal direct floor?",
+    "back": "100 seconds before overhead and activation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-022",
+    "topicId": "sd-018",
+    "type": "failure",
+    "front": "What do hierarchical caches save?",
+    "back": "Origin work; total downstream payload still exists.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-023",
+    "topicId": "sd-018",
+    "type": "tradeoff",
+    "front": "Why jitter reconnects?",
+    "back": "Avoid synchronized snapshots, reports, and reconciliation overwhelming recovery.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-024",
+    "topicId": "sd-018",
+    "type": "interview",
+    "front": "What separates management load classes?",
+    "back": "Writes, heartbeats, fan-out, scans, and queries have different scaling laws.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-025",
+    "topicId": "sd-018",
+    "type": "concept",
+    "front": "What is a configuration acknowledgment?",
+    "back": "A scoped claim about a named lifecycle stage on one incarnation.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-026",
+    "topicId": "sd-018",
+    "type": "failure",
+    "front": "What survives 300 units losing 100 at demand 180?",
+    "back": "200 remain, sufficient under the declared capacity assumption.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-027",
+    "topicId": "sd-018",
+    "type": "tradeoff",
+    "front": "What changes at demand 220?",
+    "back": "A 20-unit shortfall requires degradation, admission changes, or restored capacity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-028",
+    "topicId": "sd-018",
+    "type": "interview",
+    "front": "Compute serial recovery 4+6+3+2 minutes.",
+    "back": "15 minutes to useful routed capacity under the stated dependencies.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-029",
+    "topicId": "sd-018",
+    "type": "concept",
+    "front": "What if the recovery key is absent?",
+    "back": "Recovery is infeasible until trust material is restored; arithmetic alone is irrelevant.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-030",
+    "topicId": "sd-018",
+    "type": "failure",
+    "front": "How do model aliases differ from bundles?",
+    "back": "An alias is mutable selection; a bundle identifies compatible immutable execution state.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-031",
+    "topicId": "sd-018",
+    "type": "tradeoff",
+    "front": "Why pin long streams?",
+    "back": "Preserve a defined request-version contract while new requests change versions.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-032",
+    "topicId": "sd-018",
+    "type": "interview",
+    "front": "Can a running training job still depend on management?",
+    "back": "Yes, through leases, checkpoint publication, identity, or input access.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-033",
+    "topicId": "sd-018",
+    "type": "concept",
+    "front": "What does a management SLO measure?",
+    "back": "Change, reconciliation, or revocation behavior, separately from serving availability.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-034",
+    "topicId": "sd-018",
+    "type": "failure",
+    "front": "When is global coordination justified?",
+    "back": "When a named invariant requires its ordering/freshness despite the failure cost.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-018-fc-035",
+    "topicId": "sd-018",
+    "type": "tradeoff",
+    "front": "What is the central architecture defense?",
+    "back": "Show exactly which capabilities continue, stop, converge, and recover under each failure.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

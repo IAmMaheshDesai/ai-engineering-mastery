@@ -1,0 +1,492 @@
+[
+  {
+    "id": "sd-015-fc-001",
+    "topicId": "sd-015",
+    "type": "concept",
+    "front": "What must be defined before caching an object?",
+    "back": "Its authority, complete validity key, freshness/authorization contract, fill protocol, and cache-loss behavior.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-002",
+    "topicId": "sd-015",
+    "type": "concept",
+    "front": "How do invalidation and eviction differ?",
+    "back": "Invalidation removes eligibility because data is no longer valid; eviction reclaims payload memory even when data may remain correct.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-003",
+    "topicId": "sd-015",
+    "type": "interview",
+    "front": "At 100k one-lookup reads/s, what happens when hits drop from 95% to 90%?",
+    "back": "Simple source load doubles from 5k/s to 10k/s before refresh and retries.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-004",
+    "topicId": "sd-015",
+    "type": "interview",
+    "front": "With 2 ms hits and 30 ms misses, what are the simple average latencies at 95% and 90%?",
+    "back": "3.4 ms and 4.8 ms. These are not p99 estimates, and overload invalidates fixed miss latency.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-005",
+    "topicId": "sd-015",
+    "type": "failure",
+    "front": "Why can a high hit rate conceal source instability?",
+    "back": "A small miss fraction at high traffic can exceed backend capacity, and expensive misses or retries amplify work.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-006",
+    "topicId": "sd-015",
+    "type": "tradeoff",
+    "front": "Why is unconditional database bypass unsafe during cache failure?",
+    "back": "The authority may be sized for ordinary misses rather than full traffic; use bounded admission, permitted stale data, or explicit rejection.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-007",
+    "topicId": "sd-015",
+    "type": "concept",
+    "front": "What should a cache key include?",
+    "back": "Every input changing representation validity: entity/tenant scope, source or content version, representation schema, and relevant model/policy context.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-008",
+    "topicId": "sd-015",
+    "type": "failure",
+    "front": "Trace the stale-fill race after a source write.",
+    "back": "Reader gets old revision, pauses; writer commits newer revision and invalidates; delayed reader fills old data unless publication rejects it.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-009",
+    "topicId": "sd-015",
+    "type": "tradeoff",
+    "front": "Does database-update-then-cache-delete fully solve consistency?",
+    "back": "No. It avoids one race but not an old read filling after deletion; specify a stronger barrier or weaker freshness contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-010",
+    "topicId": "sd-015",
+    "type": "failure",
+    "front": "Why is resident-value version comparison insufficient after eviction?",
+    "back": "Eviction can erase the newest version evidence, allowing an older delayed fill into an apparently empty key.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-011",
+    "topicId": "sd-015",
+    "type": "concept",
+    "front": "What can a fill-generation token establish?",
+    "back": "Publication authority under a cache-enforced current-generation check; a client merely holding a token is insufficient.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-012",
+    "topicId": "sd-015",
+    "type": "failure",
+    "front": "Why must lease release compare ownership identity?",
+    "back": "A paused old owner could otherwise remove a newer owner’s lease.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-013",
+    "topicId": "sd-015",
+    "type": "concept",
+    "front": "What does a cache incarnation protect?",
+    "back": "It distinguishes restart histories so pre-restart fill tokens cannot accidentally become current after metadata reset.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-014",
+    "topicId": "sd-015",
+    "type": "tradeoff",
+    "front": "What must barrier metadata reclamation prove?",
+    "back": "No old fill can later be accepted without revalidation, for example through bounded checked token validity or a supported generation/session protocol.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-015",
+    "topicId": "sd-015",
+    "type": "failure",
+    "front": "What should happen after losing invalidation-stream trust?",
+    "back": "Mark affected stronger-contract state untrusted, reconcile or rotate/flush safely, and use bounded source access until a verified frontier is restored.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-016",
+    "topicId": "sd-015",
+    "type": "concept",
+    "front": "What does insertion TTL not necessarily bound?",
+    "back": "Source-relative staleness: a delayed old snapshot may be inserted just now and live for the full TTL.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-017",
+    "topicId": "sd-015",
+    "type": "concept",
+    "front": "How do local single-flight and distributed fill ownership differ?",
+    "back": "Local coalescing collapses work within one process; distributed ownership can collapse duplicate loads across clients under its protocol.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-018",
+    "topicId": "sd-015",
+    "type": "interview",
+    "front": "At 20k requests/s and a 0.2-second fill window, how many potential duplicate loads arrive?",
+    "back": "About 4,000 under steady arrivals before coalescing, ignoring overload-induced delay.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-019",
+    "topicId": "sd-015",
+    "type": "failure",
+    "front": "Why can one local loader on each of 100 processes still be dangerous?",
+    "back": "It can create roughly 100 simultaneous source loads for one key, which may exceed the source budget.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-020",
+    "topicId": "sd-015",
+    "type": "tradeoff",
+    "front": "What does TTL jitter solve and not solve?",
+    "back": "It spreads expirations across different keys, but does not alone solve one hot-key expiry or a whole cache restart.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-021",
+    "topicId": "sd-015",
+    "type": "concept",
+    "front": "Why does source admission remain necessary after coalescing?",
+    "back": "A unique-key scan has no duplicate loads to collapse and can still overwhelm the authority.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-022",
+    "topicId": "sd-015",
+    "type": "failure",
+    "front": "Why should timeouts not be cached as authoritative not-found?",
+    "back": "An infrastructure failure does not prove absence; caching it can hide existing data or distort authorization behavior.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-023",
+    "topicId": "sd-015",
+    "type": "concept",
+    "front": "Why does more hash sharding not automatically fix one hot key?",
+    "back": "A simple mapping still assigns that key to one serving path; read replication or representation changes need separate semantics.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-024",
+    "topicId": "sd-015",
+    "type": "interview",
+    "front": "For 120k reads/s and a 40k/s per-copy ceiling, what do five copies provide after one loss?",
+    "back": "Four survivors receive an ideal 30k/s each, or 75% of ceiling, before routing skew.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-025",
+    "topicId": "sd-015",
+    "type": "tradeoff",
+    "front": "Why is immutable content easier to replicate than a mutable alias?",
+    "back": "Content identity never changes in place; selecting the approved version remains a separate mutable consistency contract.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-026",
+    "topicId": "sd-015",
+    "type": "concept",
+    "front": "What determines whether key salting is correct?",
+    "back": "The application’s update, merge, and read semantics; random decomposition alone does not preserve an invariant.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-027",
+    "topicId": "sd-015",
+    "type": "concept",
+    "front": "Why distinguish admission from eviction policy?",
+    "back": "Admission decides whether low-reuse objects enter; eviction chooses which residents leave under pressure.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-028",
+    "topicId": "sd-015",
+    "type": "failure",
+    "front": "How can a scan harm an LRU cache?",
+    "back": "One-time objects can evict the reusable hot working set; isolation, bypass, or reuse-aware admission may help.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-029",
+    "topicId": "sd-015",
+    "type": "interview",
+    "front": "Size 10m entries with 500 B values, 80 B keys, and 120 B overhead.",
+    "back": "700 B each gives 7 GB decimal per copy; two copies need 14 GB resident, about 20 GB capacity at 70% occupancy before other costs.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-030",
+    "topicId": "sd-015",
+    "type": "failure",
+    "front": "Why can warming a new namespace exceed steady-state memory?",
+    "back": "Old and new representations may coexist, plus transient fills and buffers, causing eviction or refill storms.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-031",
+    "topicId": "sd-015",
+    "type": "concept",
+    "front": "How does prefix caching differ from response caching?",
+    "back": "Prefix caching reuses compatible computation, often prefill state; response caching returns prior output with broader validity obligations.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-032",
+    "topicId": "sd-015",
+    "type": "tradeoff",
+    "front": "Does a prefix hit eliminate decode latency?",
+    "back": "Not generally. New output tokens still require generation under the runtime’s actual mechanism.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-033",
+    "topicId": "sd-015",
+    "type": "failure",
+    "front": "Why can exact visible text be an insufficient AI cache key?",
+    "back": "Tokenizer, model weights, adapters, templates, positional context, and sharing scope may change computation or validity.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-034",
+    "topicId": "sd-015",
+    "type": "tradeoff",
+    "front": "Why is semantic caching a product/evaluation decision?",
+    "back": "Similarity does not prove interchangeable meaning, current state, authorization, or safe effect behavior.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  },
+  {
+    "id": "sd-015-fc-035",
+    "topicId": "sd-015",
+    "type": "concept",
+    "front": "What should cache correctness observability measure?",
+    "back": "Served-version violations, stale age, invalidation delay, rejected stale fills, trust gaps, and isolation, separately from performance benefit.",
+    "companies": [
+      "OpenAI",
+      "Anthropic",
+      "Meta",
+      "Google",
+      "NVIDIA"
+    ]
+  }
+]

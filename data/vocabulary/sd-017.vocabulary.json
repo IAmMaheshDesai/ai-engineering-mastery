@@ -1,0 +1,92 @@
+[
+  {
+    "word": "eligibility",
+    "meaning": "The rule defining which operations enter a measurement denominator.",
+    "sentence": "Eligibility includes service-capacity rejection under our contract."
+  },
+  {
+    "word": "burn rate",
+    "meaning": "Observed error fraction relative to the objective’s allowed error fraction.",
+    "sentence": "Burn rate twenty requires investigation."
+  },
+  {
+    "word": "error budget",
+    "meaning": "The allowed bad work within an objective window.",
+    "sentence": "The incident consumed part of the error budget."
+  },
+  {
+    "word": "cardinality",
+    "meaning": "The number of distinct metric identities.",
+    "sentence": "Unbounded labels increased cardinality."
+  },
+  {
+    "word": "exemplar",
+    "meaning": "A reference linking an observation to detailed evidence.",
+    "sentence": "The exemplar opens a representative trace."
+  },
+  {
+    "word": "critical path",
+    "meaning": "The causal path determining completion under stated dependencies.",
+    "sentence": "Retrieval is on this request’s critical path."
+  },
+  {
+    "word": "selection bias",
+    "meaning": "A sample differing systematically from its source population.",
+    "sentence": "Error retention creates selection bias."
+  },
+  {
+    "word": "completeness",
+    "meaning": "Known coverage and loss of observed evidence.",
+    "sentence": "The panel displays telemetry completeness."
+  },
+  {
+    "word": "structured event",
+    "meaning": "A diagnostic record with defined fields and semantics.",
+    "sentence": "The structured event includes deployment revision."
+  },
+  {
+    "word": "context propagation",
+    "meaning": "Passing causal references across execution boundaries.",
+    "sentence": "Context propagation continues through the queue."
+  },
+  {
+    "word": "baggage",
+    "meaning": "Propagated contextual metadata with bounded trusted use.",
+    "sentence": "Baggage must not contain secrets."
+  },
+  {
+    "word": "observation boundary",
+    "meaning": "The point at which behavior is measured.",
+    "sentence": "The client boundary includes response delivery."
+  },
+  {
+    "word": "nearest rank",
+    "meaning": "A percentile convention selecting a ranked observation.",
+    "sentence": "Nearest rank exposes the boundary assumption."
+  },
+  {
+    "word": "tail sampling",
+    "meaning": "Selecting traces using information collected about their outcomes.",
+    "sentence": "Tail sampling retains useful slow traces."
+  },
+  {
+    "word": "audit evidence",
+    "meaning": "Required accountable records of privileged or business actions.",
+    "sentence": "Audit evidence follows a durable contract."
+  },
+  {
+    "word": "semantic revision",
+    "meaning": "A version describing a measurement’s meaning.",
+    "sentence": "Semantic revision prevents incompatible aggregation."
+  },
+  {
+    "word": "useful progress",
+    "meaning": "Accepted work advancing the business goal.",
+    "sentence": "Useful progress matters more than busy GPUs."
+  },
+  {
+    "word": "coverage probe",
+    "meaning": "An independent check of measurement or service visibility.",
+    "sentence": "The coverage probe detected collector blindness."
+  }
+]
